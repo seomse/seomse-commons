@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties version="1.0">
+	
+	<!-- 
+	   파 일 명 : seomse_config.xml
+	   설    명 : 기본 설정파일 
+	                     
+	   작 성 자 : macle
+	   작 성 일 : 2017.07 (설정파일)
+	   버    전 : 1.0
+	   수정이력 :  
+	   기타사항 :	
+	  @author Copyrights 2017 by ㈜ 섬세한사람들. All right reserved.
+ 	-->
+ 
+ 	
+ 	<entry key="seomse.jdbc.type">oracle</entry>
+	<entry key="seomse.jdbc.driver.class">oracle.jdbc.driver.OracleDriver</entry>	
+   	<entry key="seomse.jdbc.url">jdbc:oracle:thin:@127.0.0.1:1521:orcl</entry>
+   	<entry key="seomse.jdbc.login.encrypt">N</entry>
+   	<entry key="seomse.jdbc.user.id">seomse_stock</entry>
+   	<entry key="seomse.jdbc.user.password">SlWZyLhGfLoF</entry>
+ 	<entry key="seomse.jdbc.connection.pool.count">5</entry>
+
+</properties>
