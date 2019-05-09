@@ -1,16 +1,3 @@
-/** 
- * <pre>
- *  파 일 명 : FileUtil.java
- *  설    명 : File을 사용할때 공통으로 사용할만한 메소드들을 정의
- *         
- *  작 성 자 : macle
- *  작 성 일 : 2017.09
- *  버    전 : 1.1
- *  수정이력 :  2018.04
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017, 2018 by ㈜섬세한사람들. All right reserved.
- */
 
 package com.seomse.commons.file;
 
@@ -34,6 +21,20 @@ import org.slf4j.LoggerFactory;
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.commons.utils.string.Check;
 
+/**
+ * <pre>
+ *  파 일 명 : FileUtil.java
+ *  설    명 : File을 사용할때 공통으로 사용할만한 메소드들을 정의
+ *
+ *
+ *  작 성 자 : macle
+ *  작 성 일 : 2017.09
+ *  버    전 : 1.1
+ *  수정이력 :  2018.04
+ *  기타사항 :
+ * </pre>
+ * @author Copyrights 2017, 2018 by ㈜섬세한사람들. All right reserved.
+ */
 
 public class FileUtil {
 
@@ -45,10 +46,11 @@ public class FileUtil {
 	 * @param charSet 파일 케릭터셋
 	 * @return 파일 라인 리스트
 	 */
-	public static final List<String> getFileContentsList(File file, String charSet){
-		List<String> dataList = new ArrayList<String>();
+	@SuppressWarnings("unused")
+	public static  List<String> getFileContentsList(File file, String charSet){
+		List<String> dataList = new ArrayList<>();
 		
-		BufferedReader br = null;
+		BufferedReader br;
 		try{
 			 String line;
 	         br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet));
@@ -68,7 +70,8 @@ public class FileUtil {
 	 * @param charSet 파일 케릭터셋
 	 * @return 파일 라인 리스트
 	 */
-	public static final String getFileContents(File file, String charSet){
+	@SuppressWarnings({"unused", "WeakerAccess"})
+	public static String getFileContents(File file, String charSet){
 		
 		StringBuilder sb = new StringBuilder();
 		BufferedReader br = null;
@@ -85,7 +88,7 @@ public class FileUtil {
 		}catch(Exception e){
 			logger.error(ExceptionUtil.getStackTrace(e));
 		}finally{
-			try{if(br != null)br.close();}catch(Exception e){}
+			try{if(br != null)br.close();}catch(Exception e){logger.error(ExceptionUtil.getStackTrace(e));}
 		}
 		
 		if(sb.length() == 0){
@@ -101,8 +104,9 @@ public class FileUtil {
 	 * @param path 폴더경로 또는 파일경로
 	 * @return 파일리스트
 	 */
-	public static final List<File> getFileList(String path){
-		List<File> fileList = new ArrayList<File>();
+	@SuppressWarnings("unused")
+	public static  List<File> getFileList(String path){
+		List<File> fileList = new ArrayList<>();
 		File file = new File(path);
 		addFiles(fileList, file);
 		return fileList;
@@ -112,6 +116,11 @@ public class FileUtil {
 		fileList.add(file);
 		if(file.isDirectory()){
 			File [] files = file.listFiles();
+
+			if(files == null){
+				return;
+			}
+
 			for(File f : files){
 				addFiles(fileList, f);
 			}
@@ -124,20 +133,20 @@ public class FileUtil {
 	 * @param fileExtension 확장자명 ex: .txt
 	 * @return 파일리스트
 	 */
-	public static final List<File> getFileList(String path, String fileExtension){
-		List<File> fileList = new ArrayList<File>();
+	@SuppressWarnings("unused")
+	public static  List<File> getFileList(String path, String fileExtension){
+		List<File> fileList = new ArrayList<>();
 		File file = new File(path);
 		addFiles(fileList, file);
 		
-		List<File> resultFileList = new ArrayList<File>();
+		List<File> resultFileList = new ArrayList<>();
 		for(File f : fileList){
 			if(f.getName().endsWith(fileExtension)){
 				resultFileList.add(f);
 			}
 		}
 		fileList.clear();
-		fileList = null;
-		
+
 		return resultFileList;
 	}
 	
@@ -148,13 +157,14 @@ public class FileUtil {
 	 * @param regex 정규식
 	 * @return 파일리스트
 	 */
-	public static final List<File> getRegexFileList(String path, String regex){
-		List<File> fileList = new ArrayList<File>();
+	@SuppressWarnings("unused")
+	public static  List<File> getRegexFileList(String path, String regex){
+		List<File> fileList = new ArrayList<>();
 		File file = new File(path);
 		addFiles(fileList, file);
 		
 		Pattern pattern = Pattern.compile(regex);
-		List<File> resultFileList = new ArrayList<File>();
+		List<File> resultFileList = new ArrayList<>();
 		for(File f : fileList){
 			Matcher matcher = pattern.matcher(f.getName());
 			
@@ -163,8 +173,7 @@ public class FileUtil {
 			}
 		}
 		fileList.clear();
-		fileList = null;
-		
+
 		return resultFileList;
 	}
 	
@@ -176,6 +185,7 @@ public class FileUtil {
 	 * @param fileName 파일명
 	 * @param isAppend 기존내용에 추가할지 새로만들지에 대한 여부
 	 */
+	@SuppressWarnings({"unused"})
 	public static void fileOutput(String outValue, String fileName, boolean isAppend){
 		fileOutput(outValue ,"UTF-8", fileName,  isAppend);
 		
@@ -188,7 +198,8 @@ public class FileUtil {
 	 * @param fileName 파일명
 	 * @param isAppend 기존내용에 추가할지 새로만들지에 대한 여부
 	 */
-	public static void fileOutput(String outValue, String charSet,String fileName, boolean isAppend){
+	@SuppressWarnings("WeakerAccess")
+	public static void fileOutput(String outValue, String charSet, String fileName, boolean isAppend){
 		
 		FileOutputStream out = null;
 		try{
@@ -197,16 +208,17 @@ public class FileUtil {
 		}catch(Exception e){
 			logger.error(ExceptionUtil.getStackTrace(e));
 		}finally{
-			try{out.close(); }catch(Exception e){}
+			try{if(out!= null)out.close(); }catch(Exception e){logger.error(ExceptionUtil.getStackTrace(e));}
 		}
 	}
 	
 	/**
 	 * 경로 전체 복사
-	 * @param inPath
-	 * @param outPath
-	 * @return
+	 * @param inPath 입력경로
+	 * @param outPath 출력경로
+	 * @return 복사 성공여부
 	 */
+	@SuppressWarnings({"unused"})
 	public static boolean copy(String inPath, String outPath){
 		File file = new File(inPath);
 		if(!file.exists()){
@@ -225,8 +237,11 @@ public class FileUtil {
 					
 					
 				File newFile = new File(newPath);
+				//noinspection ResultOfMethodCallIgnored
 				newFile.getParentFile().mkdirs();
-				if(subFile.isDirectory()){
+				if(subFile.isDirectory())//noinspection SingleStatementInBlock
+				{
+					//noinspection ResultOfMethodCallIgnored
 					newFile.mkdir();
 				}else{
 					fileCopy(subPath, newPath);
@@ -247,6 +262,7 @@ public class FileUtil {
 	 * @param inFileName 복사대상
 	 * @param outFileName 복사파일
 	 */
+	@SuppressWarnings("WeakerAccess")
 	public static boolean fileCopy(String inFileName, String outFileName) {
 		 try {
 			 FileInputStream fis = new FileInputStream(inFileName);
@@ -259,11 +275,7 @@ public class FileUtil {
 			 
 			 long size = fcin.size();
 			 fcin.transferTo(0, size, fcout);
-			   
-//			 int data = 0;
-//			 while((data=fis.read())!=-1) {
-//				 fos.write(data);
-//			 }
+
 			 fcin.close();
 			 fcout.close();
 			 
@@ -285,6 +297,7 @@ public class FileUtil {
 	  * @param outFileName 이동파일
 	  * @param isNameMake 파일명이 존재하면 이름을 자동생서할지 여부 (1) 형태로 붙어서 생성됨
 	  */
+	@SuppressWarnings("unused")
 	public static boolean move(String inFileName, String outFileName, boolean isNameMake) {
 		
 		try{
@@ -295,8 +308,6 @@ public class FileUtil {
 				}
 			}
 			
-//			 fileCopy(inFileName, outFileName);
-			
 			Path file = Paths.get(inFileName);
 			Path movePath = Paths.get(outFileName);
 			Files.move(file , movePath);
@@ -305,27 +316,14 @@ public class FileUtil {
 			logger.error(ExceptionUtil.getStackTrace(e));
 			return false;
 		}
-		
-//		 try {
-//			 fileCopy(inFileName, outFileName);
-//	   
-//			 //파일복사 완료후 원복파일삭제
-//			 File file = new File(inFileName);
-//			 file.delete();
-//			 return true;
-//		 } catch (Exception e) {
-//		
-//			 logger.error(ExceptionUtil.getStackTrace(e));
-//			 return false;
-//		 }
 	}
 	
 	/**
 	 * 이름이 중복일때 이름생성 확장자전에 (1) 을 붙여서생성
-	 * @param file
-	 * @return
+	 * @param file 파일
+	 * @return 사용될 파일명
 	 */
-	private static final String makeName(File file){
+	private static String makeName(File file){
 		
 		String parentPath ;
 		
@@ -338,7 +336,7 @@ public class FileUtil {
 		
 		String fileName = file.getName();
 		//확장자
-		String extension =  null;
+		String extension ;
 		int index = fileName.lastIndexOf('.');
 		
 		if(index != -1){
@@ -352,12 +350,12 @@ public class FileUtil {
 		
 		int makeIndex =2;
 		
-		int startIndex = -1;	
+		int startIndex ;
 		if(fileName.charAt(fileName.length()-1) == ')'){
 			startIndex = fileName.lastIndexOf('(');
 			
 			
-			String numValue = null;
+			String numValue ;
 			if(startIndex != -1){
 				numValue = fileName.substring(startIndex+1, fileName.length()-1);
 				if(Check.isNumber(numValue)){
@@ -371,11 +369,8 @@ public class FileUtil {
 			
 
 		}
-		
-		while(true){
-			if(!new File(parentPath + "/" + fileName + "(" + makeIndex +")" + extension).isFile()){
-				break;
-			}
+
+		while (new File(parentPath + "/" + fileName + "(" + makeIndex + ")" + extension).isFile()) {
 			makeIndex++;
 		}
 		
@@ -395,6 +390,7 @@ public class FileUtil {
 	 * @param isFileName 파일명 변경여부
 	 * @param isRegex 정규식 사용여부
 	 */
+	@SuppressWarnings("unused")
 	public static void fileContentsChange(String path, String charSet, String value, String newValue, boolean isFileName, boolean isRegex){
 		List<File> fileList = getFileList(path);
 		for(File file : fileList){
@@ -433,37 +429,21 @@ public class FileUtil {
 			fileOutput(contents, charSet , fileName, false);
 
 			if(isFileNameChange){
+				//noinspection ResultOfMethodCallIgnored
 				file.delete();
 			}
 		}
 		
 	}
 	 
-	 
-	
-	/**
-	 * 경로내에 있는 모든 파일명을 불러온다
-	 * @param path 폴더경로 또는 파일경로
-	 * @return 파일이름 리스트(절대경로)
-	 */
-//	public static final List<String> getFileFullNameList(String path){
-//		List<File> fileList = getFileList(path);
-//		
-//		List<String> fileFullNameList = new ArrayList<String>();
-//		for(File f : fileList){
-//			fileFullNameList.add(f.getAbsolutePath());
-//		}
-//		
-//		fileList.clear();
-//		fileList = null;
-//		return fileFullNameList;
-//	}
+
 	/**
 	 * 경로에 있는 파일을 불러와서 언어셋을 변경한다.
-	 * @param path
-	 * @param charSet
-	 * @param newCharSet
+	 * @param path  경로
+	 * @param charSet 변경전 언어셋
+	 * @param newCharSet 병견된 언어셋
 	 */
+	@SuppressWarnings("unused")
 	public static void charSetChange(String path, String charSet, String newCharSet){
 		List<File> fileList = getFileList(path);
 		for(File file : fileList){
@@ -475,16 +455,23 @@ public class FileUtil {
 			fileOutput(fileContents,newCharSet,file.getAbsolutePath(),false);
 		}
 	}
-	
-	public static boolean checkReadableFile(String filePath) {
+
+	/**
+	 * 파일이 읽을 있는 상태 여부
+	 * @param filePath 파일경로
+	 * @return isReadableFile
+	 */
+	@SuppressWarnings("unused")
+	public static boolean isReadableFile(String filePath) {
 		File file = new File(filePath);
 		return (file.exists() && file.canRead() && !file.isDirectory());
 	}
 	
 	/**
 	 * 디렉토리가 비어있는지 여부
-	 * @return
+	 * @return isEmptyDir
 	 */
+	@SuppressWarnings("unused")
 	public static boolean isEmptyDir(String dirPath) {
 		
 		File file = new File(dirPath);	
@@ -494,41 +481,48 @@ public class FileUtil {
 	
 	/**
 	 * 디렉토리가 비어있는지 여부
-	 * @param dirFile
-	 * @return
+	 * @param dirFile dirFile
+	 * @return isEmptyDir
 	 */
+	@SuppressWarnings("WeakerAccess")
 	public static boolean isEmptyDir(File dirFile) {
 		if(!dirFile.isDirectory()) {
 			return false;
 		}
-		
-		
-		if(dirFile.list().length == 0) {
-			return true;
-		}
-		
-		return false;
+
+
+		//noinspection ConstantConditions
+		return dirFile.list() != null && dirFile.list().length == 0;
+
 	}
 	
 	/**
 	 * 폴더 및 모든파일 삭제
-	 * @param path
-	 * @return
+	 * @param path 경로
+	 * @return 삭제 성공 여부
 	 */
+	@SuppressWarnings("unused")
 	public static boolean delete(String path) {
 		return delete(new File(path));
 	}
 	
 	/**
 	 * 폴더 및 모든파일 삭제
-	 * @param file
-	 * @return
+	 * @param file 삭제대상 파일
+	 * @return 삭제 성공 여부
 	 */
+	@SuppressWarnings("WeakerAccess")
 	public static boolean delete(File file) {
 		if(file.isDirectory()) {
-			boolean isResult = true;
-			
+
 			File [] files = file.listFiles();
+
+			if(files == null){
+				logger.error("file delete fail: " + file.getAbsolutePath());
+				return false;
+			}
+			boolean isResult = true;
+
 			for(File cFile : files) {
 				if(cFile.isDirectory()) {
 					boolean chkResult = delete(cFile);
@@ -565,12 +559,5 @@ public class FileUtil {
 			return chkResult;
 		}
 	}
-	
-	
-	
-	public static void main(String [] args){
-		System.out.println(isEmptyDir("C:\\Users\\김용수\\Desktop\\moara\\"));
-		
-	}
-	
+
 }
