@@ -1,16 +1,4 @@
-/** 
- * <pre>
- *  파 일 명 : ExceptionUtil.java
- *  설    명 : Exception을 사용할때 공통으로 사용할만한 메소드들을 정의
- *         
- *  작 성 자 : macle
- *  작 성 일 : 2017.07
- *  버    전 : 1.1
- *  수정이력 :  2018.04
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017, 2018 by ㈜섬세한사람들. All right reserved.
- */
+
 
 package com.seomse.commons.utils;
 
@@ -20,20 +8,34 @@ import java.io.PrintStream;
 import org.slf4j.Logger;
 
 import com.seomse.commons.handler.ExceptionHandler;
-
+/**
+ * <pre>
+ *  파 일 명 : ExceptionUtil.java
+ *  설    명 : Exception을 사용할때 공통으로 사용할만한 메소드들을 정의
+ *
+ *  작 성 자 : macle
+ *  작 성 일 : 2017.07
+ *  버    전 : 1.1
+ *  수정이력 :  2018.04
+ *  기타사항 :
+ * </pre>
+ * @author Copyrights 2017, 2018 by ㈜섬세한사람들. All right reserved.
+ */
 public class ExceptionUtil {
 	/**
 	 *  Exception.printStackTrace 내용을 String 으로 가져오기
 	 * @param e Exception e
 	 * @return stackTrace String Value
 	 */
-	public static final String getStackTrace(Exception e){
+	public static  String getStackTrace(Exception e){
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
     	PrintStream pinrtStream = new PrintStream(out);
     	e.printStackTrace(pinrtStream);  
-    	String exceptionStackTrace = out.toString();     
-   
-        try{out.close();}catch(Exception e1){}
+    	String exceptionStackTrace = out.toString();
+
+		//noinspection CatchMayIgnoreException
+		try{out.close();}catch(Exception e1){}
+		//noinspection CatchMayIgnoreException
         try{pinrtStream.close();}catch(Exception e1){}
         
         return exceptionStackTrace;
@@ -43,9 +45,9 @@ public class ExceptionUtil {
 	 * 기본 예외처리
 	 * @param e
 	 * @param logger
-	 * @param handler
+	 * @param exceptionHandler
 	 */
-	public static final void exception(Exception e, Logger logger, ExceptionHandler exceptionHandler){
+	public static  void exception(Exception e, Logger logger, ExceptionHandler exceptionHandler){
 		if(exceptionHandler == null) {
 			logger.error(getStackTrace(e));
 		}else{

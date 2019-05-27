@@ -1,17 +1,5 @@
 
-/** 
- * <pre>
- *  파 일 명 : StringReceive.java
- *  설    명 : (문자열) 받기
- *                    
- *  작 성 자 : macle
- *  작 성 일 : 2018.04
- *  버    전 : 1.0
- *  수정이력 : 
- *  기타사항 :
- * </pre>
- * @author Copyrights 2018 by ㈜섬세한사람들. All right reserved.
- */
+
 
 package com.seomse.commons.communication;
 
@@ -19,10 +7,22 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
-
+/**
+ * <pre>
+ *  파 일 명 : StringReceive.java
+ *  설    명 : (문자열) 받기
+ *
+ *  작 성 자 : macle
+ *  작 성 일 : 2018.04
+ *  버    전 : 1.0
+ *  수정이력 :
+ *  기타사항 :
+ * </pre>
+ * @author Copyrights 2018 by ㈜섬세한사람들. All right reserved.
+ */
 public class StringReceive {
-	private Socket socket = null;
-	private InputStreamReader reader = null;
+	private Socket socket ;
+	private InputStreamReader reader ;
 	private char [] cbuf;
 	
 	
@@ -66,6 +66,7 @@ public class StringReceive {
 				reader.close();	
 			}
 		}catch(Exception e){}
+
 		reader = null;
 		try{
 			if(socket != null ){

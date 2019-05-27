@@ -234,7 +234,7 @@ public class Config {
 	 * 로그백 설정파일 경로설정
 	 * isErrorLog는 초기생성자에서 에러를 출력하지않기위한 로그
 	 * @param configPath
-	 * @param isErrorLog 
+	 * @param isErrorLog
 	 */
 	private static void setLogbackConfigPath(String configPath, boolean isErrorLog){
 		File file = new File(configPath);	
@@ -262,12 +262,12 @@ public class Config {
 	
 	
 	
-	private Map<String, String> configMap = new HashMap<String, String>();
+	private Map<String, String> configMap = new HashMap<>();
 
 	private final Object configLock = new Object();
 	
 	
-	private List<ConfigObserver> observerList = new ArrayList<ConfigObserver>();
+	private List<ConfigObserver> observerList = new ArrayList<>();
 	private final Object observerLock = new Object();
 	private final Object notifyLock = new Object();
 	
@@ -355,9 +355,11 @@ public class Config {
 		
 		try{
 			if(configInputStream != null){
-				configInputStream.close(); configInputStream =null;
+				configInputStream.close();
 			}
-		}catch(Exception e){}
+		}catch(Exception e){
+			ExceptionUtil.exception(e,logger, instance.exceptionHandler);
+		}
 	}
 	
 	
@@ -415,7 +417,7 @@ public class Config {
 			}
 		}
 		if(isUpdate){
-			Map<String, String> updateConfigMap = new HashMap<String, String>();
+			Map<String, String> updateConfigMap = new HashMap<>();
 			updateConfigMap.put(key, value);
 			notifyConfig(updateConfigMap);
 		}
@@ -429,7 +431,7 @@ public class Config {
 			return ;
 		}
 		
-		Map<String, String> updateConfigMap = new HashMap<String, String>();
+		Map<String, String> updateConfigMap = new HashMap<>();
 		synchronized (configLock) {
 			//설정정보 업데이트구간
 			for(ConfigInfo info : infoList){
@@ -468,9 +470,9 @@ public class Config {
 		for(String key : keySet){
 			logger.trace("Confg update key: " + key + " value: " + updateConfigMap.get(key));
 		}
-		ConfigObserver [] configObserverArray = null; 
+		ConfigObserver [] configObserverArray ;
 		synchronized (observerLock) {
-			configObserverArray = observerList.toArray(new ConfigObserver[observerList.size()]);
+			configObserverArray = observerList.toArray(new ConfigObserver[0]);
 		}
 		
 		synchronized (notifyLock) {

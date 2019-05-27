@@ -1,21 +1,21 @@
-/** 
- * <pre>
- *  파 일 명 : RandomString.java
- *  설    명 : 랜덤한 문자열 생성
- *  
- *                    
- *  작 성 자 : macle
- *  작 성 일 : 2017.12
- *  버    전 : 1.0
- *  수정이력 : 
- *  기타사항 :
- * </pre>
- * @author  Copyrights 2017 by ㈜섬세한사람들. All right reserved.
- */
 
 
 package com.seomse.commons.utils.string;
 
+/**
+ * <pre>
+ *  파 일 명 : RandomString.java
+ *  설    명 : 랜덤한 문자열 생성
+ *
+ *
+ *  작 성 자 : macle
+ *  작 성 일 : 2017.12
+ *  버    전 : 1.0
+ *  수정이력 :
+ *  기타사항 :
+ * </pre>
+ * @author  Copyrights 2017 by ㈜섬세한사람들. All right reserved.
+ */
 
 public class RandomString {
 

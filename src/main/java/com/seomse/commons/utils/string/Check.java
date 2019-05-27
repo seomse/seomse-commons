@@ -1,17 +1,4 @@
-/** 
- * <pre>
- *  파 일 명 : Check.java
- *  설    명 : 문자열 유효성 체크 관련 클래스
- *  
- *                    
- *  작 성 자 : macle
- *  작 성 일 : 2017.09
- *  버    전 : 1.0
- *  수정이력 : 
- *  기타사항 :
- * </pre>
- * @author  Copyrights 2017 by ㈜섬세한사람들. All right reserved.
- */
+
 
 
 package com.seomse.commons.utils.string;
@@ -21,7 +8,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-
+/**
+ * <pre>
+ *  파 일 명 : Check.java
+ *  설    명 : 문자열 유효성 체크 관련 클래스
+ *
+ *
+ *  작 성 자 : macle
+ *  작 성 일 : 2017.09
+ *  버    전 : 1.0
+ *  수정이력 :
+ *  기타사항 :
+ * </pre>
+ * @author  Copyrights 2017 by ㈜섬세한사람들. All right reserved.
+ */
 public class Check {
 
 	/**
@@ -203,7 +203,7 @@ public class Check {
 	
 	/**
 	 * 한글 완성형 문자인지 체크한다.
-	 * @param ch
+	 * @param str
 	 * @return
 	 */
 	public static boolean isHangulSyllable(String str) {
@@ -222,7 +222,7 @@ public class Check {
 	
 	/**
 	 * 완성형한글문자와 숫자 스페이스로만 이루어진 글자인지 검사한다.
-	 * @param ch
+	 * @param str
 	 * @return
 	 */
 	public static boolean isHangulAndNumber(String str) {

@@ -1,16 +1,4 @@
-/** 
- * <pre>
- *  파 일 명 : LoginSecurity.java
- *  설    명 : 로그인 보안 
- *            seed128은 16자리키로 생성해야 바이트가맞음 md5(해쉬알고리즘)를 활용하여 16자리의 스트링을 생성하는 알고리즘활용   
- *  작 성 자 : macle
- *  작 성 일 : 2017.07
- *  버    전 : 1.0
- *  수정이력 : 
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
- */
+
 
 package com.seomse.commons.security.login;
 
@@ -20,7 +8,19 @@ import org.slf4j.LoggerFactory;
 import com.seomse.commons.security.hash.HashString;
 import com.seomse.commons.security.seed.Seed128Cipher;
 import com.seomse.commons.utils.ExceptionUtil;
-
+/**
+ * <pre>
+ *  파 일 명 : LoginSecurity.java
+ *  설    명 : 로그인 보안
+ *            seed128은 16자리키로 생성해야 바이트가맞음 md5(해쉬알고리즘)를 활용하여 16자리의 스트링을 생성하는 알고리즘활용
+ *  작 성 자 : macle
+ *  작 성 일 : 2017.07
+ *  버    전 : 1.0
+ *  수정이력 :
+ *  기타사항 :
+ * </pre>
+ * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
+ */
 public class LoginSecurity {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LoginSecurity.class);

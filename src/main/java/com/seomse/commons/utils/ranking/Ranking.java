@@ -1,16 +1,3 @@
-/** 
- * <pre>
- *  파 일 명 : Ranking.java
- *  설    명 : 순위 측정
- *                    
- *  작 성 자 : macle
- *  작 성 일 : 2017.11
- *  버    전 : 1.0
- *  수정이력 : 
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
- */
 
 package com.seomse.commons.utils.ranking;
 
@@ -19,12 +6,25 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.seomse.commons.utils.sort.QuickSortList;
+/**
+ * <pre>
+ *  파 일 명 : Ranking.java
+ *  설    명 : 순위 측정
+ *
+ *  작 성 자 : macle
+ *  작 성 일 : 2017.11
+ *  버    전 : 1.0
+ *  수정이력 :
+ *  기타사항 :
+ * </pre>
+ * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
+ */
 
 public class Ranking {
 	
 	/**
 	 * 
-	 * @param rankingInfoCollection
+	 * @param rankingInfoArray
 	 * @param rankNumber
 	 * @return
 	 */

@@ -1,19 +1,19 @@
-/** 
+
+
+package com.seomse.commons.utils;
+/**
  * <pre>
  *  파 일 명 : CodeUtil.java
  *  설    명 : 코드체계 관련 유틸성 클래스
- *                    
+ *
  *  작 성 자 : macle
  *  작 성 일 : 2018.03
  *  버    전 : 1.0
- *  수정이력 : 
+ *  수정이력 :
  *  기타사항 :
  * </pre>
  * @author Copyrights 2018 by ㈜섬세한사람들. All right reserved.
  */
-
-package com.seomse.commons.utils;
-
 public class CodeUtil {
 	
 	/**

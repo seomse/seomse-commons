@@ -1,19 +1,19 @@
-/** 
+
+package com.seomse.commons.utils.sort;
+/**
  * <pre>
  *  파 일 명 : QuickSortStringArray.java
  *  설    명 : 문자열을을 받은 순서대로 정렬 퀵정렬알고리즘 이용
- *  
- *                    
+ *
+ *
  *  작 성 자 : macle
  *  작 성 일 : 2017.09
  *  버    전 : 1.0
- *  수정이력 : 
+ *  수정이력 :
  *  기타사항 :
  * </pre>
  * @author  Copyrights 2017 by ㈜섬세한사람들. All right reserved.
  */
-
-package com.seomse.commons.utils.sort;
 
 public class QuickSortStringArray {
 

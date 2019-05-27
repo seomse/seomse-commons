@@ -1,17 +1,5 @@
 
-/** 
- * <pre>
- *  파 일 명 : StringPush.java
- *  설    명 : (문자열) 푸시
- *                    
- *  작 성 자 : macle
- *  작 성 일 : 2018.04
- *  버    전 : 1.0
- *  수정이력 : 
- *  기타사항 :
- * </pre>
- * @author Copyrights 2018 by ㈜섬세한사람들. All right reserved.
- */
+
 
 
 
@@ -21,7 +9,19 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-
+/**
+ * <pre>
+ *  파 일 명 : StringPush.java
+ *  설    명 : (문자열) 푸시
+ *
+ *  작 성 자 : macle
+ *  작 성 일 : 2018.04
+ *  버    전 : 1.0
+ *  수정이력 :
+ *  기타사항 :
+ * </pre>
+ * @author Copyrights 2018 by ㈜섬세한사람들. All right reserved.
+ */
 public class StringPush {
 	private String ipAddress;
 	private int port;

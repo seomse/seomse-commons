@@ -1,16 +1,4 @@
-/** 
- * <pre>
- *  파 일 명 : PackageSearch.java
- *  설    명 : 클래스와 스트링을 Json객체를이용하여 서로변환
- *         
- *  작 성 자 : macle
- *  작 성 일 : 2017.09
- *  버    전 : 1.0
- *  수정이력 :
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
- */
+
 
 package com.seomse.commons.packages.classes;
 
@@ -33,7 +21,19 @@ import com.seomse.commons.packages.classes.field.FieldUtil;
 import com.seomse.commons.utils.ExceptionUtil;
 
 
-
+/**
+ * <pre>
+ *  파 일 명 : PackageSearch.java
+ *  설    명 : 클래스와 스트링을 Json객체를이용하여 서로변환
+ *
+ *  작 성 자 : macle
+ *  작 성 일 : 2017.09
+ *  버    전 : 1.0
+ *  수정이력 :
+ *  기타사항 :
+ * </pre>
+ * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
+ */
 public class ClassJsonUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(ClassJsonUtil.class);
@@ -45,7 +45,7 @@ public class ClassJsonUtil {
 	
 	/**
 	 * json문자열을 클래스로 생성하여 리스트로 돌려준다.
-	 * @param valu1e
+	 * @param jsonString
 	 * @return
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -115,7 +115,7 @@ public class ClassJsonUtil {
 
 	/**
 	 * json문자열을 클래스로 생성하여 리스트로 돌려준다.
-	 * @param value
+	 * @param jsonString
 	 * @return
 	 */
 	public static <T> T makeVo(String jsonString){
@@ -124,7 +124,7 @@ public class ClassJsonUtil {
 	
 	/**
 	 * json문자열을 클래스로 생성하여 리스트로 돌려준다.
-	 * @param value
+	 * @param jsonString
 	 * @return
 	 */	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -327,7 +327,7 @@ public class ClassJsonUtil {
 
 	/**
 	 * json문자열을 dataMap 형태로 생성해서 돌려준다.
-	 * @param value
+	 * @param jsonString
 	 * @return
 	 */
 	public static Map<String, Object> makeDataMap(String jsonString){
@@ -365,7 +365,7 @@ public class ClassJsonUtil {
 	
 	/**
 	 * json문자열을 정렬된 dataMap 형태로 생성해서 돌려준다.
-	 * @param value
+	 * @param jsonString
 	 * @return
 	 */
 	public static Map<String, Object> makeOrderedDataMap(String jsonString){
@@ -390,7 +390,7 @@ public class ClassJsonUtil {
 	
 	/**
 	 * ListMap의 형태를 JsonString 으로 출력한다.
-	 * @param mapDataList
+	 * @param mapData
 	 * @return
 	 */
 	public static String mapDataToJsonString(Map<String, Object> mapData){

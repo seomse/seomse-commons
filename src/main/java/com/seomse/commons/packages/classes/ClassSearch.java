@@ -1,8 +1,15 @@
-/** 
+
+
+package com.seomse.commons.packages.classes;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+/**
  * <pre>
  *  파 일 명 : ClassSearch.java
  *  설    명 : 클래스 검색
- *         
+ *
  *  작 성 자 : macle
  *  작 성 일 : 2017.09
  *  버    전 : 1.0
@@ -11,13 +18,6 @@
  * </pre>
  * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
  */
-
-package com.seomse.commons.packages.classes;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 public class ClassSearch {
 	
 	private String targetPath;

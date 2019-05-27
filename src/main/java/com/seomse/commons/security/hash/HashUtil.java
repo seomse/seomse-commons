@@ -1,21 +1,21 @@
-/** 
- * <pre>
- *  파 일 명 : HashUtil.java
- *  설    명 : Hash관련 유틸성클래스 
- *         
- *  작 성 자 : macle
- *  작 성 일 : 2017.07
- *  버    전 : 1.0
- *  수정이력 : 
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
- */
 
 
 package com.seomse.commons.security.hash;
 
 import java.security.NoSuchAlgorithmException;
+/**
+ * <pre>
+ *  파 일 명 : HashUtil.java
+ *  설    명 : Hash관련 유틸성클래스
+ *
+ *  작 성 자 : macle
+ *  작 성 일 : 2017.07
+ *  버    전 : 1.0
+ *  수정이력 :
+ *  기타사항 :
+ * </pre>
+ * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
+ */
 
 public class HashUtil {
 	
@@ -33,7 +33,7 @@ public class HashUtil {
 	
 	/**
 	 * 특정해쉬알고리즘의 값 얻기
-	 * @param hash
+	 * @param messageDigest
 	 * @param value
 	 * @return
 	 */

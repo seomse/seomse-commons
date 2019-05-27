@@ -1,9 +1,12 @@
-/** 
+
+
+package com.seomse.commons.utils.date;
+/**
  * <pre>
  *  파 일 명 : RunningTime.java
  *  설    명 : running 시간 측정용 클래스
- *  
- *         
+ *
+ *
  *  작 성 자 : macle
  *  작 성 일 : 2017.10
  *  버    전 : 1.0
@@ -12,9 +15,6 @@
  * </pre>
  * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
  */
-
-
-package com.seomse.commons.utils.date;
 
 public class RunningTime {
 	

@@ -1,18 +1,4 @@
 
-/** 
- * <pre>
- *  파 일 명 : SendToReceive.java
- *  설    명 : 메시지 보내고 받기 
- *             대량 메시지 전송에는 적합하지 않음
- *                    
- *  작 성 자 : macle
- *  작 성 일 : 2018.04
- *  버    전 : 1.0
- *  수정이력 : 
- *  기타사항 :
- * </pre>
- * @author Copyrights 2018 by ㈜섬세한사람들. All right reserved.
- */
 
 package com.seomse.commons.communication;
 
@@ -23,13 +9,27 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.nio.charset.StandardCharsets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.seomse.commons.handler.ExceptionHandler;
 import com.seomse.commons.utils.ExceptionUtil;
-
+/**
+ * <pre>
+ *  파 일 명 : SendToReceive.java
+ *  설    명 : 메시지 보내고 받기
+ *             대량 메시지 전송에는 적합하지 않음
+ *
+ *  작 성 자 : macle
+ *  작 성 일 : 2018.04
+ *  버    전 : 1.0
+ *  수정이력 :
+ *  기타사항 :
+ * </pre>
+ * @author Copyrights 2018 by ㈜섬세한사람들. All right reserved.
+ */
 public class SendToReceive {
 	
 	private static final Logger logger = LoggerFactory.getLogger(SendToReceive.class);
@@ -130,8 +130,8 @@ public class SendToReceive {
 					socket.setSoTimeout(connectTimeOut);
 					socket.connect(socketAddress, connectTimeOut);
 				}
-				reader  = new InputStreamReader(socket.getInputStream(), "UTF-8");
-				writer = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
+				reader  = new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8);
+				writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
 				
 
 				return true;
@@ -156,10 +156,7 @@ public class SendToReceive {
 	 * @return
 	 */
 	public boolean isConnect(){
-		if(socket == null || socket.isClosed()){
-			return false;
-		}
-		return true;
+		return socket != null && !socket.isClosed();
 	}
 	
 	/**
@@ -239,13 +236,14 @@ public class SendToReceive {
 	 */
 	public void disConnect(){
 		readMessageFlag = false;
-		
-		try {if(reader!=null) reader.close(); } catch(Exception e){}
-		reader=null;
+
+		try {if(socket!=null) socket.close(); } catch(Exception e){}
+		socket=null;
 		try {if(writer!=null) writer.close(); } catch(Exception e){}
 		writer=null;
-		try {if(socket!=null) socket.close(); } catch(Exception e){}	
-		socket=null;
+		try {if(reader!=null) reader.close(); } catch(Exception e){}
+		reader=null;
+
 	}
 	
 	/**
