@@ -258,9 +258,9 @@ public class Config {
 	
 	
 	
-	private String configPath = "config/seomse_config.xml";
-	
-	
+	private String configPath = ConfigSet.CONFIG_PATH;
+	private String logbackPath = ConfigSet.LOG_BACK_PATH;
+
 	
 	private Map<String, String> configMap = new HashMap<>();
 
@@ -281,14 +281,11 @@ public class Config {
 	 * 싱글턴글래스
 	 */
 	private Config(){
-		
 
-		
-		String defaultLogbackPath = "config/logback.xml";
-		File logbackFile = new File(defaultLogbackPath);
+		File logbackFile = new File(logbackPath);
 		if(logbackFile.exists()){
 			//기본경로에 로그백 설정파일이존재할경우 호출
-			setLogbackConfigPath(defaultLogbackPath, false);
+			setLogbackConfigPath(logbackPath, false);
 		}
 		
 		File file = new File(configPath);
@@ -299,10 +296,7 @@ public class Config {
 			loadConfigFile(false);
 		}
 	}
-	
-	
-	
-	
+
 	/**
 	 * 설정파일 로드
 	 */
