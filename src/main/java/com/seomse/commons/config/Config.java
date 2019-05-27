@@ -1,46 +1,33 @@
-/** 
- * <pre>
- *  파 일 명 : Config.java
- *  설    명 : 설정
- *  		  
- *  			                  
- *  작 성 자 : macle
- *  작 성 일 : 2017.07
- *  버    전 : 1.1
- *  수정이력 : 2019.02 
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017, 2019 by ㈜섬세한사람들. All right reserved.
- */
+
 
 package com.seomse.commons.config;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.seomse.commons.handler.ExceptionHandler;
-import com.seomse.commons.meta.MetaData;
-import com.seomse.commons.meta.MetaDataManager;
-import com.seomse.commons.utils.ExceptionUtil;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
+import com.seomse.commons.handler.ExceptionHandler;
+import com.seomse.commons.utils.ExceptionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.*;
+/**
+ * <pre>
+ *  파 일 명 : Config.java
+ *  설    명 : 설정
+ *
+ *
+ *  작 성 자 : macle
+ *  작 성 일 : 2017.07
+ *  버    전 : 1.1
+ *  수정이력 : 2019.02
+ *  기타사항 :
+ * </pre>
+ * @author Copyrights 2017, 2019 by ㈜섬세한사람들. All right reserved.
+ */
 public class Config {
 	private final static Logger logger = LoggerFactory.getLogger(Config.class);
 	
@@ -242,40 +229,7 @@ public class Config {
 		
 		instance.loadConfigFile(true);
 	}
-	
-	/**
-	 * 업데이트 테이블 정보설정
-	 * @param configConnection
-	 * @param tableName
-	 * @param keyColumn
-	 * @param valueColumn
-	 * @param timeColumn
-	 */
-	public static void setTableInfo(final ConfigConnection configConnection, final String tableName, 
-			final String keyColumn,  final String valueColumn, final String timeColumn){
-		instance.setTableInformation(configConnection, tableName, keyColumn, valueColumn, timeColumn);
-	}
-	
-	/**
-	 * 로그백 경로설정
-	 * @param configPath
-	 */
-	public static void setLogbackConfigPath(String configPath){
-		setLogbackConfigPath(configPath, true);
-	}
-	
-	
-	
-	
-	/**
-	 * 설정정보 업데이트
-	 * DB테이블에 가저온졍보 이후시간이 업데이트된경우
-	 */
-	public static void update(){
-		instance.metaUpdate();
-	}
-	
-	
+
 	/**
 	 * 로그백 설정파일 경로설정
 	 * isErrorLog는 초기생성자에서 에러를 출력하지않기위한 로그
@@ -310,12 +264,12 @@ public class Config {
 	
 	private Map<String, String> configMap = new HashMap<String, String>();
 
-	private Object configLock = new Object();
+	private final Object configLock = new Object();
 	
 	
 	private List<ConfigObserver> observerList = new ArrayList<ConfigObserver>();
-	private Object observerLock = new Object();
-	private Object notifyLock = new Object();
+	private final Object observerLock = new Object();
+	private final Object notifyLock = new Object();
 	
 	
 	private Object tableInfoLock = new Object();
@@ -358,7 +312,7 @@ public class Config {
 	
 	/**
 	 * 설정파일 로드
-	 * isErrorLog는 초기생성자에서 에러를 출력하지않기위한 로그
+	 * isErrorLog : 초기생성자에서 에러를 출력하지않기위한 로그
 	 * @param isErrorLog
 	 */
 	private void loadConfigFile(boolean isErrorLog){		
@@ -370,7 +324,7 @@ public class Config {
 			Properties props = new Properties();
 			props.loadFromXML(configInputStream);
 			
-			List<ConfigInfo> infoList = new ArrayList<ConfigInfo>();
+			List<ConfigInfo> infoList = new ArrayList<>();
 			
 			Set<Object> keySet =props.keySet();
 			for(Object key : keySet){
@@ -525,129 +479,15 @@ public class Config {
 			}	
 		}
 	}
-	
-	//설정 테이블 정보
-	private long dateTime = 0;
-	private MetaData metaData = null;
-	
-	/**
-	 * 설정정보 업데이트
-	 * DB접속 이용
-	 */
-	public void metaUpdate(){
-		if(metaData == null){
-			return ;
-		}
-		try{
-			metaData.update();
-		}catch(Exception e){
-			ExceptionUtil.exception(e, logger, exceptionHandler);
-		}
-	}
-	
-	/**
-	 * 테이블 접속정보설정
-	 */
-	private void setTableInformation(final ConfigConnection configConnection, final String tableName, 
-			final String keyColumn,  final String valueColumn, final String timeColumn){
 
-	
-		synchronized (tableInfoLock) {
-			
-		
-			MetaDataManager metaDataManager  = MetaDataManager.getInstance();
-			if(metaData != null){
-				metaDataManager.removeMetaData(metaData);
-			}
-			this.dateTime = 0l;
-			metaData = new MetaData() {
-				
-				public void update() {
-					PreparedStatement pstmt = null;
-					ResultSet result = null;
-					try{
-						StringBuilder sqlBuilder = new StringBuilder();
-						
-						sqlBuilder.append("SELECT " + keyColumn + ", " + valueColumn ); 
-						
-						if(timeColumn != null){
-							sqlBuilder.append(", " + timeColumn ); 
-						}
-						sqlBuilder.append(" FROM " + tableName); 
-						if(dateTime > 0l){
-							sqlBuilder.append(" WHERE " + timeColumn + " > ?" );
-						}
-						
-						Connection conn = configConnection.getConnection();
-						pstmt = conn.prepareStatement(sqlBuilder.toString());
-						if(dateTime > 0l){
-							Timestamp timestamp = new Timestamp(dateTime);
-							pstmt.setTimestamp(1, timestamp);
-						}
-						List<ConfigInfo> infoList = new ArrayList<ConfigInfo>();
-						
-						result = pstmt.executeQuery();	
-						while(result.next()){
-							String key = result.getString(keyColumn);
-							String value = result.getString(valueColumn);
-							
-							if(key == null || value == null){
-								continue;
-							}
-							
-							ConfigInfo info = new ConfigInfo();
-							info.setKey(key);
-							info.setValue(value);
-							infoList.add(info);
-							
-							if(timeColumn != null){
-								Timestamp timeStamp = result.getTimestamp(timeColumn);
-								long time = timeStamp.getTime();
-								if(dateTime < time){
-									dateTime = time;
-								}
-							}
-							
-						}
-						setConfigValue(infoList);
-						infoList.clear();
-						infoList= null;
-					}catch(Exception e){
-						ExceptionUtil.exception(e, logger, exceptionHandler);
-					}finally {
-						if(pstmt != null){try{pstmt.close(); pstmt = null;}catch(Exception e){}}
-						if(result != null){try{result.close(); result = null;}catch(Exception e){}}
-					}
-				}
-				
-				public String getName() {
-					return Config.class.getName();
-				}
-				
-			};
-			
-			//설정정보는 항상 최우선으로 업데이트 되어야함
-			metaDataManager.addMetaData( 0, metaData);
-		}
-	}
 	
 	/**
 	 * 테스트소스
 	 * @param args
 	 */
 	public static void main(String [] args){
-
-
-
 		System.out.println(getConfig("seomse.jdbc.type"));
 
-//		setLogbackConfigPath("config/logback.xml");
-//		System.out.println(	Config.getConfig("application.database.user.name"));
-//		setConfig("test", "tt");
-//		System.out.println(	Config.getConfig("test"));
-//		System.out.println(	Config.class.getName());
-	
-		
 	}
 }
 
