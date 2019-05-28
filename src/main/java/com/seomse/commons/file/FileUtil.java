@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,11 +31,11 @@ import com.seomse.commons.utils.string.Check;
  *
  *  작 성 자 : macle
  *  작 성 일 : 2017.09
- *  버    전 : 1.1
- *  수정이력 :  2018.04
+ *  버    전 : 1.2
+ *  수정이력 :  2018.04, 2019.05.28(sortToLength 추가)
  *  기타사항 :
  * </pre>
- * @author Copyrights 2017, 2018 by ㈜섬세한사람들. All right reserved.
+ * @author Copyrights 2017 ~ 2019 by ㈜섬세한사람들. All right reserved.
  */
 
 public class FileUtil {
@@ -560,4 +562,34 @@ public class FileUtil {
 		}
 	}
 
+
+	private final static Comparator<File> FILE_SORT_ASC =  new Comparator<File>() {
+		@Override
+		public int compare(File f1, File f2 ) {
+			return Long.compare(f1.length(), f2.length());
+		}
+	};
+
+
+	private final static Comparator<File> FILE_SORT_DESC =  new Comparator<File>() {
+		@Override
+		public int compare(File f1, File f2 ) {
+			return Long.compare(f2.length(), f1.length());
+		}
+	};
+
+	/**
+	 * 파일을 length (byte 크기) 로 정렬
+	 * @param files 정렬대상 파일 목록
+	 * @param isAsc 오름차순여부
+	 */
+	public static void sortToLength(File [] files, boolean isAsc){
+		Comparator<File> sort;
+		if(isAsc){
+			sort = FILE_SORT_ASC;
+		}else{
+			sort = FILE_SORT_DESC;
+		}
+		Arrays.sort(files, sort);
+	}
 }
