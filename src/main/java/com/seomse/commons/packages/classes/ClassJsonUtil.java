@@ -23,7 +23,7 @@ import com.seomse.commons.utils.ExceptionUtil;
 
 /**
  * <pre>
- *  파 일 명 : PackageSearch.java
+ *  파 일 명 : ClassJsonUtil.java
  *  설    명 : 클래스와 스트링을 Json객체를이용하여 서로변환
  *
  *  작 성 자 : macle

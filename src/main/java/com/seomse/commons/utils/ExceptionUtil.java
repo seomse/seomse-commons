@@ -29,14 +29,14 @@ public class ExceptionUtil {
 	 */
 	public static  String getStackTrace(Exception e){
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-    	PrintStream pinrtStream = new PrintStream(out);
-    	e.printStackTrace(pinrtStream);  
+    	PrintStream printStream = new PrintStream(out);
+    	e.printStackTrace(printStream);
     	String exceptionStackTrace = out.toString();
 
 		//noinspection CatchMayIgnoreException
 		try{out.close();}catch(Exception e1){}
 		//noinspection CatchMayIgnoreException
-        try{pinrtStream.close();}catch(Exception e1){}
+        try{printStream.close();}catch(Exception e1){}
         
         return exceptionStackTrace;
 	}
