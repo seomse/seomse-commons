@@ -16,7 +16,8 @@ The dual licensing model is based on the principle of fair exchange or Quid pro 
 
 The dual licensing model offers you a choice of either a GPL license or a commercial license. 
 The commercial license will exempt you from all GPL obligations. 
-From licensing perspective, we have two different products depending on usage and distribution, though technically they have the same source code.
+From licensing perspective, we have two different products depending on usage and distribution, though technically they have 
+the same source code.
 
 Commercial Technical Support Available
 
