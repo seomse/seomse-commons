@@ -11,8 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.*;
 /**
  * <pre>
@@ -22,11 +20,11 @@ import java.util.*;
  *
  *  작 성 자 : macle
  *  작 성 일 : 2017.07
- *  버    전 : 1.1
- *  수정이력 : 2019.02
+ *  버    전 : 1.2
+ *  수정이력 : 2019.02, 2019.05.28
  *  기타사항 :
  * </pre>
- * @author Copyrights 2017, 2019 by ㈜섬세한사람들. All right reserved.
+ * @author Copyrights 2017 ~ 2019 by ㈜섬세한사람들. All right reserved.
  */
 public class Config {
 	private final static Logger logger = LoggerFactory.getLogger(Config.class);
@@ -69,8 +67,6 @@ public class Config {
 	public static void setConfig(String key, String value){
 		instance.setConfigValue(key, value);
 	}
-	
-	
 
 	/**
 	 * 설정값 얻기 Long형
@@ -102,10 +98,9 @@ public class Config {
 		
 		return defaultValue;
 	}
-	
-	
+
 	/**
-	 * 설정값 얻기 Integer형
+	 * 설정값 얻기 Integer 형
 	 * @param key 설정키
 	 * @return
 	 */
@@ -114,7 +109,7 @@ public class Config {
 	}
 	
 	/** 
-	 * 설정값 얻기 Integer형
+	 * 설정값 얻기 Integer 형
 	 * @param key 설정키
 	 * @param defaultValue 기본값
 	 * @return 
@@ -136,7 +131,7 @@ public class Config {
 	}
 	
 	/** 
-	 * 설정값 얻기 Double형
+	 * 설정값 얻기 Double 형
 	 * @param key 설정키
 	 * @return 
 	 */
@@ -145,7 +140,7 @@ public class Config {
 	}
 	
 	/** 
-	 * 설정값 얻기 Double형
+	 * 설정값 얻기 Double 형
 	 * @param key 설정키
 	 * @param defaultValue 기본값
 	 * @return 
@@ -168,7 +163,7 @@ public class Config {
 	
 	
 	/**
-	 * 설정값 얻기 Boolean형
+	 * 설정값 얻기 Boolean 형
 	 * @param key 설정키
 	 * @return
 	 */
@@ -177,7 +172,7 @@ public class Config {
 	}
 			
 	/**
-	 * 설정값 얻기 Boolean형
+	 * 설정값 얻기 Boolean 형
 	 * @param key 설정키
 	 * @param defaultValue 기본값
 	 * @return
@@ -200,6 +195,17 @@ public class Config {
 		}	
 	}
 
+
+    /**
+     * 설정 정보 데이터 추가
+     * synchronized 하지 않으므로 꼭 순서대로 동작하게 구현
+     * 설정 우선순위 동작하므로 시스템 초기에 등록할 것
+     * @param configData
+     */
+	public static void addConfigData(ConfigData configData){
+        instance.addConfig(configData);
+    }
+
 	/**
 	 * 옵져버 추가 ( 설정정보 업데이트 내역 )
 	 * @param configObserver
@@ -218,16 +224,6 @@ public class Config {
 		synchronized (instance.observerLock) {
 			instance.observerList.remove(configObserver);
 		}
-	}
-	
-	/**
-	 * 설정파일 경로설정
-	 * @param configPath
-	 */
-	public static void setConfigPath(String configPath){
-		instance.configPath = configPath;
-		
-		instance.loadConfigFile(true);
 	}
 
 	/**
@@ -255,18 +251,9 @@ public class Config {
 	    	}
 	    }
 	}
-	
-	
-	
-	private String configPath = ConfigSet.CONFIG_PATH;
-	private String logbackPath = ConfigSet.LOG_BACK_PATH;
 
-	
-	private Map<String, String> configMap = new HashMap<>();
 
-	private final Object configLock = new Object();
-	
-	
+
 	private List<ConfigObserver> observerList = new ArrayList<>();
 	private final Object observerLock = new Object();
 	private final Object notifyLock = new Object();
@@ -275,98 +262,67 @@ public class Config {
 	private Object tableInfoLock = new Object();
 	
 	private ExceptionHandler exceptionHandler;
-	
+
+	private ConfigData [] configDataArray;
+
+
+	private final Comparator<ConfigData> sort =  new Comparator<ConfigData>() {
+        @Override
+        public int compare(ConfigData c1, ConfigData c2 ) {
+
+            return Integer.compare(c1.getPriority(), c2.getPriority());
+        }
+    };
+
 	/**
 	 * 생성자
 	 * 싱글턴글래스
 	 */
 	private Config(){
 
-		File logbackFile = new File(logbackPath);
+        String logbackPath = ConfigSet.LOG_BACK_PATH;
+        File logbackFile = new File(logbackPath);
 		if(logbackFile.exists()){
 			//기본경로에 로그백 설정파일이존재할경우 호출
 			setLogbackConfigPath(logbackPath, false);
 		}
-		
-		File file = new File(configPath);
-		
-		if(file.exists()){
-			//기본경로에 파일이존재할경우 호출
-			//초기설정파일에는 에러로그를 쓰지않음 (설정파일이 없어도 허용)
-			loadConfigFile(false);
-		}
-	}
 
-	/**
-	 * 설정파일 로드
-	 */
-	public void loadConfigFile(){		
-		loadConfigFile(true);
-	}
-	
-	/**
-	 * 설정파일 로드
-	 * isErrorLog : 초기생성자에서 에러를 출력하지않기위한 로그
-	 * @param isErrorLog
-	 */
-	private void loadConfigFile(boolean isErrorLog){		
-		InputStream configInputStream = null;
-		try{
-			//설정업데이트 정보 옵져버 전달용
-			
-			configInputStream = new FileInputStream(new File(configPath));
-			Properties props = new Properties();
-			props.loadFromXML(configInputStream);
-			
-			List<ConfigInfo> infoList = new ArrayList<>();
-			
-			Set<Object> keySet =props.keySet();
-			for(Object key : keySet){
-				String keyValue  = (String) key;
-				
-				String value = props.getProperty(keyValue);
-				if(value == null){
-					continue;
-				}
-				ConfigInfo info = new ConfigInfo();
-				info.setKey(keyValue);
-				info.setValue(value);
-				infoList.add(info);
+		File file = new File( ConfigSet.CONFIG_PATH);
+        XmlFileConfigData fileConfigData ;
+        try {
+            fileConfigData =  new XmlFileConfigData(file);
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }
 
-			}
-			setConfigValue(infoList);
-			infoList.clear();
-	
-			
-		}catch(Exception e){
-			//초기설정에는 에러로그를 호출하지않음
-			if(isErrorLog){
-				ExceptionUtil.exception(e, logger, exceptionHandler);
+        if(ConfigSet.IS_SYSTEM_PROPERTIES_USE){
+            configDataArray = new ConfigData[2];
+            configDataArray[0] = fileConfigData;
+            configDataArray[1] = new SystemPropertiesData();
+            Arrays.sort(configDataArray, sort);
+        }else{
+            configDataArray = new ConfigData[1];
+            configDataArray[0] = fileConfigData;
+        }
+    }
 
-			}
-		}
-		
-		
-		try{
-			if(configInputStream != null){
-				configInputStream.close();
-			}
-		}catch(Exception e){
-			ExceptionUtil.exception(e,logger, instance.exceptionHandler);
-		}
-	}
-	
-	
+
+    private void addConfig(ConfigData configData){
+       ConfigData [] newDataArray = new ConfigData[configDataArray.length + 1];
+       System.arraycopy(configDataArray, 0, newDataArray, 0, configDataArray.length);
+       newDataArray[newDataArray.length-1] = configData;
+       Arrays.sort(newDataArray, sort);
+       this.configDataArray = newDataArray;
+    }
+
+
 	/**
 	 * 설정값 얻기
 	 * @param key
 	 * @return
 	 */
 	private String getConfigValue(String key){
-		synchronized (configLock) {
-			//락구간최소화 신경쓰기 
-			return configMap.get(key);
-		}
+	    return getConfigValue(key , null);
 	}
 	
 
@@ -377,80 +333,72 @@ public class Config {
 	 * @return
 	 */
 	private String getConfigValue(String key, String defaultValue){
-		synchronized (configLock) {
-			String value =configMap.get(key);
-			if(value == null){
-				return defaultValue;
-			}
-			return value;
-		}
+        ConfigData [] configDataArray = this.configDataArray;
+        //순서정보를 명확히 하기위해 사용
+        String value = null;
+        //noinspection ForLoopReplaceableByForEach
+        for (int i = 0; i <configDataArray.length ; i++) {
+            value = configDataArray[i].getConfig(key);
+
+            if(value != null){
+                break;
+            }
+        }
+	    if(value == null){
+	        return defaultValue;
+	    }
+	    return value;
 	}
 	/**
 	 * 설정값 세팅
-	 * @param key
-	 * @param value
+     * 최우선순위 설정값을 변경함
+	 * @param key 설정 키
+	 * @param value 설정 값
 	 */
 	private void setConfigValue(String key, String value){
-		if(value == null){
-			return ;
-		}
-		boolean isUpdate = false;
-		synchronized (configLock) {
-			String lastValue = configMap.get(key);
-		
-			if(lastValue == null){
-				isUpdate = true;
-			}else{
-				if(!lastValue.equals(value)){
-					isUpdate = true;
-				}
-			}
-			
-			if(isUpdate){
-				configMap.put(key, value);
-			}
-		}
-		if(isUpdate){
-			Map<String, String> updateConfigMap = new HashMap<>();
-			updateConfigMap.put(key, value);
-			notifyConfig(updateConfigMap);
-		}
-	
+        configDataArray[0].setConfig(key, value);
+	}
 
-	}
-	
-	private void setConfigValue(List<ConfigInfo> infoList){
-		
-		if(infoList == null || infoList.size() == 0){
-			return ;
-		}
-		
-		Map<String, String> updateConfigMap = new HashMap<>();
-		synchronized (configLock) {
-			//설정정보 업데이트구간
-			for(ConfigInfo info : infoList){
-				boolean isUpdate = false;
-				
-				String lastValue = configMap.get(info.getKey());
-				if(lastValue == null){
-					isUpdate = true;
-				}else{
-				
-					if(!lastValue.equals(info.getValue())){
-						isUpdate = true;
-					}
-				}
-				
-				if(isUpdate){
-					configMap.put(info.getKey(), info.getValue());
-					updateConfigMap.put(info.getKey(), info.getValue());
-				}
-			}
-			
-		}
-		notifyConfig(updateConfigMap);
-		
-	}
+	static void notify(ConfigData configData, Map<String, String> updateConfigMap){
+        if(updateConfigMap == null || updateConfigMap.size() ==0){
+            return;
+        }
+
+        ConfigData firstData = instance.configDataArray[0];
+
+	    if(firstData == configData) {
+	        //최우선순위 설정이 변경된 경우
+            instance.notifyConfig(updateConfigMap);
+        }else{
+	        //최 우선순위에 없는 설정일  경우
+            boolean isMapChange = false;
+
+            Set<String> keySet = updateConfigMap.keySet();
+
+            for(String key : keySet){
+                String value = firstData.getConfig(key);
+                if(value != null){
+                    isMapChange = true;
+                }
+            }
+
+            if(isMapChange){
+                //최우선 순위에 영향이 가지 않게 전송
+                Map<String, String> changeMap = new HashMap<>();
+                for(String key : keySet){
+                    String value = firstData.getConfig(key);
+                    if(value != null){
+                        continue;
+                    }
+                    changeMap.put(key, updateConfigMap.get(key));
+                }
+                instance.notifyConfig(changeMap);
+            }else{
+                instance.notifyConfig(updateConfigMap);
+            }
+        }
+    }
+
 	/**
 	 * 설정변경정보 알림
 	 * @param updateConfigMap
@@ -462,7 +410,7 @@ public class Config {
 		
 		Set<String> keySet = updateConfigMap.keySet();
 		for(String key : keySet){
-			logger.trace("Confg update key: " + key + " value: " + updateConfigMap.get(key));
+			logger.trace("Config update key: " + key + " value: " + updateConfigMap.get(key));
 		}
 		ConfigObserver [] configObserverArray ;
 		synchronized (observerLock) {
@@ -482,8 +430,10 @@ public class Config {
 	 * @param args
 	 */
 	public static void main(String [] args){
-		System.out.println(getConfig("seomse.jdbc.type"));
+	    setConfig("application.jdbc.type","test");
+		System.out.println(getConfig("application.jdbc.type"));
 
+        System.out.println(getConfig("os.name"));
 	}
 }
 

@@ -7,27 +7,24 @@ package com.seomse.commons.config;
  *
  *
  *  작 성 자 : macle
- *  작 성 일 : 2017.07
+ *  작 성 일 : 2019.05.28
  *  버    전 : 1.0
  *  수정이력 :
  *  기타사항 :
  * </pre>
- * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
+ * @author Copyrights 2019 by ㈜섬세한사람들. All right reserved.
  */
 public class ConfigInfo {
-	private String key;
-	private String value ;
-	public String getKey() {
-		return key;
-	}
-	public void setKey(String key) {
+	String key;
+	String value ;
+
+	/**
+	 * 생성자
+	 * @param key 설정 키
+	 * @param value 설정 값
+	 */
+	public ConfigInfo(String key, String value){
 		this.key = key;
-	}
-	public String getValue() {
-		return value;
-	}
-	public void setValue(String value) {
 		this.value = value;
-	} 
-	
+	}
 }
