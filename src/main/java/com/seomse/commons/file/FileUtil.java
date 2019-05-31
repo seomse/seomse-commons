@@ -471,7 +471,7 @@ public class FileUtil {
 	
 	/**
 	 * 디렉토리가 비어있는지 여부
-	 * @return isEmptyDir
+	 * @return isEmptyDir 디렉토리가 비어있는지 여부
 	 */
 	@SuppressWarnings("unused")
 	public static boolean isEmptyDir(String dirPath) {
@@ -484,7 +484,7 @@ public class FileUtil {
 	/**
 	 * 디렉토리가 비어있는지 여부
 	 * @param dirFile dirFile
-	 * @return isEmptyDir
+	 * @return isEmptyDir 디렉토리가 비어있는지 여부
 	 */
 	@SuppressWarnings("WeakerAccess")
 	public static boolean isEmptyDir(File dirFile) {
@@ -497,7 +497,30 @@ public class FileUtil {
 		return dirFile.list() != null && dirFile.list().length == 0;
 
 	}
-	
+
+	/**
+	 * 이렉토리를 비어있게 만들기
+	 * @param dirPath 디렉토리 경로
+	 * @return 성공실패 여부
+	 */
+	public static boolean emptyDir(String dirPath){
+		return emptyDir(new File(dirPath));
+	}
+
+	/**
+	 * 이렉토리를 비어있게 만들기
+	 * @param dirFile 디렉토리 파일
+	 * @return 성공실패 여부
+	 */
+	public static boolean emptyDir(File dirFile){
+		File [] files = dirFile.listFiles();
+		for(File file : files){
+			delete(file);
+		}
+
+		return isEmptyDir(dirFile);
+	}
+
 	/**
 	 * 폴더 및 모든파일 삭제
 	 * @param path 경로
@@ -592,4 +615,5 @@ public class FileUtil {
 		}
 		Arrays.sort(files, sort);
 	}
+
 }
