@@ -5,6 +5,10 @@
 
 package com.seomse.commons.communication;
 
+import com.seomse.commons.utils.ExceptionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
@@ -23,6 +27,8 @@ import java.net.Socket;
  * @author Copyrights 2018 by ㈜섬세한사람들. All right reserved.
  */
 public class StringPush {
+	private static final Logger logger = LoggerFactory.getLogger(StringPush.class);
+
 	private String ipAddress;
 	private int port;
 	
@@ -64,6 +70,7 @@ public class StringPush {
 				socket = new Socket(ipAddress, port);	
 				send =  new OutputStreamWriter(socket.getOutputStream(), CommunicationDefault.CHAR_SET);
 			}catch(Exception e){
+				logger.error(ExceptionUtil.getStackTrace(e));
 				return false;
 			}		
 		}else{
@@ -73,6 +80,7 @@ public class StringPush {
 				}
 				send =  new OutputStreamWriter(socket.getOutputStream(), CommunicationDefault.CHAR_SET);
 			}catch(Exception e){
+				logger.error(ExceptionUtil.getStackTrace(e));
 				return false;
 			}
 		}
@@ -113,6 +121,7 @@ public class StringPush {
 		
 			return true;
 		}catch(Exception e){
+			logger.error(ExceptionUtil.getStackTrace(e));
 			return false;
 		}
 	}
