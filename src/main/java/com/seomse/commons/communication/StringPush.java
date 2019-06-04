@@ -5,6 +5,7 @@
 
 package com.seomse.commons.communication;
 
+import com.seomse.commons.handler.ExceptionHandler;
 import com.seomse.commons.utils.ExceptionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,9 @@ public class StringPush {
 	private int port;
 	
 	private Socket socket;			
-	private OutputStreamWriter send;				
+	private OutputStreamWriter send;
+
+	private ExceptionHandler exceptionHandler = null;
 	/**
 	 * 생성자
 	 * @param socket
@@ -56,9 +59,15 @@ public class StringPush {
 		this.ipAddress = ipAddress;
 		this.port = port;
 	}
-	
-	
-	
+
+	/**
+	 * 예외 핸들러 설정
+	 * @param exceptionHandler
+	 */
+	public void setExceptionHandler(ExceptionHandler exceptionHandler) {
+		this.exceptionHandler = exceptionHandler;
+	}
+
 	/**
 	 * 서버와 연결한다.
 	 * 문자열 전송이 완료되면 반드시 disconnet()메소드를 호출해야 한다.
@@ -70,21 +79,11 @@ public class StringPush {
 				socket = new Socket(ipAddress, port);	
 				send =  new OutputStreamWriter(socket.getOutputStream(), CommunicationDefault.CHAR_SET);
 			}catch(Exception e){
-				logger.error(ExceptionUtil.getStackTrace(e));
+				ExceptionUtil.exception(e,logger, exceptionHandler);
 				return false;
 			}		
-		}else{
-			try{
-				if(send != null || !socket.isClosed()){
-					send.close();	
-				}
-				send =  new OutputStreamWriter(socket.getOutputStream(), CommunicationDefault.CHAR_SET);
-			}catch(Exception e){
-				logger.error(ExceptionUtil.getStackTrace(e));
-				return false;
-			}
 		}
-		
+
 		return true;
 
 	}
@@ -95,17 +94,21 @@ public class StringPush {
 	public void disConnect(){
 		
 		try{
-			if(send != null){
+			if(send != null ){
 				send.close();	
 			}
-		}catch(Exception e){}
+		}catch(Exception e){
+			ExceptionUtil.exception(e,logger, exceptionHandler);
+		}
 		send = null;
 		try{
-			if(socket != null ){
+			if(socket != null && !socket.isClosed()){
 				socket.close();		
 			
 			}
-		}catch(Exception e){}
+		}catch(Exception e){
+			ExceptionUtil.exception(e,logger, exceptionHandler);
+		}
 		socket = null;
 	}
 	
@@ -121,7 +124,7 @@ public class StringPush {
 		
 			return true;
 		}catch(Exception e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			ExceptionUtil.exception(e,logger, exceptionHandler);
 			return false;
 		}
 	}
