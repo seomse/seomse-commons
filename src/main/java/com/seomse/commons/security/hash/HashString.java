@@ -22,8 +22,7 @@ public class HashString {
 	 * hash값을 문자열로 변환한 결과얻기 ( 관련패키지 고유결과)
 	 * @param hash "MD5","SHA1","SHA-256","SHA-384","SHA-512"
 	 * @param value
-	 * @return
-	 * @throws NoSuchAlgorithmException 
+	 * @return  change hash
 	 */
 	public static String getResult(String hash, String value) throws NoSuchAlgorithmException{
 		return  getResult(java.security.MessageDigest.getInstance(hash), value);
@@ -35,7 +34,7 @@ public class HashString {
 	 * hash값을 문자열로 변환한 결과얻기  ( 관련패키지 고유결과)
 	 * @param messageDigest 해쉬알고리즘 종류 
 	 * @param value 문자열
-	 * @return
+	 * @return change hash
 	 */
 	public static String getResult(java.security.MessageDigest messageDigest, String value){
         String eip;
@@ -48,23 +47,24 @@ public class HashString {
         }else{
         	addc = ' ';
         }
-        String temp = "";
-        for (int i = 0; i < length; i++) {
+        StringBuilder temp = new StringBuilder();
+		//noinspection ForLoopReplaceableByForEach
+		for (int i = 0; i < length; i++) {
             eip = "" + Integer.toHexString((int) bip[i] & 0x000000ff);
             if (eip.length() < 2)
                 eip = "0" + eip;
-            temp = temp + addc + eip;
+            temp.append(addc).append(eip);
         }
-        temp = temp + value;
+        temp.append(value);
         StringBuilder resultBuilder = new StringBuilder();
-        bip=messageDigest.digest(temp.getBytes());
+        bip=messageDigest.digest(temp.toString().getBytes());
         for (int i = 0; i <length; i++) {
         	int resultchar = ((int) bip[i] & 0x000000ff);
            	resultchar=resultchar%127+33;
            	if(resultchar>126){
-        	   if(resultchar>=127 && resultchar<=135){
+        	   if(resultchar <= 135){
         		   resultchar= resultchar - 19;
-        	   }else if(resultchar>=136 && resultchar<=148){
+        	   }else if(resultchar <= 148){
         		   resultchar= resultchar - 36;
         	   }else{
         		   resultchar= resultchar- 86;
