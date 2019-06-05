@@ -514,6 +514,10 @@ public class FileUtil {
 	 */
 	public static boolean emptyDir(File dirFile){
 		File [] files = dirFile.listFiles();
+		if(files == null){
+			return true;
+		}
+
 		for(File file : files){
 			delete(file);
 		}

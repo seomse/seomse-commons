@@ -5,7 +5,6 @@ package com.seomse.commons.communication;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 /**
  * <pre>
@@ -23,44 +22,39 @@ import java.net.Socket;
 public class StringReceive {
 	private Socket socket ;
 	private InputStreamReader reader ;
-	private char [] cbuf;
+	private char [] charBuffer;
 	
 	
 	
 	/**
 	 * 생성자
-	 * @throws IOException 
-	 * @throws UnsupportedEncodingException 
 	 */
-	public StringReceive(Socket socket, int bufSize) throws UnsupportedEncodingException, IOException{
+	public StringReceive(Socket socket, int bufSize) throws IOException{
 		this.socket =socket;
 		reader  = new InputStreamReader(socket.getInputStream(), CommunicationDefault.CHAR_SET);
-		cbuf = new char[bufSize];
+		charBuffer = new char[bufSize];
 	}
 	
 	/**
 	 * 메시지얻기
-	 * @return
-	 * @throws IOException
 	 */
 	public String receive() throws IOException{
 	
-		int i = reader.read(cbuf);
+		int i = reader.read(charBuffer);
 		if( i == -1){
 			return null;
 		}
 		
 		
-		return new String(cbuf,0,i);
-		
-//		return null;
+		return new String(charBuffer,0,i);
 	}
 	
 	/**
 	 * 연결 해제
 	 */
 	public void disConnect(){
-		
+
+		//noinspection CatchMayIgnoreException
 		try{
 			if(reader != null){
 				reader.close();	
@@ -68,6 +62,7 @@ public class StringReceive {
 		}catch(Exception e){}
 
 		reader = null;
+		//noinspection CatchMayIgnoreException
 		try{
 			if(socket != null ){
 				socket.close();		

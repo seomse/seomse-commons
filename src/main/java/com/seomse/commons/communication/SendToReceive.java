@@ -2,20 +2,18 @@
 
 package com.seomse.commons.communication;
 
+import com.seomse.commons.handler.ExceptionHandler;
+import com.seomse.commons.utils.ExceptionUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.nio.charset.StandardCharsets;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.seomse.commons.handler.ExceptionHandler;
-import com.seomse.commons.utils.ExceptionUtil;
 /**
  * <pre>
  *  파 일 명 : SendToReceive.java
@@ -52,11 +50,9 @@ public class SendToReceive {
 	
 	/**
 	 * 생성자
-	 * @param socket
-	 * @throws UnsupportedEncodingException
-	 * @throws IOException
+	 * @param socket 접속정보
 	 */
-	public SendToReceive(Socket socket) throws UnsupportedEncodingException, IOException{
+	public SendToReceive(Socket socket) throws IOException{
 	
 		readMessageFlag = true;
 		this.socket = socket;
@@ -71,7 +67,7 @@ public class SendToReceive {
 
 	/**
 	 * 예외 핸들링설정
-	 * @param exceptionHandler
+	 * @param exceptionHandler 예외 핸들러
 	 */
 	public void setExceptionHandler(ExceptionHandler exceptionHandler) {
 		this.exceptionHandler = exceptionHandler;
@@ -81,7 +77,7 @@ public class SendToReceive {
 
 	/**
 	 * 연결에러로그 설정
-	 * @param isConnectErrorLog
+	 * @param isConnectErrorLog 에러로그 츌력 여부
 	 */
 	public void setConnectErrorLog(boolean isConnectErrorLog){
 		this.isConnectErrorLog = isConnectErrorLog;
@@ -90,7 +86,7 @@ public class SendToReceive {
 	
 	/**
 	 * 연결제한시간을 돌려준다.
-	 * @return
+	 * @return 연결제한시간
 	 */
 	public Integer getConnectTimeOut() {
 		return connectTimeOut;
@@ -99,14 +95,16 @@ public class SendToReceive {
 
 	/**
 	 * 연결 제한시간을 설정한다.
-	 * @param connectTimeOut
+	 * @param connectTimeOut 연결제한시간
 	 */
 	public void setConnectTimeOut(Integer connectTimeOut) {
 		this.connectTimeOut = connectTimeOut;
 	}
 
 
-
+	/**
+	 * 생성자
+	 */
 	public SendToReceive() {
 		
 	}
@@ -153,7 +151,7 @@ public class SendToReceive {
 	}
 	/**
 	 * 연결중인지 체크한다.
-	 * @return
+	 * @return 연결여부
 	 */
 	public boolean isConnect(){
 		return socket != null && !socket.isClosed();
@@ -161,7 +159,7 @@ public class SendToReceive {
 	
 	/**
 	 * 메시지를 돌려받는다
-	 * @return
+	 * @return 메시지
 	 */
 	public String receive(){
 		int readData ;
@@ -208,9 +206,8 @@ public class SendToReceive {
 	
 	/**
 	 * 메시지전달
-	 * null이나 빈값이 들어오면 전달하지 않는다.
-	 * @param message 메시지를 전달한 
-	 * @throws IOException 
+	 * null 이나 빈값이 들어오면 전달하지 않는다.
+	 * @param message 메시지를 전달한
 	 */
 	public boolean send(String message){
 		if(message == null || message.equals(""))
@@ -248,7 +245,7 @@ public class SendToReceive {
 	
 	/**
 	 * socket 얻기
-	 * @return
+	 * @return socket
 	 */
 	public Socket getSocket() {
 		return socket;

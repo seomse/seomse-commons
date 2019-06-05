@@ -37,9 +37,10 @@ public class DefaultClassLoader extends ClassLoader {
         InputStream is = getClass().getClassLoader().getResourceAsStream(className.replace(".", "/")+".class");
         ByteArrayOutputStream byteSt = new ByteArrayOutputStream();
         //write into byte
-        int len =0;
+        int len;
         try {
-                     while((len=is.read())!=-1){
+            assert is != null;
+            while((len=is.read())!=-1){
                            byteSt.write(len);
                       }
                } catch (IOException e) {

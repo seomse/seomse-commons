@@ -22,15 +22,11 @@ public class TimeUtil {
 	
 	//한시간 밀리세컨드 값
 	private static int hourTime = 3600000;
-	
-	//하루 밀리세컨드 값
-	private static int dayTime = 86400000;
-	
-	
+
 	/**
 	 * 초단위 값을 가져온다.
 	 * @param milleSecond 천분의 1초 
-	 * @return
+	 * @return second
 	 */
 	public static double getSecond(long milleSecond){
 		return (double)milleSecond/(double)1000;
@@ -49,7 +45,7 @@ public class TimeUtil {
 	/**
 	 * 시간단위 값으로 변환해서 가져온다.
 	 * @param milleSecond 천분의 1초
-	 * @return
+	 * @return hour
 	 */
 	public static double getHour(long milleSecond){
 		return (double)milleSecond/(double)hourTime;
@@ -58,16 +54,18 @@ public class TimeUtil {
 	/**
 	 * 일,시간,분,초, 나머지 밀리세컨드 형태의 문자열로 가져온다.
 	 * @param milleSecond 천분의 1초
-	 * @return
+	 * @return TimeValue
 	 */
 	public static String getTimeValue(long milleSecond){
 		
 			
 		StringBuilder timeValueBuilder = new StringBuilder();
+
+		//하루 밀리세컨드 값
+		int dayTime = 86400000;
+		long day = milleSecond/ dayTime;
 		
-		long day = milleSecond/dayTime;
-		
-		milleSecond = milleSecond - dayTime*day;
+		milleSecond = milleSecond - dayTime *day;
 		
 		
 		int hour = (int)milleSecond/hourTime;
@@ -85,20 +83,20 @@ public class TimeUtil {
 		timeValueBuilder.append("day");
 		
 //		if(hour>9){
-			timeValueBuilder.append("  " + hour);
+			timeValueBuilder.append("  ").append(hour);
 //		}else{
 //			timeValueBuilder.append("0"+hour);	
 //		}
 		timeValueBuilder.append("Hour");
 //		if(minute>9){
-			timeValueBuilder.append("  " + minute);
+			timeValueBuilder.append("  ").append(minute);
 //		}else{
 //			timeValueBuilder.append("0"+minute);	
 //		}
 		timeValueBuilder.append("Minute");
 	
 //		if(second>9){
-			timeValueBuilder.append("  " + second);
+			timeValueBuilder.append("  ").append(second);
 //		}else{
 //			timeValueBuilder.append("0"+second);	
 //		}

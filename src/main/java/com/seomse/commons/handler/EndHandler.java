@@ -18,7 +18,7 @@ public interface EndHandler {
 	
 	/**
 	 * 종료
-	 * @param obj
+	 * @param obj Object
 	 */
 	void end(Object obj); 
 }

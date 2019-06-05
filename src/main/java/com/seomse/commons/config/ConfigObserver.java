@@ -13,7 +13,7 @@ import java.util.Map;
  *  수정이력 :
  *  기타사항 :
  * </pre>
- * @atuhor Copyrights 2017 by ㈜섬세한사람들. All right reserved.
+ * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
  */
 
 public interface ConfigObserver {

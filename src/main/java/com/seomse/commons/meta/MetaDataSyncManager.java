@@ -41,7 +41,7 @@ public class MetaDataSyncManager {
 
     /**
      * 인스턴스 얻기
-     * @return
+     * @return Singleton instance
      */
     public static MetaDataSyncManager getInstance(){
         return Singleton.instance;
@@ -64,6 +64,7 @@ public class MetaDataSyncManager {
             List<MetaDataSync> metaDataSyncList = new ArrayList<>();
             for (Class<?> cl : ref.getSubTypesOf(MetaDataSync.class)) {
                 try{
+                    //noinspection deprecation
                     MetaDataSync sync = (MetaDataSync)cl.newInstance();
                     metaDataSyncList.add(sync);
 
@@ -137,7 +138,7 @@ public class MetaDataSyncManager {
 
     /**
      * 예외 핸들러 설정
-     * @param exceptionHandler
+     * @param exceptionHandler ExceptionHandler
      */
     public void setExceptionHandler(ExceptionHandler exceptionHandler) {
         this.exceptionHandler = exceptionHandler;

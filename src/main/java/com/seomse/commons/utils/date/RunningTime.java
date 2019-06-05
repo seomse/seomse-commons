@@ -57,7 +57,7 @@ public class RunningTime {
 	}
 	/**
 	 * 작업 종료 타임을 얻어온다
-	 * @return
+	 * @return LastTime
 	 */
 	public long getLastTime() {
 		if(lastTime == -1){

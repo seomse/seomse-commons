@@ -27,7 +27,7 @@ public class XmlFileConfigData extends ConfigData{
     /**
      * 생성자
      * @param file 설정파일
-     * @throws IOException
+     * @throws IOException exception
      */
     XmlFileConfigData(File file) throws IOException {
         props = new Properties();

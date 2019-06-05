@@ -17,7 +17,7 @@ package com.seomse.commons.handler;
 public interface ExceptionHandler {
 	/**
 	 * 예외
-	 * @param e
+	 * @param e Exception
 	 */
 	void exception(Exception e);
 }
