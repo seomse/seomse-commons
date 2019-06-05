@@ -18,9 +18,9 @@ public class CodeUtil {
 	
 	/**
 	 * 자리수만큼 00문자열을 생성해서 돌려줌
-	 * @param codeNum
-	 * @param length
-	 * @return
+	 * @param codeNum codeNum
+	 * @param length length
+	 * @return CodeNumberValue
 	 */
 	public static String getCodeNumberValue(int codeNum, int length){
 		

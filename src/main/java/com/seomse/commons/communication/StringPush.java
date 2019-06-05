@@ -30,7 +30,7 @@ import java.net.Socket;
 public class StringPush {
 	private static final Logger logger = LoggerFactory.getLogger(StringPush.class);
 
-	private String ipAddress;
+	private String hostAddress;
 	private int port;
 	
 	private Socket socket;			
@@ -39,30 +39,29 @@ public class StringPush {
 	private ExceptionHandler exceptionHandler = null;
 	/**
 	 * 생성자
-	 * @param socket
-	 * @throws IOException
+	 * @param socket socket
 	 */
 	public StringPush(Socket socket) throws IOException{
 		this.socket = socket; 
 		send = new OutputStreamWriter(socket.getOutputStream(), CommunicationDefault.CHAR_SET);
-		this.ipAddress = socket.getInetAddress().getHostAddress();
+		this.hostAddress = socket.getInetAddress().getHostAddress();
 		this.port = socket.getPort();
 		
 	}
 	
 	/**
 	 * 생성자
-	 * @param ipAddress
-	 * @param port
+	 * @param hostAddress hostAddress
+	 * @param port port
 	 */
-	public StringPush(String ipAddress, int port){
-		this.ipAddress = ipAddress;
+	public StringPush(String hostAddress, int port){
+		this.hostAddress = hostAddress;
 		this.port = port;
 	}
 
 	/**
 	 * 예외 핸들러 설정
-	 * @param exceptionHandler
+	 * @param exceptionHandler exceptionHandler
 	 */
 	public void setExceptionHandler(ExceptionHandler exceptionHandler) {
 		this.exceptionHandler = exceptionHandler;
@@ -70,13 +69,13 @@ public class StringPush {
 
 	/**
 	 * 서버와 연결한다.
-	 * 문자열 전송이 완료되면 반드시 disconnet()메소드를 호출해야 한다.
+	 * 문자열 전송이 완료되면 반드시 disconnet() 메소드를 호출해야 한다.
 	 * @return 연결 성공실패 여부
 	 */
 	public boolean connect(){
 		if(socket == null || socket.isClosed()){
 			try{
-				socket = new Socket(ipAddress, port);	
+				socket = new Socket(hostAddress, port);
 				send =  new OutputStreamWriter(socket.getOutputStream(), CommunicationDefault.CHAR_SET);
 			}catch(Exception e){
 				ExceptionUtil.exception(e,logger, exceptionHandler);
@@ -114,7 +113,7 @@ public class StringPush {
 	
 	/**
 	 * 서버에 문자열 형태의 메시지를 전송한다.
-	 * @param msg
+	 * @param msg sendMessage
 	 * @return 메시지 전송 성공실패여부
 	 */
 	public boolean sendMessage(String msg){	

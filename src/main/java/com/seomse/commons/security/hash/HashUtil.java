@@ -23,7 +23,7 @@ public class HashUtil {
 	/***
 	 * 특정해쉬알고리즘의 값 얻기
 	 * @param hash "MD5","SHA1","SHA-256","SHA-384","SHA-512"
-	 * @param value
+	 * @param value value
 	 * @return hash
 	 */
 	public static String getHash(String hash, String value) throws NoSuchAlgorithmException{
@@ -32,8 +32,8 @@ public class HashUtil {
 	
 	/**
 	 * 특정해쉬알고리즘의 값 얻기
-	 * @param messageDigest
-	 * @param value
+	 * @param messageDigest 알고리즘
+	 * @param value value
 	 * @return hash
 	 */
 	public static String getHash(java.security.MessageDigest messageDigest, String value){

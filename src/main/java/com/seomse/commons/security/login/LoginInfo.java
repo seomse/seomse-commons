@@ -28,7 +28,7 @@ public class LoginInfo {
 	
 	/**
 	 * id 얻기
-	 * @return
+	 * @return id
 	 */
 	public String getId(){
 		return id;
@@ -36,7 +36,7 @@ public class LoginInfo {
 	
 	/**
 	 * password 얻기
-	 * @return
+	 * @return password
 	 */
 	public String getPassword(){
 		return password;

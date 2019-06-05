@@ -21,7 +21,7 @@ public class HashString {
 	/***
 	 * hash값을 문자열로 변환한 결과얻기 ( 관련패키지 고유결과)
 	 * @param hash "MD5","SHA1","SHA-256","SHA-384","SHA-512"
-	 * @param value
+	 * @param value 문자열
 	 * @return  change hash
 	 */
 	public static String getResult(String hash, String value) throws NoSuchAlgorithmException{

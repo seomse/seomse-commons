@@ -29,7 +29,7 @@ public class LoginSecurity {
 	 * 로그인정보 암호화
 	 * @param id 아이디
 	 * @param password 패스워드
-	 * @return
+	 * @return encryption info
 	 */
 	public static LoginInfo encryption(String id, String password){
 		
@@ -56,7 +56,7 @@ public class LoginSecurity {
 	 * 로그인정보 복호화
 	 * @param encryptionId 암호화된 아이디
 	 * @param encryptionPassword 암호화된 패스워드
-	 * @return
+	 * @return decryption info
 	 */
 	public static LoginInfo decryption(String encryptionId, String encryptionPassword){
 	

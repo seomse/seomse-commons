@@ -43,9 +43,9 @@ public class ExceptionUtil {
 	
 	/**
 	 * 기본 예외처리
-	 * @param e
-	 * @param logger
-	 * @param exceptionHandler
+	 * @param e exception
+	 * @param logger logger
+	 * @param exceptionHandler exceptionHandler
 	 */
 	public static  void exception(Exception e, Logger logger, ExceptionHandler exceptionHandler){
 		if(exceptionHandler == null) {
