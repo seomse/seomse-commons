@@ -22,7 +22,7 @@ public class SystemPropertiesData extends ConfigData{
 
     @Override
     public String getConfig(String key) {
-        return System.getProperty(key);
+        return System.getProperties().getProperty(key);
     }
 
     @Override

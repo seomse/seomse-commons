@@ -52,7 +52,7 @@ public class FileUtil {
 	public static  List<String> getFileContentsList(File file, String charSet){
 		List<String> dataList = new ArrayList<>();
 		
-		BufferedReader br;
+		BufferedReader br = null;
 		try{
 			 String line;
 	         br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet));
@@ -61,7 +61,13 @@ public class FileUtil {
 	          }
 	          br.close();	          
 	     
-		}catch(Exception e){logger.error(ExceptionUtil.getStackTrace(e));}
+		}catch(Exception e){
+			logger.error(ExceptionUtil.getStackTrace(e));
+		}finally {
+			//noinspection CatchMayIgnoreException
+			try{if(br != null)br.close();}catch(Exception e){}
+		}
+
 		
 		return dataList;
 	}
@@ -90,7 +96,8 @@ public class FileUtil {
 		}catch(Exception e){
 			logger.error(ExceptionUtil.getStackTrace(e));
 		}finally{
-			try{if(br != null)br.close();}catch(Exception e){logger.error(ExceptionUtil.getStackTrace(e));}
+			//noinspection CatchMayIgnoreException
+			try{if(br != null)br.close();}catch(Exception e){}
 		}
 		
 		if(sb.length() == 0){
@@ -289,10 +296,7 @@ public class FileUtil {
 			 return false;
 		 }
 	}
-	 
-	
-	
-	
+
 	 /**
 	  * 파일 이동
 	  * @param inFileName 이동대상
