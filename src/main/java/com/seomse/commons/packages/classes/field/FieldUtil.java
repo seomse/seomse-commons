@@ -1,16 +1,4 @@
-/** 
- * <pre>
- *  파 일 명 : FieldUtil.java
- *  설    명 : 필드를 사용할때 필요한 유틸모음
- *         
- *  작 성 자 : macle
- *  작 성 일 : 2017.09
- *  버    전 : 1.0
- *  수정이력 : 
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
- */
+
 
 package com.seomse.commons.packages.classes.field;
 
@@ -20,7 +8,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.seomse.commons.utils.ExceptionUtil;
-
+/**
+ * <pre>
+ *  파 일 명 : FieldUtil.java
+ *  설    명 : 필드를 사용할때 필요한 유틸모음
+ *
+ *  작 성 자 : macle
+ *  작 성 일 : 2017.09
+ *  버    전 : 1.0
+ *  수정이력 :
+ *  기타사항 :
+ * </pre>
+ * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
+ */
 public class FieldUtil {
 	
 		
@@ -114,8 +114,8 @@ public class FieldUtil {
 	
 	/**
 	 * 같은필드가있을경우 내부데이터를 복사
-	 * @param originalObject
-	 * @param copyObject
+	 * @param originalObject originalObject
+	 * @param copyObject copyObject
 	 */
 	public static void copy(Object originalObject, Object copyObject){
 		Field [] objectFieldArray = getFieldArrayToParents(originalObject.getClass());

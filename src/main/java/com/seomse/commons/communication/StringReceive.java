@@ -56,7 +56,7 @@ public class StringReceive {
 
 		//noinspection CatchMayIgnoreException
 		try{
-			if(reader != null){
+			if(reader != null ){
 				reader.close();	
 			}
 		}catch(Exception e){}
@@ -64,9 +64,8 @@ public class StringReceive {
 		reader = null;
 		//noinspection CatchMayIgnoreException
 		try{
-			if(socket != null ){
-				socket.close();		
-			
+			if(socket != null && !socket.isClosed() ){
+				socket.close();
 			}
 		}catch(Exception e){}
 		socket = null;

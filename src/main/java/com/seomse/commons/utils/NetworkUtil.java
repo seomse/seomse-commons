@@ -22,11 +22,10 @@ public class NetworkUtil {
 	
 	/**
 	 * 맥주소 얻기
-	 * @param inetAddress
-	 * @return
-	 * @throws SocketException
+	 * @param inetAddress inetAddress
+	 * @return MacAddress
 	 */
-	public static final String getMacAddress(InetAddress inetAddress) throws SocketException {
+	public static  String getMacAddress(InetAddress inetAddress) throws SocketException {
 		
 		
 		NetworkInterface network = NetworkInterface.getByInetAddress(inetAddress);
@@ -41,10 +40,10 @@ public class NetworkUtil {
 	
 	/**
 	 * 맥주소 얻기
-	 * @param macArray
-	 * @return
+	 * @param macArray mac byte array
+	 * @return MacAddress
 	 */
-	public static final String getMacAddress( byte [] macArray ) {
+	public static String getMacAddress( byte [] macArray ) {
 		     
 		StringBuilder macAddressBuilder = new StringBuilder();
 		for(byte mac : macArray){

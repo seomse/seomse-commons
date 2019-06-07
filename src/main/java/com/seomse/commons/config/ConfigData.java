@@ -70,7 +70,7 @@ public abstract class ConfigData {
      * 초기 세팅이 완료된후
      * 이후 변경 과정 업데이트
      * 반드시 Config 클래스에 notify 시킬것
-     * @param configInfoList
+     * @param configInfoList configInfoList
      */
     public int setConfig(List<ConfigInfo> configInfoList){
 

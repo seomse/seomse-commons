@@ -31,18 +31,15 @@ public class CollectionUtil {
 			return true;
 		}
 		
-		if(obj == null && obj2 != null) {
+		if(obj == null) {
 			return false;
 		}
 		
 		
-		if(obj != null && obj2 == null) {
+		if(obj2 == null) {
 			return false;
 		}
-		
-		
+
 		return obj.equals(obj2);
-		
 	}
-	
 }

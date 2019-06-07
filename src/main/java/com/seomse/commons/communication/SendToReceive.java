@@ -234,10 +234,13 @@ public class SendToReceive {
 	public void disConnect(){
 		readMessageFlag = false;
 
+		//noinspection CatchMayIgnoreException
 		try {if(socket!=null) socket.close(); } catch(Exception e){}
 		socket=null;
+		//noinspection CatchMayIgnoreException
 		try {if(writer!=null) writer.close(); } catch(Exception e){}
 		writer=null;
+		//noinspection CatchMayIgnoreException
 		try {if(reader!=null) reader.close(); } catch(Exception e){}
 		reader=null;
 

@@ -73,7 +73,6 @@ public class Seed128Cipher {
 	 * ARIA algorithm to decrypt the data.
 	 * @param data Target Data
 	 * @param key Masterkey
-	 * @param keySize Masterkey Size
 	 * @param charset Data character set
 	 * @return Decrypted data
 	 * @throws UnsupportedEncodingException If character is not supported
@@ -104,41 +103,5 @@ public class Seed128Cipher {
 			return new String(BlockPadding.getInstance().removePadding(decrypt, SEED_BLOCK_SIZE), charset);
 		}
 	}
-	
-	/**
-	 * The sample code in the Cipher class
-	 * @param args none
-	 */
-	public static void main(String args[]) {
-		
-		try {
-			
-			byte[] key = new byte[32];
-			for( int i = 0; i < key.length; i++ ) {
-				key[i] = (byte)i;
-			}
-//			
-//			String data = "김용수";
-//					
-////			data = Seed128Cipher.encrypt(data, "1234567890123456".getBytes(), "UTF-8");
-////			System.out.println(data);
-//			
-//			
-//			data = Seed128Cipher.decrypt("fegBbUCy+J1t9COdpFGbRVm598c561ORjw2DGzAIHhLj+KWiSl7kW3glyN4wN3ae", "1234567890123456".getBytes(), "UTF-8");
-//			System.out.print(data);
-//			System.out.println("공책체크");
-//		
-			String data = "안녕하세요. 아시아나 항공!!!";
-			
-			String encData = Seed128Cipher.encrypt(data, "1234567890123456".getBytes(), "UTF-8");
-			System.out.println(encData);
-			
-			//복호화
-			String decData = Seed128Cipher.decrypt(encData, "1234567890123456".getBytes(), "UTF-8");
-			System.out.println(decData);
-		
-		} catch(Exception e) {
-			System.out.println("E:" + e.getMessage());
-		}
-	}
+
 }

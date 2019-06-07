@@ -27,9 +27,8 @@ public class YmdUtil {
 	
 	/**
 	 * 시작일부터 끝일까지의 날짜리스트값 얻기
-	 * @param startYmd
-	 * @return
-	 * @throws ParseException 
+	 * @param startYmd startYmd
+	 * @return YmdList
 	 */
 	public static List<String> getYmdList (String startYmd, String endYmd) throws ParseException{
 		
@@ -37,7 +36,7 @@ public class YmdUtil {
 		
 		Date startDate = simpleDateFormat.parse(startYmd);
 		
-		List<String> dayList = new ArrayList<String>();
+		List<String> dayList = new ArrayList<>();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(startDate);
 		
@@ -60,10 +59,9 @@ public class YmdUtil {
 	
 	/**
 	 * ymd 얻기
-	 * @param ymd
-	 * @param day
-	 * @return
-	 * @throws ParseException
+	 * @param ymd ymd
+	 * @param day day
+	 * @return ymd
 	 */
 	public static String getYmd(String ymd, int day) throws ParseException{
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -76,19 +74,5 @@ public class YmdUtil {
 		return new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
 		
 	}
-	
-	
-//	public static void main(String [] args){
-//		try{
-////			List<String> dayList = YmdUtil.getYmdList("20160501", "20160531");
-////			for(String day : dayList){
-////				System.out.println(day);
-////			}
-//			
-//			System.out.println(getYmd("20170929", -20));
-//			
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//	}
+
 }	

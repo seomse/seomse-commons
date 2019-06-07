@@ -1,6 +1,7 @@
 
 package com.seomse.commons.utils.ranking;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,10 +24,12 @@ import com.seomse.commons.utils.sort.QuickSortList;
 public class Ranking {
 	
 	/**
-	 * 
-	 * @param rankingInfoArray
-	 * @param rankNumber
-	 * @return
+	 * 순위측정 리스트 얻기
+	 * 리스트인 이유는 마지막 결과가 같을경우 공동추출
+	 *
+	 * @param rankingInfoArray rankingInfoArray
+	 * @param rankNumber 순위
+	 * @return 랭크 리스트
 	 */
 	public static <T extends RankingInfo> List<T> getRankingList(T [] rankingInfoArray, int rankNumber){
 	
@@ -39,7 +42,7 @@ public class Ranking {
 		if( rankNumber < 1){
 			throw new RuntimeException("rankNumber < 1 rankNumber: " + rankNumber);
 		}
-		List<T> rankList = new LinkedList<T>();
+		List<T> rankList = new LinkedList<>();
 		if(rankingInfoArray.length == 1){
 			rankList.add(rankingInfoArray[0]);
 			rankingInfoArray[0].setRanking(1);
@@ -47,16 +50,15 @@ public class Ranking {
 		}
 		
 		if(rankingInfoArray.length <= rankNumber){
-			for(T info : rankingInfoArray){
-				rankList.add(info);
-			}
+			rankList.addAll(Arrays.asList(rankingInfoArray));
 			
 			sortAndRanking(rankList);
 			
 			return rankList;
 		}
-		
-		
+
+
+		//noinspection ManualArrayToCollectionCopy
 		for(int i=0 ; i<rankNumber ; i++){
 			rankList.add(rankingInfoArray[i]);
 		}
@@ -111,7 +113,7 @@ public class Ranking {
 					return;
 				}
 			}
-			T compare = rankList.get(lastIndex-1);;
+			T compare = rankList.get(lastIndex-1);
 			int next = lastIndex;
 			info.setRanking(compare.getRanking());
 			rankList.add(next, info);
@@ -131,7 +133,7 @@ public class Ranking {
 		}
 		
 		if(compare.getRankingPoint() == info.getRankingPoint()){
-			//점수가 같을때 이럴수가... 딱맞아
+			//점수가 같을때
 			info.setRanking(compare.getRanking());
 			int next = mid+1;
 			rankList.add(next, info);
