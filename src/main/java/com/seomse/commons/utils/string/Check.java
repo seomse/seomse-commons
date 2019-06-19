@@ -63,10 +63,7 @@ public class Check {
 	 * @return
 	 */
 	public static boolean isNumber(char ch){
-		if(ch > 57 || ch < 48) 
-    		return false; 
-	
-		return true;
+		return ch <= 57 && ch >= 48;
 	}
 	
 	/**
@@ -98,7 +95,8 @@ public class Check {
 		
 		if(array[array.length-1] == '.')
 			return false;
-			
+
+		//noinspection ForLoopReplaceableByForEach
 		for (int i=0; i < array.length ; i++){
 			char chk = array[i];
 			if((chk>57 || chk<48 ) && chk !='.')
@@ -131,9 +129,7 @@ public class Check {
 	public static boolean isEng(char ch){
 		
 		ch = Character.toLowerCase(ch);
-		if(ch>122 || ch<97)
-			return false;			
-		return true;
+		return ch <= 122 && ch >= 97;
 	}
 	
 	
@@ -147,15 +143,9 @@ public class Check {
 	
 		UnicodeBlock block = UnicodeBlock.of(ch);
 
-	    if (
-	         UnicodeBlock.HANGUL_JAMO == block
-	         || UnicodeBlock.HANGUL_COMPATIBILITY_JAMO == block
-	         ) {
-	
-	    	return true;
-	    }
+		return UnicodeBlock.HANGUL_JAMO == block
+				|| UnicodeBlock.HANGUL_COMPATIBILITY_JAMO == block;
 
-	    return false;
 	}
 	
 	
@@ -169,17 +159,10 @@ public class Check {
 	
 		UnicodeBlock block = UnicodeBlock.of(ch);
 
-	    if (UnicodeBlock.HANGUL_SYLLABLES == block	
-	         || UnicodeBlock.HANGUL_JAMO == block
-	         || UnicodeBlock.HANGUL_COMPATIBILITY_JAMO == block
-	         
-	         ) {
-	
-	    	return true;
-	    }
+		return UnicodeBlock.HANGUL_SYLLABLES == block
+				|| UnicodeBlock.HANGUL_JAMO == block
+				|| UnicodeBlock.HANGUL_COMPATIBILITY_JAMO == block;
 
-	    return false;
-	
 	}
 
 	/**
@@ -191,14 +174,8 @@ public class Check {
 	
 		UnicodeBlock block = UnicodeBlock.of(ch);
 
-	    if (UnicodeBlock.HANGUL_SYLLABLES == block	
-	         ) {
-	
-	    	return true;
-	    }
+		return UnicodeBlock.HANGUL_SYLLABLES == block;
 
-	    return false;
-	
 	}
 	
 	/**
@@ -250,16 +227,11 @@ public class Check {
 	 * @return
 	 */
 	public static boolean isSyllableType(char ch){
-		if(isHangulSyllable(ch)
+		return isHangulSyllable(ch)
 				|| isNumber(ch)
-				|| isEng(ch)){
-			
-			return true;
-			
-		}
-		
-		
-		return false;
+				|| isEng(ch);
+
+
 	}
 	
 	
@@ -278,7 +250,7 @@ public class Check {
 			return false;
 		}
 		
-		if(a == null && b != null){
+		if(a == null){
 			return false;
 		}
 		
@@ -301,13 +273,10 @@ public class Check {
 		String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]";
 
 		check =check.replaceAll(match, "");
-		
-		if(check.length()==0){
-			return true;
-		}
-		
-		
-		return false;
+
+		return check.length() == 0;
+
+
 	}
 	
 	/**
@@ -320,13 +289,10 @@ public class Check {
 		String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]";
 
 		str =str.replaceAll(match, "");
-		
-		if(str.length()==0){
-			return true;
-		}
-		
-		
-		return false;
+
+		return str.length() == 0;
+
+
 	}
 	
 	

@@ -48,9 +48,8 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String getDateYmd(long currTime , String dateFomatter){
-		SimpleDateFormat sdf = new SimpleDateFormat(dateFomatter);		
-		String result = sdf.format(new Date(currTime));
-		return result;
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFomatter);
+		return sdf.format(new Date(currTime));
 	}
 	
 	/**
@@ -70,7 +69,7 @@ public class DateUtil {
 	 */
 	public static long getDateTime(String currTime , String dateFomatter){
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFomatter);		
-		long result=-1l;
+		long result=-1L;
 		try {
 			result = (sdf.parse(currTime)).getTime();
 		} catch (ParseException e) {

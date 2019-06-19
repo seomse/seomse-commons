@@ -43,9 +43,8 @@ public class LoginSecurity {
 			String idKey = HashString.getResult("MD5",encPassword);
 			//아이디 암호화
 			String encId = Seed128Cipher.encrypt(id, idKey.getBytes(), "UTF-8");
-		
-			LoginInfo loginInfo = new LoginInfo(encId, encPassword);
-			return loginInfo;
+
+			return new LoginInfo(encId, encPassword);
 		}catch(Exception e){
 			logger.error(ExceptionUtil.getStackTrace(e));
 			return null;
@@ -69,8 +68,7 @@ public class LoginSecurity {
 			String decPasswordKey =  HashString.getResult("MD5", id);
 			//패스워드 복호화
 			String password = Seed128Cipher.decrypt(encryptionPassword,  decPasswordKey.getBytes(), "UTF-8");
-			LoginInfo loginInfo = new LoginInfo(id, password);
-			return loginInfo;
+			return new LoginInfo(id, password);
 		}catch(Exception e){
 			logger.error(ExceptionUtil.getStackTrace(e));
 			return null;

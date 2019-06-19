@@ -38,6 +38,7 @@ public abstract class BlockPadding {
 	 * @param type The type of padding bytes (ANSI X.923 : ANSIX923, ISO 10126 : ISO10126, PKCS7 : PKCS7)
 	 * @return Byte padding instance, if that does not support the null of the padding bytes is returned.
 	 */
+	@SuppressWarnings("PointlessBooleanExpression")
 	public static BlockPadding getInstance(String type) {
 		
 		boolean isCreate = false;

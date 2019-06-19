@@ -123,8 +123,8 @@ public class RandomString {
 		return specials[((int)(Math.random()*specials.length))];
 	}
 
-	public static void main(String args[]){	
-		
-		System.out.println(new RandomString().create(true,true,false,false,12) );
-	}
+//	public static void main(String args[]){
+//
+//		System.out.println(new RandomString().create(true,true,false,false,12) );
+//	}
 }

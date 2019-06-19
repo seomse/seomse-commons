@@ -13,8 +13,9 @@ package com.seomse.commons.utils.sort;
  *  수정이력 :
  *  기타사항 :
  * </pre>
- * @author  Copyrights 2018 by ㈜섬세한사람들. All right reserved.
+ * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
  */
+@SuppressWarnings("Duplicates")
 public class QuickSortArray <T>{
 	private T [] array;
 
@@ -78,7 +79,8 @@ public class QuickSortArray <T>{
 	 * @param lo
 	 * @param hi
 	 */
-	public void sortDesc (int [] num,  int lo, int hi){
+
+	public void sortDesc (int [] num, int lo, int hi){
 	    int i=lo, j=hi, h;
 	    int x=num[(lo+hi)/2];
 	    T temp;
