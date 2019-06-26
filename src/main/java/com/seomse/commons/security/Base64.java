@@ -14,7 +14,7 @@ package com.seomse.commons.security;
  * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
  */
 
-
+@SuppressWarnings("ALL")
 public final class Base64 {
 
 	public static String toString(byte[] data)

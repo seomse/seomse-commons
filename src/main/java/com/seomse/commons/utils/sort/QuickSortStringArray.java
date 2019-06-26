@@ -14,7 +14,7 @@ package com.seomse.commons.utils.sort;
  * </pre>
  * @author  Copyrights 2017 by ㈜섬세한사람들. All right reserved.
  */
-
+@SuppressWarnings("Duplicates")
 public class QuickSortStringArray {
 
 

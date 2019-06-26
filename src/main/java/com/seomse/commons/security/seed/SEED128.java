@@ -1,20 +1,19 @@
-/** 
+
+package com.seomse.commons.security.seed;
+/**
  * <pre>
  *  파 일 명 : SEED128.java
- *  설    명 : 인터넷 오픈소스 활용 
- *         
+ *  설    명 : 인터넷 오픈소스 활용
+ *
  *  작 성 자 : macle
  *  작 성 일 : 2017.07
  *  버    전 : 1.0
- *  수정이력 : 
+ *  수정이력 :
  *  기타사항 :
  * </pre>
  * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
  */
-
-
-package com.seomse.commons.security.seed;
-
+@SuppressWarnings("ALL")
 public class SEED128
 {
 	private static int SS0[] = {
@@ -176,12 +175,12 @@ public class SEED128
 	
 /****************************** Common functions ******************************/
 
-	private static int GetB0(int A){	return (int)(0x000000ff&(A)    ); };
-	private static int GetB1(int A){	return (int)(0x000000ff&((A)>>>8)); };
-	private static int GetB2(int A){	return (int)(0x000000ff&((A)>>>16)); };
-	private static int GetB3(int A){	return (int)(0x000000ff&((A)>>>24)); };
-	private static void EndianChange(int dws[]) { dws[0] = (dws[0]>>>24) | (dws[0]<<24) | ((dws[0]<<8)&0x00ff0000)|((dws[0]>>>8)&0x0000ff00); };
-	private static int EndianChange(int dws)   { return (dws>>>24) | (dws<<24) | ((dws<<8)&0x00ff0000)|((dws>>>8)&0x0000ff00); };
+	private static int GetB0(int A){	return (int)(0x000000ff&(A)    ); }
+	private static int GetB1(int A){	return (int)(0x000000ff&((A)>>>8)); }
+	private static int GetB2(int A){	return (int)(0x000000ff&((A)>>>16)); }
+	private static int GetB3(int A){	return (int)(0x000000ff&((A)>>>24)); }
+	private static void EndianChange(int dws[]) { dws[0] = (dws[0]>>>24) | (dws[0]<<24) | ((dws[0]<<8)&0x00ff0000)|((dws[0]>>>8)&0x0000ff00); }
+	private static int EndianChange(int dws)   { return (dws>>>24) | (dws<<24) | ((dws<<8)&0x00ff0000)|((dws>>>8)&0x0000ff00); }
 
 
 /***************************** SEED round function ****************************/

@@ -4,6 +4,7 @@ package com.seomse.commons.packages.classes;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 /**
  * <pre>
@@ -50,25 +51,30 @@ public class ClassSearch {
 	 * 패키지내의 클래스 목록 얻기
 	 * file을 사용하므로 jar로 묶여있지 않아아햠.
 	 * 클래스가 .jar로 묶여있지 않고 classes등의 폴더에 
-	 * @param pkgname 패키지명
+	 * @param packageName 패키지명
 	 * @return 클래스 리스트
 	 */
-	public List<Class<?>> getClassesForPackage(String pkgname) {
+	public List<Class<?>> getClassesForPackage(String packageName) {
 
-	    ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
+
 	    
 	    //패키지 절대경로
 	    String classesPath = targetPath;
 	
-	    File directory = null;
-	    directory = new File(classesPath + pkgname.replace(".", "/"));
-	
-	    if (directory != null && directory.exists()) {
+	    File directory ;
+	    directory = new File(classesPath + packageName.replace(".", "/"));
+		ArrayList<Class<?>> classes = null;
+		if (directory.exists()) {
 	        String[] files = directory.list();
-	        for (int i = 0; i < files.length; i++) {
+	        if(files == null){
+	        	return Collections.emptyList();
+			}
+			classes = new ArrayList<>();
+			//noinspection ForLoopReplaceableByForEach
+			for (int i = 0; i < files.length; i++) {
 	            if (files[i].endsWith(".class")) {
 	                
-	                String className = pkgname + '.' + files[i].substring(0, files[i].length() - 6);
+	                String className = packageName + '.' + files[i].substring(0, files[i].length() - 6);
 
 	                try {
 	                    classes.add(Class.forName(className));
@@ -80,6 +86,10 @@ public class ClassSearch {
 	        }
 	    }
 	    
+
+		if(classes == null){
+			return Collections.emptyList();
+		}
 
 	    return classes;
 	}

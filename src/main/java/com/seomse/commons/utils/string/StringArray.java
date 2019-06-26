@@ -36,12 +36,7 @@ public class StringArray {
 		}
 		
 		new QuickSortStringArray(array, sortNumArray, isAsc);
-//		QuickSortStringArray sortStringArray = new QuickSortStringArray(array);
-//		if(isAsc){
-//			sortStringArray.sortAsc(sortNumArray);
-//		}else{
-//			sortStringArray.sortDesc(sortNumArray);	
-//		}
+
 	}
 	
 }

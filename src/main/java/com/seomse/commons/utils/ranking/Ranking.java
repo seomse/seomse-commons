@@ -21,6 +21,7 @@ import com.seomse.commons.utils.sort.QuickSortList;
  * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
  */
 
+@SuppressWarnings("ALL")
 public class Ranking {
 	
 	/**

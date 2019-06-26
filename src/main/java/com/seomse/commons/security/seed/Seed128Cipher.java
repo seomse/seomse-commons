@@ -1,16 +1,3 @@
-/** 
- * <pre>
- *  파 일 명 : Seed128Cipher.java
- *  설    명 : 인터넷 오픈소스 활용 
- *         
- *  작 성 자 : macle
- *  작 성 일 : 2017.07
- *  버    전 : 1.0
- *  수정이력 : 
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
- */
 
 
 package com.seomse.commons.security.seed;
@@ -21,10 +8,20 @@ import com.seomse.commons.security.Base64;
 import com.seomse.commons.security.padding.BlockPadding;
 
 /**
- * SEED algorithm to encrypt or decrypt the data is the class that provides the ability to.
- * @author devhome.tistory.com
+ * <pre>
+ *  파 일 명 : Seed128Cipher.java
+ *  설    명 : 인터넷 오픈소스 활용
  *
+ *  작 성 자 : macle
+ *  작 성 일 : 2017.07
+ *  버    전 : 1.0
+ *  수정이력 :
+ *  기타사항 :
+ * </pre>
+ *  @author devhome.tistory.com
  */
+
+@SuppressWarnings("ALL")
 public class Seed128Cipher {
 	
 	/**
@@ -79,7 +76,7 @@ public class Seed128Cipher {
 	 */
 	public static String decrypt(String data, byte[] key, String charset)
 	throws UnsupportedEncodingException {
-		
+
 		int pdwRoundKey[] = new int[32];
 		SEED128.SeedRoundKey(pdwRoundKey, key);
 		

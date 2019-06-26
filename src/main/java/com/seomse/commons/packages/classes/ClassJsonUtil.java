@@ -40,13 +40,11 @@ public class ClassJsonUtil {
 
 	
 	public static final String CLASS_NAME = "classFullName^";
-	
-	
-	
+
 	/**
-	 * json문자열을 클래스로 생성하여 리스트로 돌려준다.
-	 * @param jsonString
-	 * @return
+	 * jsonString 을 List<T> 생성
+	 * @param jsonString jsonString
+	 * @return List<T>
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <T> List<T> makeObjectList(String jsonString){
@@ -62,42 +60,24 @@ public class ClassJsonUtil {
 			if(size == 0 ){
 				return Collections.emptyList();
 			}
-			
-			List<T> objectList = new ArrayList<T>();
+
+
+
 			JSONObject checkObject = jSONArray.getJSONObject(0);
-			String className = checkObject.getString(CLASS_NAME);	
+			String className = checkObject.getString(CLASS_NAME);
+			//noinspection deprecation
 			T chkT =(T)Class.forName(className).newInstance();
 			Field []  fields= FieldUtil.getFieldArrayToParents(chkT.getClass());
-			
-			
+
+			List<T> objectList = new ArrayList<>();
 			for(int i=0; i<size ; i++){
 				JSONObject jSONObject = jSONArray.getJSONObject(i);
 				jSONObject.remove(CLASS_NAME);
-				
+
+				//noinspection deprecation
 				T t =(T)Class.forName(className).newInstance();
 				for(Field field : fields){
-					field.setAccessible(true);
-					if(!jSONObject.isNull(field.getName())){
-						Object obj  = jSONObject.get(field.getName() );
-						if(obj.getClass() == org.json.JSONObject.class){
-							Map dataMap = new HashMap();
-							
-							JSONObject mapObject =(JSONObject) obj;
-							Iterator<String> mapIterator = mapObject.keys();
-							while(mapIterator.hasNext()){
-								String key = mapIterator.next();
-								dataMap.put(key, mapObject.get(key));
-							}
-							
-							field.set(t,  dataMap);
-						}else{
-							field.set(t,  obj);
-						}	
-						
-						
-//						field.set(t,  jSONObject.get(field.getName() ));
-					}
-					
+					setField(t, field, jSONObject);
 				}
 			
 				objectList.add(t);
@@ -105,27 +85,41 @@ public class ClassJsonUtil {
 			
 			return objectList;
 		
-		} catch (Exception e1) {
-			logger.error(ExceptionUtil.getStackTrace(e1));
-			return null;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-
 	}
-	
+
+	private static <T> void setField(T t, Field field, JSONObject jSONObject) throws IllegalAccessException {
+		field.setAccessible(true);
+		if(!jSONObject.isNull(field.getName())){
+			Object obj  = jSONObject.get(field.getName() );
+			if(obj.getClass() == org.json.JSONObject.class){
+				Map dataMap = new HashMap();
+
+				JSONObject mapObject =(JSONObject) obj;
+				//noinspection unchecked
+				Iterator<String> mapIterator = mapObject.keys();
+				while(mapIterator.hasNext()){
+					String key = mapIterator.next();
+					//noinspection unchecked
+					dataMap.put(key, mapObject.get(key));
+				}
+
+				field.set(t,  dataMap);
+			}else{
+				field.set(t,  obj);
+			}
+
+		}
+	}
+
+
 
 	/**
-	 * json문자열을 클래스로 생성하여 리스트로 돌려준다.
-	 * @param jsonString
-	 * @return
-	 */
-	public static <T> T makeVo(String jsonString){
-		return makeObject(jsonString);
-	}
-	
-	/**
-	 * json문자열을 클래스로 생성하여 리스트로 돌려준다.
-	 * @param jsonString
-	 * @return
+	 * jsonString 을 활용한 클래스 생성
+	 * @param jsonString jsonString
+	 * @return  <T>
 	 */	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <T> T makeObject(String jsonString){
@@ -136,40 +130,19 @@ public class ClassJsonUtil {
 			
 			String className = jSONObject.getString(CLASS_NAME);	
 			jSONObject.remove(CLASS_NAME);
-			
-		
+
+			//noinspection deprecation
 			T t =(T)Class.forName(className).newInstance();
 			Field []  fields= FieldUtil.getFieldArrayToParents(t.getClass());
-			
 
 			for(Field field : fields){
-				field.setAccessible(true);
-				if(!jSONObject.isNull(field.getName())){
-					Object obj  = jSONObject.get(field.getName() );
-					if(obj.getClass() == org.json.JSONObject.class){
-						Map dataMap = new HashMap();
-						
-						JSONObject mapObject =(JSONObject) obj;
-						Iterator<String> mapIterator = mapObject.keys();
-						while(mapIterator.hasNext()){
-							String key = mapIterator.next();
-							dataMap.put(key, mapObject.get(key));
-						}
-						
-						field.set(t,  dataMap);
-					}else{
-						field.set(t,  obj);
-					}	
-				}
+				setField(t, field, jSONObject);
 			}
-			
-			
+
 			return t;
 		
-		} catch (Exception e1) {
-			logger.error("ERROR JSONString : " + jsonString);
-			logger.error(ExceptionUtil.getStackTrace(e1));
-			return null;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 
 	}
@@ -177,25 +150,16 @@ public class ClassJsonUtil {
 	
 
 	/**
-	 * 리스트에있는 클래스를 Json스트링으로 만든다
+	 * T to  JsonString
 	 * 리스트에는 단순 변수를 사용한다.
-	 * @param classList
-	 * @return
-	 */
-	public static <T> String voListToJsonString(List<T> classList){
-		return objectListToJsonString(classList);
-	}
-	/**
-	 * 리스트에있는 클래스를 Json스트링으로 만든다
-	 * 리스트에는 단순 변수를 사용한다.
-	 * @param classList
-	 * @return
+	 * @param classList JsonString
+	 * @return JsonString
 	 */
 	public static <T> String objectListToJsonString(List<T> classList){
 		if(classList == null || classList.size() ==0)
 			return null;
 		
-		List<JSONObject> jsonObjectList = new ArrayList<JSONObject>();
+		List<JSONObject> jsonObjectList = new ArrayList<>();
 				
 		Class<?> voClass = classList.get(0).getClass();
 		Field []  fields= FieldUtil.getFieldArrayToParents(voClass);
@@ -215,8 +179,7 @@ public class ClassJsonUtil {
 			}
 			
 		} catch (Exception e) {
-			logger.error(ExceptionUtil.getStackTrace(e));
-			return null;
+			throw new RuntimeException(e);
 		}
 		
 		return org.json.simple.JSONArray.toJSONString(jsonObjectList);
@@ -225,23 +188,23 @@ public class ClassJsonUtil {
 	
 
 	/**
-	 * object객체를 json스트링으로 변환한다.
-	 * @param objcet
-	 * @return
+	 * object json 스트링으로 변환
+	 * @param object object
+	 * @return JsonString
 	 */
-	public static <T> String objectToJsonString(T objcet){
-		if(objcet == null){
+	public static <T> String objectToJsonString(T object){
+		if(object == null){
 			return null;
 		}
 		
 		try {
-			Field []  fields = FieldUtil.getFieldArrayToParents(objcet.getClass());
+			Field []  fields = FieldUtil.getFieldArrayToParents(object.getClass());
 			
-			Map<String, Object> objectMap = new HashMap<String, Object>();
-			objectMap.put(CLASS_NAME, objcet.getClass().getName());
+			Map<String, Object> objectMap = new HashMap<>();
+			objectMap.put(CLASS_NAME, object.getClass().getName());
 			for(Field field : fields){
 				field.setAccessible(true);
-				Object obj =  field.get(objcet);
+				Object obj =  field.get(object);
 				if(obj != null){
 					objectMap.put(field.getName(), obj);
 				}
@@ -294,24 +257,13 @@ public class ClassJsonUtil {
 				return Collections.emptyList();
 			}
 			
-			List<Map<String, Object>> mapDataList = new ArrayList<Map<String, Object>>();
+			List<Map<String, Object>> mapDataList = new ArrayList<>();
 			for(int i=0; i<size ; i++){
-				Map<String, Object> dataMap = new HashMap<String, Object>();
+				Map<String, Object> dataMap = new HashMap<>();
 				
 				JSONObject jSONObject = jSONArray.getJSONObject(i);
-	
-				@SuppressWarnings("rawtypes")
-				Iterator keyIterator = jSONObject.keys();
-				while(keyIterator.hasNext()){
-					String key = (String)keyIterator.next();
-					if(jSONObject.isNull(key)){
-						
-						dataMap.put(key, null);
-					}else{
-						dataMap.put(key, jSONObject.get(key));
-					}
-					
-				}
+
+				setMapData(jSONObject, dataMap);
 				mapDataList.add(dataMap);
 			}
 			
@@ -339,20 +291,9 @@ public class ClassJsonUtil {
 					
 			JSONObject jSONObject = new JSONObject(jsonString);
 	
-			Map<String, Object> dataMap = new HashMap<String, Object>();
+			Map<String, Object> dataMap = new HashMap<>();
 
-			@SuppressWarnings("rawtypes")
-			Iterator keyIterator = jSONObject.keys();
-			while(keyIterator.hasNext()){
-				String key = (String)keyIterator.next();
-			
-				if(jSONObject.isNull(key)){
-					dataMap.put(key, null);
-				}else{
-					dataMap.put(key, jSONObject.get(key));
-				}
-			}
-			
+			setMapData(jSONObject, dataMap);
 			return dataMap;
 		
 		} catch (Exception e) {
@@ -362,7 +303,21 @@ public class ClassJsonUtil {
 		}
 
 	}
-	
+
+
+	private static void setMapData(JSONObject jSONObject, Map<String, Object> dataMap){
+		Iterator keyIterator = jSONObject.keys();
+		while(keyIterator.hasNext()){
+			String key = (String)keyIterator.next();
+
+			if(jSONObject.isNull(key)){
+				dataMap.put(key, null);
+			}else{
+				dataMap.put(key, jSONObject.get(key));
+			}
+		}
+	}
+
 	/**
 	 * json문자열을 정렬된 dataMap 형태로 생성해서 돌려준다.
 	 * @param jsonString
@@ -404,7 +359,6 @@ public class ClassJsonUtil {
 			return null;
 		}
 	}
-	
 
-	
+
 }

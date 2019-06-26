@@ -19,6 +19,7 @@ import java.util.List;
  * </pre>
  * @author  Copyrights 2017 by ㈜섬세한사람들. All right reserved.
  */
+@SuppressWarnings("Duplicates")
 public class QuickSortList {
 
 
@@ -230,7 +231,7 @@ public class QuickSortList {
 	
 	@SuppressWarnings("unchecked")
 	private  void insert(int x,int y){
-		Object xData = (Object) list.get(x);
+		Object xData = list.get(x);
 		
 		list.add(y,xData);
 		list.remove(y+1);
