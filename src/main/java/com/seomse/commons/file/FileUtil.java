@@ -1,11 +1,7 @@
 
 package com.seomse.commons.file;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -620,4 +616,53 @@ public class FileUtil {
 		Arrays.sort(files, sort);
 	}
 
+
+	/**
+	 * 라인카운트에 맞게 파일쪼개기
+	 * 파일명은 확장자없는 숫자
+	 * 반드시 원본파일을 제외판 빈폴더일대 실행할것
+	 * @param file file
+	 * @param lineCount line count
+	 * @param charSet char set
+	 */
+	public static void splitLine(File file, int lineCount, String charSet){
+		StringBuilder sb = new StringBuilder();
+		BufferedReader br = null;
+
+		try{
+
+			int fileNameIndex = 1;
+
+			File dir = file.getParentFile();
+
+			String line;
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet));
+
+			int count = 0;
+
+			while ((line = br.readLine()) != null) {
+				sb.append("\n");
+				sb.append(line);
+				count ++;
+				if(count >=lineCount){
+					fileOutput(sb.substring(1),charSet,dir.getAbsolutePath()+"/"+fileNameIndex, false);
+					fileNameIndex++;
+					count =0;
+					sb.setLength(0);
+				}
+			}
+
+			if(count > 0){
+				fileOutput(sb.substring(1),charSet,dir.getAbsolutePath()+"/"+fileNameIndex, false);
+			}
+
+
+		}catch(IOException e){
+			throw new RuntimeException(e);
+		}finally{
+			//noinspection CatchMayIgnoreException
+			try{if(br != null)br.close();}catch(Exception e){}
+		}
+
+	}
 }
