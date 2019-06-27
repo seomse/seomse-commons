@@ -624,12 +624,30 @@ public class FileUtil {
 	/**
 	 * 라인카운트에 맞게 파일쪼개기
 	 * 파일명은 확장자없는 숫자
-	 * 반드시 원본파일을 제외판 빈폴더일대 실행할것
+	 * 생긴 숫자형 파일이 덮어쓰일 수 있으므로 숫자이름의 파일이 없는 폴더로 실행할 것
+	 * 기본경로 split_line
 	 * @param file file
 	 * @param lineCount line count
 	 * @param charSet char set
 	 */
 	public static void splitLine(File file, int lineCount, String charSet){
+		File dirFile = file.getParentFile();
+		String defaultPath = dirFile.getAbsolutePath() +"/split_line";
+		splitLine(file, defaultPath, lineCount, charSet);
+	}
+
+
+
+	/**
+	 * 라인카운트에 맞게 파일쪼개기
+	 * 파일명은 확장자없는 숫자
+	 * 생긴 숫자형 파일이 덮어쓰일 수 있으므로 숫자이름의 파일이 없는 폴더로 실행할 것
+	 * @param file file
+	 * @param outDirPath outPath
+	 * @param lineCount line count
+	 * @param charSet char set
+	 */
+	public static void splitLine(File file, String outDirPath, int lineCount, String charSet){
 		StringBuilder sb = new StringBuilder();
 		BufferedReader br = null;
 
@@ -637,7 +655,12 @@ public class FileUtil {
 
 			int fileNameIndex = 1;
 
-			File dir = file.getParentFile();
+			File dirFile = new File(outDirPath);
+			if(!dirFile.isDirectory()){
+				//noinspection ResultOfMethodCallIgnored
+				dirFile.mkdirs();
+			}
+
 
 			String line;
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet));
@@ -649,7 +672,7 @@ public class FileUtil {
 				sb.append(line);
 				count ++;
 				if(count >=lineCount){
-					fileOutput(sb.substring(1),charSet,dir.getAbsolutePath()+"/"+fileNameIndex, false);
+					fileOutput(sb.substring(1),charSet,outDirPath+"/"+fileNameIndex, false);
 					fileNameIndex++;
 					count =0;
 					sb.setLength(0);
@@ -657,7 +680,7 @@ public class FileUtil {
 			}
 
 			if(count > 0){
-				fileOutput(sb.substring(1),charSet,dir.getAbsolutePath()+"/"+fileNameIndex, false);
+				fileOutput(sb.substring(1),charSet,outDirPath+"/"+fileNameIndex, false);
 			}
 
 
@@ -669,4 +692,5 @@ public class FileUtil {
 		}
 
 	}
+
 }
