@@ -209,7 +209,9 @@ public class FileUtil {
 		FileOutputStream out = null;
 		try{
 			out = new FileOutputStream(fileName, isAppend);
-			out.write(outValue.getBytes(charSet));	
+			out.write(outValue.getBytes(charSet));
+			out.flush();
+			out.getFD().sync();
 		}catch(Exception e){
 			logger.error(ExceptionUtil.getStackTrace(e));
 		}finally{
