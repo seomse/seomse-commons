@@ -301,7 +301,7 @@ public class FileUtil {
 	  * @param outFileName 이동파일
 	  * @param isNameMake 파일명이 존재하면 이름을 자동생서할지 여부 (1) 형태로 붙어서 생성됨
 	  */
-	@SuppressWarnings("unused")
+	@SuppressWarnings({"unused", "UnusedReturnValue"})
 	public static boolean move(String inFileName, String outFileName, boolean isNameMake) {
 		
 		try{
@@ -694,5 +694,26 @@ public class FileUtil {
 		}
 
 	}
+
+
+	/**
+	 * 앞에 문자를 지정하여 파일명 변경
+	 * 하위폴더에 있는 모든 파일이 대상임
+	 * @param path 경로
+	 * @param prefix 앞에 붙일 이름
+	 */
+	public static void renamePrefix(String path, String prefix){
+
+		List<File> fileList = getFileList(path);
+
+		for(File file :fileList){
+			if(file.isDirectory()){
+				continue;
+			}
+			move(file.getAbsolutePath(), file.getParentFile().getAbsolutePath()+"/" +prefix + file.getName(),true);
+		}
+
+	}
+
 
 }
