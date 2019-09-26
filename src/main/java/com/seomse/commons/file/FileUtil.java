@@ -327,8 +327,8 @@ public class FileUtil {
 	 * @param file 파일
 	 * @return 사용될 파일명
 	 */
-	private static String makeName(File file){
-		
+	public static String makeName(File file){
+
 		String parentPath ;
 		
 		File parent = file.getParentFile();
