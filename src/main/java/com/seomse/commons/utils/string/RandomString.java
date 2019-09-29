@@ -21,7 +21,7 @@ public class RandomString {
 
 	/**
 	 * 8~13자리의 랜덤한 문자열을 생성한다 
-	 * @return
+	 * @return 랜덤 문자열 얻기
 	 */
 	public String create(){
 		int  length =(int)((Math.random()*5)+8);
@@ -112,7 +112,7 @@ public class RandomString {
 	
 	/**
 	 * 특수문자 배열설정
-	 * @param specials
+	 * @param specials 특수문자 배열 얻기
 	 */
 	public void setSpecials(char[] specials) {
 		this.specials = specials;
