@@ -14,6 +14,16 @@ package com.seomse.commons.utils.string;
  * @author  Copyrights 2017 by ㈜섬세한사람들. All right reserved.
  */
 public class Change {
+    /**
+     * 이중공백을 하나의 스페이스로 치환한다.
+     * @param str 문자열
+     * @return String
+     */
+    public static String spaceContinue(String str){
+        String match2 = "\\s{2,}";
+        str = str.replaceAll(match2, " ");
+        return str;
+    }
 
     /**
      * 두개이상의 엔터가 하나의 엔터로 치환된다.
@@ -34,5 +44,48 @@ public class Change {
      */
     public static String spaceContinueTab(String str){
         return str.replaceAll("\\p{Blank}{2,}", " ");
+    }
+
+    /**
+     * 특수문자를 변경한다
+     * @param str 변경할 문자열
+     * @param changeValue 변경될 값
+     * @return
+     */
+    public static String special(String str, String changeValue){
+        String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]";
+        str = str.replaceAll(match, changeValue);
+        return str;
+    }
+
+    /**
+     * 숫자 사이에 있는 .(dot)을 스페이스로 변경한다
+     * @param str
+     * @return
+     */
+    public static String noNumberDot(String str){
+
+        char [] charArray = str.toCharArray();
+        if(str.length() < 2){
+            return str;
+        }
+
+        if(charArray[0] == '.' ){
+            charArray[0] = ' ';
+        }
+
+        for(int i=1 ; i<charArray.length -1; i++){
+            if(charArray[i] =='.'){
+                if(!Check.isNumber(charArray[i - 1]) || !Check.isNumber(charArray[i + 1])) {
+                    charArray[i] =' ';
+                }
+            }
+        }
+        if(charArray[charArray.length -1] == '.' ){
+            charArray[charArray.length -1] = ' ';
+        }
+
+
+        return new String(charArray).trim();
     }
 }
