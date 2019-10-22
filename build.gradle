@@ -26,10 +26,5 @@ dependencies {
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'org.json:json:20131018'
 
-    //reflections
-    implementation 'org.reflections:reflections:0.9.11'
-
     implementation 'org.apache.poi:poi-ooxml:3.16'
-
-
 }
