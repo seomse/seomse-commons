@@ -4,6 +4,8 @@ package com.seomse.commons.utils;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.Enumeration;
+
 /**
  * <pre>
  *  파 일 명 : NetworkUtil.java
@@ -19,7 +21,33 @@ import java.net.SocketException;
  */
 public class NetworkUtil {
 
-	
+
+	/**
+	 * hostAddress 정보가 있는 inetAddress 얻기
+	 * @param hostAddress hostAddress
+	 * @return inetAddress
+	 */
+	public static InetAddress getInetAddress(String hostAddress ) throws SocketException{
+
+
+		for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();){
+			NetworkInterface intf = en.nextElement();
+
+			for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();){
+				InetAddress inetAddress = enumIpAddr.nextElement();
+
+
+				if(inetAddress.getHostAddress().equals(hostAddress)){
+					return inetAddress;
+				}
+			}
+		}
+
+
+
+		return null;
+	}
+
 	/**
 	 * 맥주소 얻기
 	 * @param inetAddress inetAddress
