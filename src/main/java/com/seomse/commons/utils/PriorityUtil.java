@@ -2,6 +2,8 @@ package com.seomse.commons.utils;
 
 import com.seomse.commons.annotation.Priority;
 
+import java.util.Comparator;
+
 /**
  * <pre>
  *  파 일 명 : PriorityUtil.java
@@ -10,14 +12,23 @@ import com.seomse.commons.annotation.Priority;
  *
  *  작 성 자 : macle
  *  작 성 일 : 2019.05.29
- *  버    전 : 1.0
- *  수정이력 :
+ *  버    전 : 1.1
+ *  수정이력 : 2019.10.25
  *  기타사항 :
  * </pre>
  * @author Copyrights 2019 by ㈜섬세한사람들. All right reserved.
  */
 public class PriorityUtil {
 
+
+    public static final Comparator<Object> PRIORITY_SORT = new Comparator<Object>() {
+        @Override
+        public int compare(Object o1, Object o2 ) {
+            int seq1 = PriorityUtil.getSeq(o1.getClass());
+            int seq2 = PriorityUtil.getSeq(o2.getClass());
+            return Integer.compare(seq1, seq2);
+        }
+    };
 
     /**
      * 우선순위 순서 값 얻기
