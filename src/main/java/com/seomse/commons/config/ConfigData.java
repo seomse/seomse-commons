@@ -1,8 +1,7 @@
 package com.seomse.commons.config;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <pre>
@@ -14,15 +13,13 @@ import java.util.Map;
  *
  *  작 성 자 : macle
  *  작 성 일 : 2019.05.28
- *  버    전 : 1.0
- *  수정이력 :
+ *  버    전 : 1.1
+ *  수정이력 : 2019.10.26
  *  기타사항 :
  * </pre>
  * @author Copyrights 2019 by ㈜섬세한사람들. All right reserved.
  */
 public abstract class ConfigData {
-
-
 
     /**
      * 값 얻기
@@ -30,6 +27,9 @@ public abstract class ConfigData {
      * @return 저장된 설정된 값
      */
     public abstract String getConfig(String key);
+
+
+    public abstract boolean containsKey(String key);
 
     /**
      * 호출 우선순위
@@ -45,6 +45,7 @@ public abstract class ConfigData {
      * 설정하기
      * @param key 설정키
      * @param value 설정된 값
+     * @return 변화여부
      */
     @SuppressWarnings("UnusedReturnValue")
     public boolean setConfig(String key, String value){
@@ -58,9 +59,10 @@ public abstract class ConfigData {
         }
 
         put(key, value);
-        Map<String, String> updateConfigMap = new HashMap<>();
-        updateConfigMap.put(key, value);
-        Config.notify(this, updateConfigMap);
+
+        ConfigInfo [] configInfos = new ConfigInfo[1];
+        configInfos[0] = new ConfigInfo(key, value);
+        Config.notify(this, configInfos);
         return true;
     }
 
@@ -72,29 +74,29 @@ public abstract class ConfigData {
      * 반드시 Config 클래스에 notify 시킬것
      * @param configInfoList configInfoList
      */
-    public int setConfig(List<ConfigInfo> configInfoList){
-
-        Map<String, String> updateConfigMap = null;
+    public void setConfig(List<ConfigInfo> configInfoList){
+        List<ConfigInfo> changeList = null;
         for(ConfigInfo configInfo : configInfoList){
             String lastValue = getConfig(configInfo.key);
             if(lastValue != null && lastValue.equals(configInfo.value)){
                 continue;
             }
 
-            if(updateConfigMap == null){
-                updateConfigMap = new HashMap<>();
+            if(changeList == null){
+                changeList = new ArrayList<>();
             }
 
             put(configInfo.key, configInfo.value);
-            updateConfigMap.put(configInfo.key, configInfo.value);
-
+            changeList.add(configInfo);
         }
 
-        if (updateConfigMap == null) {
-            return 0;
+        if (changeList == null) {
+            return;
         }
-        Config.notify(this, updateConfigMap);
-        return updateConfigMap.size();
+
+        ConfigInfo [] changeArray = changeList.toArray(new ConfigInfo[0]);
+        Config.notify(this, changeArray);
+        changeList.clear();
     }
 
 }

@@ -20,8 +20,8 @@ import java.util.*;
  *
  *  작 성 자 : macle
  *  작 성 일 : 2017.07
- *  버    전 : 1.2
- *  수정이력 : 2019.02, 2019.05.28
+ *  버    전 : 1.3
+ *  수정이력 : 2019.02, 2019.05.28, 2019.10.26
  *  기타사항 :
  * </pre>
  * @author Copyrights 2017 ~ 2019 by ㈜섬세한사람들. All right reserved.
@@ -363,43 +363,38 @@ public class Config {
         if(configInfos == null || configInfos.length ==0){
             return;
         }
-
         ConfigData firstData = instance.configDataArray[0];
-
 	    if(firstData == configData) {
 	        //최우선순위 설정이 변경된 경우
+			Map<String, String> updateConfigMap = new HashMap<>();
+			for(ConfigInfo configInfo :configInfos){
+				updateConfigMap.put(configInfo.key, configInfo.value);
+			}
             instance.notifyConfig(updateConfigMap);
         }else{
 	    	ConfigData [] configDataArray = instance.configDataArray;
 	    	int dataIndex = configDataArray.length;
-
-
-
-
-	        //최 우선순위에 없는 설정일  경우
-            boolean isMapChange = false;
-
-            Set<String> keySet = updateConfigMap.keySet();
-
-            for(String key : keySet){
-                String value = firstData.getConfig(key);
-                if(value != null){
-                    isMapChange = true;
-                }
-            }
-
-            if(isMapChange){
-                //최우선 순위에 영향이 가지 않게 전송
-                Map<String, String> changeMap = new HashMap<>();
-                for(String key : keySet){
-                    String value = firstData.getConfig(key);
-                    if(value != null){
-                        continue;
-                    }
-                    changeMap.put(key, updateConfigMap.get(key));
-                }
-                instance.notifyConfig(changeMap);
-            }else{
+			for (int i = 0; i <configDataArray.length ; i++) {
+				if(configData == configDataArray[i]){
+					dataIndex = i;
+					break;
+				}
+			}
+			Map<String, String> updateConfigMap = null;
+			outer:
+			for(ConfigInfo configInfo :configInfos) {
+				for (int i = 0; i < dataIndex; i++) {
+					ConfigData leftData = configDataArray[i];
+					if(leftData.containsKey(configInfo.key)){
+						continue outer;
+					}
+				}
+				if (updateConfigMap == null) {
+					updateConfigMap = new HashMap<>();
+				}
+				updateConfigMap.put(configInfo.key, configInfo.value);
+			}
+            if(updateConfigMap != null){
                 instance.notifyConfig(updateConfigMap);
             }
         }
