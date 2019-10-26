@@ -359,8 +359,8 @@ public class Config {
         configDataArray[0].setConfig(key, value);
 	}
 
-	static void notify(ConfigData configData, Map<String, String> updateConfigMap){
-        if(updateConfigMap == null || updateConfigMap.size() ==0){
+	static void notify(ConfigData configData, ConfigInfo [] configInfos){
+        if(configInfos == null || configInfos.length ==0){
             return;
         }
 
@@ -370,6 +370,12 @@ public class Config {
 	        //최우선순위 설정이 변경된 경우
             instance.notifyConfig(updateConfigMap);
         }else{
+	    	ConfigData [] configDataArray = instance.configDataArray;
+	    	int dataIndex = configDataArray.length;
+
+
+
+
 	        //최 우선순위에 없는 설정일  경우
             boolean isMapChange = false;
 
