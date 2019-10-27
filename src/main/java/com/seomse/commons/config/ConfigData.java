@@ -31,6 +31,8 @@ public abstract class ConfigData {
 
     public abstract boolean containsKey(String key);
 
+
+
     /**
      * 호출 우선순위
      * 필수구현
@@ -43,9 +45,9 @@ public abstract class ConfigData {
     /**
      * 설정삭제
      * @param key key
-     * @return 삭제 객체
+     * @return remove value
      */
-    protected abstract Object remove(String key);
+    protected abstract String remove(String key);
 
     /**
      * 초기 설정이 끝나고 업데이트 될경우

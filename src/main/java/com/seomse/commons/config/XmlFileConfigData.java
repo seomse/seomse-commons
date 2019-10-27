@@ -60,6 +60,8 @@ public class XmlFileConfigData extends ConfigData{
         return props.containsKey(key);
     }
 
+
+
     @Override
     public int getPriority() {
         return ConfigSet.XML_FILE_PRIORITY;
@@ -71,9 +73,17 @@ public class XmlFileConfigData extends ConfigData{
     }
 
     @Override
-    protected Object remove(String key) {
+    protected String remove(String key) {
+        Object obj =props.remove(key);
 
-        return props.remove(key);
+        if(obj == null){
+            return null;
+        }
+        if(obj.getClass() == String.class){
+            return (String) obj;
+        }
+
+        return obj.toString();
     }
 
 

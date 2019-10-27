@@ -21,7 +21,7 @@ public class SystemPropertiesData extends ConfigData{
     }
 
     @Override
-    protected Object remove(String key) {
+    protected String remove(String key) {
         //시스템 설정은 삭제하지 않음
         return null;
     }
@@ -35,6 +35,8 @@ public class SystemPropertiesData extends ConfigData{
     public boolean containsKey(String key) {
         return System.getProperties().containsKey(key);
     }
+
+
 
     @Override
     public int getPriority() {

@@ -182,7 +182,7 @@ public class Config {
 		if(resultValue == null){
 			return defaultValue;
 		}
-		
+
 		resultValue = resultValue.trim();
 		
 		if(resultValue.toUpperCase().equals("Y") || resultValue.toLowerCase().equals("true")){
@@ -324,7 +324,7 @@ public class Config {
 	private String getConfigValue(String key){
 	    return getConfigValue(key , null);
 	}
-	
+
 
 	/**
 	 * 설정값 얻기
@@ -469,6 +469,5 @@ public class Config {
 			}	
 		}
 	}
-
 }
 
