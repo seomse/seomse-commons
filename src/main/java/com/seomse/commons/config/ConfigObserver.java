@@ -1,7 +1,6 @@
 
 package com.seomse.commons.config;
 
-import java.util.Map;
 /**
  * <pre>
  *  파 일 명 : ConfigObserver.java
@@ -19,7 +18,7 @@ import java.util.Map;
 public interface ConfigObserver {
 	/**
 	 * 설정정보 변경정보
-	 * @param configMap 설정정보 맵
+	 * @param changeInfos 변경된 설정 정보
 	 */
-	void updateConfig(Map<String,String> configMap);
+	void updateConfig(ConfigInfo [] changeInfos);
 }

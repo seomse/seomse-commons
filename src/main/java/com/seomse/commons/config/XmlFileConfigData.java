@@ -69,4 +69,12 @@ public class XmlFileConfigData extends ConfigData{
     protected void put(String key, String value) {
         props.put(key, value);
     }
+
+    @Override
+    protected Object remove(String key) {
+
+        return props.remove(key);
+    }
+
+
 }

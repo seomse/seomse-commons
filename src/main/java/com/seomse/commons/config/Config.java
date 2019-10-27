@@ -21,7 +21,7 @@ import java.util.*;
  *  작 성 자 : macle
  *  작 성 일 : 2017.07
  *  버    전 : 1.3
- *  수정이력 : 2019.02, 2019.05.28, 2019.10.26
+ *  수정이력 : 2019.02, 2019.05.28, 2019.10.27
  *  기타사항 :
  * </pre>
  * @author Copyrights 2017 ~ 2019 by ㈜섬세한사람들. All right reserved.
@@ -364,15 +364,37 @@ public class Config {
             return;
         }
         ConfigData firstData = instance.configDataArray[0];
+		ConfigData [] configDataArray = instance.configDataArray;
 	    if(firstData == configData) {
+			ConfigInfo [] changeInfos = new ConfigInfo[configInfos.length];
+
+
 	        //최우선순위 설정이 변경된 경우
-			Map<String, String> updateConfigMap = new HashMap<>();
-			for(ConfigInfo configInfo :configInfos){
-				updateConfigMap.put(configInfo.key, configInfo.value);
+			for (int i = 0; i <configInfos.length ; i++) {
+				ConfigInfo configInfo = configInfos[i];
+				if(configInfo.isDelete){
+					String value = null;
+					for(int j=1 ; j<configDataArray.length ; j++){
+						value = configDataArray[j].getConfig(configInfo.key);
+						if(value != null){
+							break;
+						}
+					}
+					if(value == null){
+						changeInfos[i] = configInfo;
+					}else{
+						changeInfos[i] = new ConfigInfo(configInfo.key, value);
+					}
+
+				}else{
+					changeInfos[i] = configInfo;
+				}
+
 			}
-            instance.notifyConfig(updateConfigMap);
+
+            instance.notifyConfig(changeInfos);
         }else{
-	    	ConfigData [] configDataArray = instance.configDataArray;
+
 	    	int dataIndex = configDataArray.length;
 			for (int i = 0; i <configDataArray.length ; i++) {
 				if(configData == configDataArray[i]){
@@ -385,7 +407,7 @@ public class Config {
 			    return;
             }
 
-			Map<String, String> updateConfigMap = null;
+			List<ConfigInfo> changeList = null ;
 			outer:
 			for(ConfigInfo configInfo :configInfos) {
 				for (int i = 0; i < dataIndex; i++) {
@@ -394,29 +416,47 @@ public class Config {
 						continue outer;
 					}
 				}
-				if (updateConfigMap == null) {
-					updateConfigMap = new HashMap<>();
+
+				if (changeList == null) {
+                    changeList = new ArrayList<>();
 				}
-				updateConfigMap.put(configInfo.key, configInfo.value);
+
+				if(configInfo.isDelete){
+                    String value = null;
+                    for(int j=dataIndex + 1 ; j<configDataArray.length ; j++){
+                        value = configDataArray[j].getConfig(configInfo.key);
+                        if(value != null){
+                            break;
+                        }
+                    }
+                    ConfigInfo changeInfo ;
+                    if(value == null){
+                        changeInfo = configInfo;
+                    }else{
+                        changeInfo = new ConfigInfo(configInfo.key, value);
+                    }
+                    changeList.add(changeInfo);
+                }else{
+                    changeList.add(configInfo);
+                }
 			}
-            if(updateConfigMap != null){
-                instance.notifyConfig(updateConfigMap);
+            if(changeList != null){
+                instance.notifyConfig(changeList.toArray(new ConfigInfo[0]));
             }
         }
     }
 
 	/**
 	 * 설정변경정보 알림
-	 * @param updateConfigMap 업데이트 된 정보
+	 * @param changeInfos 변경된 설정 정보
 	 */
-	private void notifyConfig(Map<String, String> updateConfigMap){
-		if(updateConfigMap == null || updateConfigMap.size() ==0){
+	private void notifyConfig(ConfigInfo [] changeInfos){
+		if(changeInfos == null || changeInfos.length ==0){
 			return;
 		}
 		
-		Set<String> keySet = updateConfigMap.keySet();
-		for(String key : keySet){
-			logger.trace("Config update key: " + key + " value: " + updateConfigMap.get(key));
+		for(ConfigInfo configInfo : changeInfos){
+			logger.trace("Config update key: " + configInfo.key + " value: " + configInfo.value);
 		}
 		ConfigObserver [] configObserverArray ;
 		synchronized (observerLock) {
@@ -425,7 +465,7 @@ public class Config {
 		
 		synchronized (notifyLock) {
 			for(ConfigObserver configObserver : configObserverArray){
-				configObserver.updateConfig(updateConfigMap);
+				configObserver.updateConfig(changeInfos);
 			}	
 		}
 	}

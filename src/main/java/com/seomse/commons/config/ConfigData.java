@@ -14,7 +14,7 @@ import java.util.List;
  *  작 성 자 : macle
  *  작 성 일 : 2019.05.28
  *  버    전 : 1.1
- *  수정이력 : 2019.10.26
+ *  수정이력 : 2019.10.27
  *  기타사항 :
  * </pre>
  * @author Copyrights 2019 by ㈜섬세한사람들. All right reserved.
@@ -39,6 +39,13 @@ public abstract class ConfigData {
     public abstract int getPriority();
 
     protected abstract void put(String key, String value);
+
+    /**
+     * 설정삭제
+     * @param key key
+     * @return 삭제 객체
+     */
+    protected abstract Object remove(String key);
 
     /**
      * 초기 설정이 끝나고 업데이트 될경우
@@ -66,17 +73,53 @@ public abstract class ConfigData {
         return true;
     }
 
+    public boolean setConfig(ConfigInfo configInfo){
+        if(configInfo.isDelete){
+            Object obj = remove(configInfo.key);
+            if(obj == null){
+                return false;
+            }
+            ConfigInfo [] configInfos = new ConfigInfo[1];
+            configInfos[0] = configInfo;
+            Config.notify(this, configInfos);
+            return true;
+        }
+
+        String lastValue = getConfig(configInfo.key);
+        if(lastValue != null && lastValue.equals(configInfo.value)){
+            return false;
+        }
+
+        ConfigInfo [] configInfos = new ConfigInfo[1];
+        configInfos[0] = configInfo;
+        Config.notify(this, configInfos);
+        return true;
+
+    }
+
     /**
      * 설정하기
      * 여러정보 동시
      * 초기 세팅이 완료된후
      * 이후 변경 과정 업데이트
      * 반드시 Config 클래스에 notify 시킬것
-     * @param configInfoList configInfoList
+     * @param configInfos configInfo array
      */
-    public void setConfig(List<ConfigInfo> configInfoList){
+    public void setConfig(ConfigInfo [] configInfos){
         List<ConfigInfo> changeList = null;
-        for(ConfigInfo configInfo : configInfoList){
+        for(ConfigInfo configInfo : configInfos){
+
+            if(configInfo.isDelete){
+                Object obj = remove(configInfo.key);
+                if(obj == null){
+                    continue;
+                }
+                if(changeList == null){
+                    changeList = new ArrayList<>();
+                }
+                changeList.add(configInfo);
+            }
+
             String lastValue = getConfig(configInfo.key);
             if(lastValue != null && lastValue.equals(configInfo.value)){
                 continue;
