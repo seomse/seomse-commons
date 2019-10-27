@@ -380,6 +380,11 @@ public class Config {
 					break;
 				}
 			}
+			//등록된 데이터가 아니면
+			if(dataIndex ==  configDataArray.length){
+			    return;
+            }
+
 			Map<String, String> updateConfigMap = null;
 			outer:
 			for(ConfigInfo configInfo :configInfos) {
