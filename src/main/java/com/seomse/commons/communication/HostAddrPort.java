@@ -17,6 +17,16 @@ public class HostAddrPort {
     private String hostAddress;
     private int port;
 
+
+    public HostAddrPort(){
+
+    }
+
+    public HostAddrPort(String hostAddress, int port){
+        this.hostAddress = hostAddress;
+        this.port = port;
+    }
+
     /**
      * @return host address
      */
