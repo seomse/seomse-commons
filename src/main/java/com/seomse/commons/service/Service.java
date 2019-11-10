@@ -69,10 +69,26 @@ public abstract class Service extends Thread {
     }
 
     //지연된 시작 (설정할 경우)
-    private Long delayTime = null;
+    private Long delayStartTime = null;
 
     //반복할때의 슬립 타임
     private Long sleepTime = null;
+
+    /**
+     * 지연 시작 시간 설정
+     * @param delayTime
+     */
+    public void setDelayStartTime(Long delayTime) {
+        this.delayStartTime = delayTime;
+    }
+
+    /**
+     * 반복 대기 시간 설정
+     * @param sleepTime
+     */
+    public void setSleepTime(Long sleepTime) {
+        this.sleepTime = sleepTime;
+    }
 
     public void killService(){
         state = State.STOP;
@@ -98,9 +114,9 @@ public abstract class Service extends Thread {
             ServiceManager.getInstance().addService(this);
         }
 
-        if(delayTime != null){
+        if(delayStartTime != null){
             try{
-                Thread.sleep(delayTime);
+                Thread.sleep(delayStartTime);
             }catch(Exception e){
                 logger.error(ExceptionUtil.getStackTrace(e));
                 serviceStop();
