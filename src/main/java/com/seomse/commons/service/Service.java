@@ -143,9 +143,11 @@ public abstract class Service extends Thread {
                 while(state != State.STOP){
                     if(state == State.START){
                         work();
+
+
                     }
 
-                    if(sleepTime != null){
+                    if(sleepTime != null && state != State.STOP){
                         Thread.sleep(sleepTime);
                     }
                 }
