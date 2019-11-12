@@ -33,7 +33,7 @@ public abstract class Service extends Thread {
      * STAND : 대기 상태
      * STOP : 서비스 중지
      * ONE_OFF : 반복이 아닌 일회성 시비스
-     * @author wini
+     * @author macle
      */
     public enum State{
         START
@@ -76,7 +76,7 @@ public abstract class Service extends Thread {
 
     /**
      * 지연 시작 시간 설정
-     * @param delayTime
+     * @param delayTime delayTime
      */
     public void setDelayStartTime(Long delayTime) {
         this.delayStartTime = delayTime;
@@ -84,7 +84,7 @@ public abstract class Service extends Thread {
 
     /**
      * 반복 대기 시간 설정
-     * @param sleepTime
+     * @param sleepTime sleepTime
      */
     public void setSleepTime(Long sleepTime) {
         this.sleepTime = sleepTime;
