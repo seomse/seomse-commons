@@ -114,7 +114,7 @@ public abstract class Service extends Thread {
             ServiceManager.getInstance().addService(this);
         }
 
-        if(delayStartTime != null){
+        if(delayStartTime != null && delayStartTime > 0 ){
             try{
                 Thread.sleep(delayStartTime);
             }catch(Exception e){
@@ -147,7 +147,7 @@ public abstract class Service extends Thread {
 
                     }
 
-                    if(sleepTime != null && state != State.STOP){
+                    if(sleepTime != null && state != State.STOP && sleepTime > 0){
                         Thread.sleep(sleepTime);
                     }
                 }
