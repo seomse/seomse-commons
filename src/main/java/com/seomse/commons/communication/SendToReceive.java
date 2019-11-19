@@ -154,7 +154,11 @@ public class SendToReceive {
 	 * @return 연결여부
 	 */
 	public boolean isConnect(){
-		return socket != null && !socket.isClosed();
+		if(!readMessageFlag){
+			return false;
+		}
+
+		return socket != null && !socket.isClosed() && socket.isConnected();
 	}
 	
 	/**
@@ -171,11 +175,13 @@ public class SendToReceive {
 				try{
 					readData = reader.read();
 				}catch(java.net.SocketException se){
+					readMessageFlag = false;
 					return null;
 				}
 				
 				
 				if(readData == -1){
+					readMessageFlag = false;
 					return null;
 				}
 				
