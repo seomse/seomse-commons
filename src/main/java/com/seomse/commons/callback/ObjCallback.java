@@ -2,8 +2,8 @@ package com.seomse.commons.callback;
 
 /**
  * <pre>
- *  파 일 명 : EndCallback.java
- *  설    명 : 종료 콜백
+ *  파 일 명 : ObjCallback.java
+ *  설    명 : 객체 전달용 callback
  *
  *  작 성 자 : macle
  *  작 성 일 : 2019.12.05
