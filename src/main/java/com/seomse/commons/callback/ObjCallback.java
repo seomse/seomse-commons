@@ -13,6 +13,6 @@ package com.seomse.commons.callback;
  * </pre>
  * @author Copyrights 2019 by ㈜섬세한사람들. All right reserved.
  */
-public interface EndCallback {
+public interface ObjCallback {
     void callback(Object obj);
 }
