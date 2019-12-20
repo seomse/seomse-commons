@@ -2,7 +2,6 @@
 
 package com.seomse.commons.utils.date;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,11 +15,11 @@ import java.util.List;
  *
  *  작 성 자 : macle
  *  작 성 일 : 2017.10
- *  버    전 : 1.0
- *  수정이력 :
+ *  버    전 : 1.1
+ *  수정이력 : 2019.12.20
  *  기타사항 :
  * </pre>
- * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
+ * @author Copyrights 2017 ~ 2019 by ㈜섬세한사람들. All right reserved.
  */
 
 public class YmdUtil {
@@ -30,30 +29,33 @@ public class YmdUtil {
 	 * @param startYmd startYmd
 	 * @return YmdList
 	 */
-	public static List<String> getYmdList (String startYmd, String endYmd) throws ParseException{
+	public static List<String> getYmdList (String startYmd, String endYmd){
 		
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-		
-		Date startDate = simpleDateFormat.parse(startYmd);
-		
 		List<String> dayList = new ArrayList<>();
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(startDate);
-		
-		int endNum = Integer.parseInt(endYmd);
-		while(true){
-			
-			
-			String day = new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
-			
-			int dayNum = Integer.parseInt(day);	
-			if(dayNum > endNum){
-				break;
+
+		try {
+			Date startDate = simpleDateFormat.parse(startYmd);
+
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(startDate);
+
+			int endNum = Integer.parseInt(endYmd);
+			while (true) {
+
+
+				String day = new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
+
+				int dayNum = Integer.parseInt(day);
+				if (dayNum > endNum) {
+					break;
+				}
+				dayList.add(day);
+				calendar.add(Calendar.DATE, 1);
 			}
-			dayList.add(day);
-			calendar.add(Calendar.DATE, 1);
+		}catch(Exception e){
+			throw new RuntimeException(e);
 		}
-		
 		return dayList;
 	}
 	
@@ -63,15 +65,19 @@ public class YmdUtil {
 	 * @param day day
 	 * @return ymd
 	 */
-	public static String getYmd(String ymd, int day) throws ParseException{
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-		
-		Date date = simpleDateFormat.parse(ymd);
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.add(Calendar.DATE, day);
-		
-		return new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
+	public static String getYmd(String ymd, int day) {
+		try {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+
+			Date date = simpleDateFormat.parse(ymd);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.add(Calendar.DATE, day);
+
+			return new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
 		
 	}
 
