@@ -55,8 +55,7 @@ public class FileUtil {
 	          while ((line = br.readLine()) != null) {
 	        	  dataList.add(line);
 	          }
-	          br.close();	          
-	     
+
 		}catch(Exception e){
 			logger.error(ExceptionUtil.getStackTrace(e));
 		}finally {
