@@ -1,6 +1,11 @@
 
 package com.seomse.commons.file;
 
+import com.seomse.commons.utils.ExceptionUtil;
+import com.seomse.commons.utils.string.Check;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
@@ -12,12 +17,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.seomse.commons.utils.ExceptionUtil;
-import com.seomse.commons.utils.string.Check;
 
 /**
  * <pre>
@@ -48,22 +47,16 @@ public class FileUtil {
 	public static  List<String> getFileContentsList(File file, String charSet){
 		List<String> dataList = new ArrayList<>();
 		
-		BufferedReader br = null;
-		try{
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet))){
 			 String line;
-	         br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet));
 	          while ((line = br.readLine()) != null) {
 	        	  dataList.add(line);
 	          }
-
 		}catch(Exception e){
 			logger.error(ExceptionUtil.getStackTrace(e));
-		}finally {
-			//noinspection CatchMayIgnoreException
-			try{if(br != null)br.close();}catch(Exception e){}
 		}
 
-		
+
 		return dataList;
 	}
 	
@@ -77,12 +70,10 @@ public class FileUtil {
 	public static String getFileContents(File file, String charSet){
 		
 		StringBuilder sb = new StringBuilder();
-		BufferedReader br = null;
-		
-		try{
+
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet))){
 			 String line;
-	         br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet));
-	         
+
 	         while ((line = br.readLine()) != null) {
 	        	  sb.append("\n");
 	        	  sb.append(line);
@@ -90,11 +81,7 @@ public class FileUtil {
 	     
 		}catch(Exception e){
 			logger.error(ExceptionUtil.getStackTrace(e));
-		}finally{
-			//noinspection CatchMayIgnoreException
-			try{if(br != null)br.close();}catch(Exception e){}
 		}
-		
 		if(sb.length() == 0){
 			return "";
 		}
@@ -205,16 +192,12 @@ public class FileUtil {
 	@SuppressWarnings("WeakerAccess")
 	public static void fileOutput(String outValue, String charSet, String fileName, boolean isAppend){
 		
-		FileOutputStream out = null;
-		try{
-			out = new FileOutputStream(fileName, isAppend);
+		try(FileOutputStream out =  new FileOutputStream(fileName, isAppend)){
 			out.write(outValue.getBytes(charSet));
 			out.flush();
 			out.getFD().sync();
 		}catch(Exception e){
 			logger.error(ExceptionUtil.getStackTrace(e));
-		}finally{
-			try{if(out!= null)out.close(); }catch(Exception e){logger.error(ExceptionUtil.getStackTrace(e));}
 		}
 	}
 	
@@ -650,9 +633,8 @@ public class FileUtil {
 	 */
 	public static void splitLine(File file, String outDirPath, int lineCount, String charSet){
 		StringBuilder sb = new StringBuilder();
-		BufferedReader br = null;
 
-		try{
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet)) ){
 
 			int fileNameIndex = 1;
 
@@ -664,7 +646,6 @@ public class FileUtil {
 
 
 			String line;
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet));
 
 			int count = 0;
 
@@ -687,9 +668,6 @@ public class FileUtil {
 
 		}catch(IOException e){
 			throw new RuntimeException(e);
-		}finally{
-			//noinspection CatchMayIgnoreException
-			try{if(br != null)br.close();}catch(Exception e){}
 		}
 
 	}
