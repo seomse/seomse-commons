@@ -1,4 +1,5 @@
 package com.seomse.commons.utils.date;
+
 /**
  * <pre>
  *  파 일 명 : TimeUtil.java
@@ -52,7 +53,7 @@ public class TrendTime {
         long [] trendTimes = new long[trendCount];
         int gapIndex = 0;
         for (int i = trendTimes.length-1; i > -1; i--) {
-            trendTimes[i] = standardTime * gapIndex * gap;
+            trendTimes[i] = standardTime - (gapIndex * gap);
             gapIndex++;
         }
         return trendTimes;
