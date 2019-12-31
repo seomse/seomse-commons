@@ -18,11 +18,11 @@ package com.seomse.commons.utils.date;
 public class TimeUtil {
 	
 	//일분 밀리세컨드 값
-	private static final int minuteTime = 60000;
+	private static final long minuteTime = 60000L;
 	
 	//한시간 밀리세컨드 값
-	private static final int hourTime = 3600000;
-	private static final int dayTime = 86400000;
+	private static final long hourTime = 3600000L;
+	private static final long dayTime = 86400000L;
 	/**
 	 * 초단위 값을 가져온다.
 	 * @param milleSecond 천분의 1초 
@@ -63,12 +63,12 @@ public class TimeUtil {
 
 		//하루 밀리세컨드 값
 
-		long day = milleSecond/ dayTime;
+		long day = milleSecond/dayTime;
 		
 		milleSecond = milleSecond - dayTime *day;
 		
 		
-		int hour = (int)milleSecond/hourTime;
+		int hour = (int)(milleSecond/hourTime);
 		
 		milleSecond = milleSecond - hourTime*hour;
 		
