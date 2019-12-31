@@ -18,11 +18,11 @@ package com.seomse.commons.utils.date;
 public class TimeUtil {
 	
 	//일분 밀리세컨드 값
-	private static int minuteTime = 60000;
+	private static final int minuteTime = 60000;
 	
 	//한시간 밀리세컨드 값
-	private static int hourTime = 3600000;
-
+	private static final int hourTime = 3600000;
+	private static final int dayTime = 86400000;
 	/**
 	 * 초단위 값을 가져온다.
 	 * @param milleSecond 천분의 1초 
@@ -62,7 +62,7 @@ public class TimeUtil {
 		StringBuilder timeValueBuilder = new StringBuilder();
 
 		//하루 밀리세컨드 값
-		int dayTime = 86400000;
+
 		long day = milleSecond/ dayTime;
 		
 		milleSecond = milleSecond - dayTime *day;
@@ -72,41 +72,26 @@ public class TimeUtil {
 		
 		milleSecond = milleSecond - hourTime*hour;
 		
-		int minute = (int)(milleSecond/60000);
+		int minute = (int)(milleSecond/60000L);
 		milleSecond = milleSecond - minuteTime*minute;
 		
-		int second = (int)(milleSecond/1000);
-		
-		milleSecond = milleSecond - 1000*second;
+		double second = (double)milleSecond/1000.0;
+
 		
 		timeValueBuilder.append(day);
 		timeValueBuilder.append("day");
 		
-//		if(hour>9){
-			timeValueBuilder.append("  ").append(hour);
-//		}else{
-//			timeValueBuilder.append("0"+hour);	
-//		}
+		timeValueBuilder.append("  ").append(hour);
 		timeValueBuilder.append("Hour");
-//		if(minute>9){
-			timeValueBuilder.append("  ").append(minute);
-//		}else{
-//			timeValueBuilder.append("0"+minute);	
-//		}
+		timeValueBuilder.append("  ").append(minute);
 		timeValueBuilder.append("Minute");
-	
-//		if(second>9){
-			timeValueBuilder.append("  ").append(second);
-//		}else{
-//			timeValueBuilder.append("0"+second);	
-//		}
-		
-			timeValueBuilder.append(".");
-			timeValueBuilder.append(milleSecond);
-			timeValueBuilder.append("Second");
+
+		timeValueBuilder.append("  ").append(String.format("%.2f", second));
+		timeValueBuilder.append("Second");
 			
 			
 		return timeValueBuilder.toString();
 	}
+
 }
 	
