@@ -64,7 +64,7 @@ public abstract class Service extends Thread {
         this.endObject = endObject;
     }
 
-    public void setCallback(ObjCallback endCallback) {
+    public void setEndCallback(ObjCallback endCallback) {
         this.endCallback = endCallback;
     }
 
