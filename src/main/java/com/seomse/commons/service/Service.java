@@ -1,6 +1,6 @@
 package com.seomse.commons.service;
 
-import com.seomse.commons.handler.EndHandler;
+import com.seomse.commons.callback.ObjCallback;
 import com.seomse.commons.utils.ExceptionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,14 +58,14 @@ public abstract class Service extends Thread {
     /**
      * 종료 핸들링
      */
-    private EndHandler endHandler = null;
+    private ObjCallback endCallback = null;
 
     public void setEndObject(Object endObject) {
         this.endObject = endObject;
     }
 
-    public void setEndHandler(EndHandler endHandler) {
-        this.endHandler = endHandler;
+    public void setCallback(ObjCallback endCallback) {
+        this.endCallback = endCallback;
     }
 
     //지연된 시작 (설정할 경우)
@@ -161,8 +161,8 @@ public abstract class Service extends Thread {
     }
 
     private void serviceStop(){
-        if(endHandler!= null){
-            endHandler.end(endObject);
+        if(endCallback!= null){
+            endCallback.callback(endObject);
         }
         isStop = true;
         if(serviceId != null){
