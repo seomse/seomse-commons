@@ -289,7 +289,7 @@ public class Config {
 		}
 
 		File file = new File( ConfigSet.CONFIG_PATH);
-		logger.debug("config path: " + logbackFile.getAbsolutePath());
+		logger.debug("config path: " + file.getAbsolutePath());
 
         XmlFileConfigData fileConfigData ;
         try {
