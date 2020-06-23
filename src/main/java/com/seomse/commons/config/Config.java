@@ -283,11 +283,14 @@ public class Config {
         String logbackPath = ConfigSet.LOG_BACK_PATH;
         File logbackFile = new File(logbackPath);
 		if(logbackFile.exists()){
+			logger.debug("logback path: " + logbackFile.getAbsolutePath());
 			//기본경로에 로그백 설정파일이존재할경우 호출
 			setLogbackConfigPath(logbackPath, false);
 		}
 
 		File file = new File( ConfigSet.CONFIG_PATH);
+		logger.debug("config path: " + logbackFile.getAbsolutePath());
+
         XmlFileConfigData fileConfigData ;
         try {
             fileConfigData =  new XmlFileConfigData(file);
