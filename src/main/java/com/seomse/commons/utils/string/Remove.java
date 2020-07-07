@@ -15,6 +15,18 @@ package com.seomse.commons.utils.string;
  */
 public class Remove {
 
+
+    /**
+     * tab enter 제거
+     * @param str string
+     * @return string
+     */
+    public static String tabEnter(String str){
+        str = str.replace("\n", "");
+        str = str.replace("\t", "");
+        return str;
+    }
+
     /**
      * HTML테그를 제거한다
      * @param str 문자열
