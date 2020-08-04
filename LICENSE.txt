@@ -1,24 +1,39 @@
-GNU General Public License (GPL)
+MIT License
 
-Seomse-commons and previous versions are distributed under GPL to allow all who wish to use, inspect, modify, and distribute it
-freely, but without any warranty.
+Copyright (c) 2017 gwiazdorrr
 
-Today the GNU GPL is the most widely used free software license. According to eWeek, Eben Moglen, General Counsel for the FSF
-estimates that 65 percent to 70 percent of all open-source projects are licensed under the GPL.
+     
 
-We believe in open source software. We believe it is the most effective way to develop, at least, software frameworks. 
-We welcome all initiatives to publish more software under the GPL license, just as we have done.
+Permission is hereby granted, free of charge, to any person obtaining a copy
 
-Dual Licensing Available
+of this software and associated documentation files (the "Software"), to deal
 
-Seomse-commons follows the dual licensing model used by MySQL, Sleepycat, and other companies. 
-The dual licensing model is based on the principle of fair exchange or Quid pro Quo ("something for something").
+in the Software without restriction, including without limitation the rights
 
-The dual licensing model offers you a choice of either a GPL license or a commercial license. 
-The commercial license will exempt you from all GPL obligations. 
-From licensing perspective, we have two different products depending on usage and distribution, though technically they have 
-the same source code.
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 
-Commercial Technical Support Available
+copies of the Software, and to permit persons to whom the Software is
 
-In addition to public forums, we provide commercial technical support by e-mail with 2 business day response time. 
+furnished to do so, subject to the following conditions:
+
+     
+
+The above copyright notice and this permission notice shall be included in all
+
+copies or substantial portions of the Software.
+
+     
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+
+SOFTWARE.
