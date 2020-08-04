@@ -26,7 +26,7 @@ import com.seomse.commons.utils.ExceptionUtil;
  */
 public class DateUtil {
 
-	private static Logger logger = LoggerFactory.getLogger(DateUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(DateUtil.class);
 
 	
 	

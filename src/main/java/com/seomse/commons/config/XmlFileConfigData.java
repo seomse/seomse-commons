@@ -22,7 +22,7 @@ import java.util.Properties;
  */
 public class XmlFileConfigData extends ConfigData{
 
-    private Properties props;
+    private final Properties props;
 
     /**
      * 생성자

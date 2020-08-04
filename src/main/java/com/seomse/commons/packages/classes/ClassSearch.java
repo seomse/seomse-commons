@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class ClassSearch {
 	
-	private String targetPath;
+	private final String targetPath;
 	
 	/**
 	 * 생성자
@@ -43,7 +43,7 @@ public class ClassSearch {
 	 * 클래스패쓰얻기
 	 * @return
 	 */
-	public String getClassPash(){
+	public String getClassPath(){
 		return this.getClass().getResource("/").getPath();
 	}
 	

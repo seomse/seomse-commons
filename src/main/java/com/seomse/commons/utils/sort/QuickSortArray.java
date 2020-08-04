@@ -17,7 +17,7 @@ package com.seomse.commons.utils.sort;
  */
 @SuppressWarnings("Duplicates")
 public class QuickSortArray <T>{
-	private T [] array;
+	private final T [] array;
 
 	
 	/**

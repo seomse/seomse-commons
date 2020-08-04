@@ -18,7 +18,7 @@ package com.seomse.commons.utils.sort;
 public class QuickSortStringArray {
 
 
-	private String [] array;
+	private final String [] array;
 
 	
 	/**

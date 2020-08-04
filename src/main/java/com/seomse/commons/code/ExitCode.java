@@ -18,7 +18,7 @@ public enum ExitCode {
 	, EXIT_ORDER(1002)
 	, ERROR(-1)
 	;
-	private int codeNum;
+	private final int codeNum;
 	ExitCode( int codeNum){
 		this.codeNum = codeNum;
 	}

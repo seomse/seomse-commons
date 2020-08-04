@@ -30,7 +30,7 @@ public class ServiceManager {
         return Singleton.instance;
     }
 
-    private Map<String, Service> serviceMap = new HashMap<>();
+    private final Map<String, Service> serviceMap = new HashMap<>();
 
     private final Object lock = new Object();
 

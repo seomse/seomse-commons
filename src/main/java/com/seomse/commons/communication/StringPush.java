@@ -30,8 +30,8 @@ import java.net.Socket;
 public class StringPush {
 	private static final Logger logger = LoggerFactory.getLogger(StringPush.class);
 
-	private String hostAddress;
-	private int port;
+	private final String hostAddress;
+	private final int port;
 	
 	private Socket socket;			
 	private OutputStreamWriter send;

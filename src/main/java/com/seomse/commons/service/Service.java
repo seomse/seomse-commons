@@ -148,6 +148,7 @@ public abstract class Service extends Thread {
                     }
 
                     if(sleepTime != null && state != State.STOP && sleepTime > 0){
+                        //noinspection BusyWait
                         Thread.sleep(sleepTime);
                     }
                 }

@@ -21,13 +21,10 @@ import java.util.Comparator;
 public class PriorityUtil {
 
 
-    public static final Comparator<Object> PRIORITY_SORT = new Comparator<Object>() {
-        @Override
-        public int compare(Object o1, Object o2 ) {
-            int seq1 = PriorityUtil.getSeq(o1.getClass());
-            int seq2 = PriorityUtil.getSeq(o2.getClass());
-            return Integer.compare(seq1, seq2);
-        }
+    public static final Comparator<Object> PRIORITY_SORT = (o1, o2) -> {
+        int seq1 = PriorityUtil.getSeq(o1.getClass());
+        int seq2 = PriorityUtil.getSeq(o2.getClass());
+        return Integer.compare(seq1, seq2);
     };
 
     /**

@@ -254,25 +254,19 @@ public class Config {
 
 
 
-	private List<ConfigObserver> observerList = new ArrayList<>();
+	private final List<ConfigObserver> observerList = new ArrayList<>();
 	private final Object observerLock = new Object();
 	private final Object notifyLock = new Object();
 	
 	
-	private Object tableInfoLock = new Object();
+	private final Object tableInfoLock = new Object();
 	
 	private ExceptionHandler exceptionHandler;
 
 	private ConfigData [] configDataArray;
 
 
-	private final Comparator<ConfigData> sort =  new Comparator<ConfigData>() {
-        @Override
-        public int compare(ConfigData c1, ConfigData c2 ) {
-
-            return Integer.compare(c1.getPriority(), c2.getPriority());
-        }
-    };
+	private final Comparator<ConfigData> sort = (c1, c2) -> Integer.compare(c1.getPriority(), c2.getPriority());
 
 	/**
 	 * 생성자

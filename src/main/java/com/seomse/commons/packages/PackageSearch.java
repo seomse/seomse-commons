@@ -28,9 +28,9 @@ public class PackageSearch {
 		, END //끝이
 	}
 	
-	private String targetPath;
-	private String startPackage;
-	private int subLength;
+	private final String targetPath;
+	private final String startPackage;
+	private final int subLength;
 	
 	/**
 	 * 생성자

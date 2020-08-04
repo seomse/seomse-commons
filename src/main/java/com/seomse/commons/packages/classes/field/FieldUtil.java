@@ -125,7 +125,7 @@ public class FieldUtil {
 		for(Field copyField : copyFieldArray){
 			
 			for(Field objectField : objectFieldArray){
-				if(copyField.getName().equals(objectField.getName()) && objectField.getClass() == copyField.getClass()){
+				if(copyField.getName().equals(objectField.getName())){
 					copyField.setAccessible(true);
 					objectField.setAccessible(true);
 					

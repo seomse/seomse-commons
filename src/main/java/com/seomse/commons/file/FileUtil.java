@@ -574,20 +574,10 @@ public class FileUtil {
 	}
 
 
-	private final static Comparator<File> FILE_SORT_ASC =  new Comparator<File>() {
-		@Override
-		public int compare(File f1, File f2 ) {
-			return Long.compare(f1.length(), f2.length());
-		}
-	};
+	private final static Comparator<File> FILE_SORT_ASC = (f1, f2) -> Long.compare(f1.length(), f2.length());
 
 
-	private final static Comparator<File> FILE_SORT_DESC =  new Comparator<File>() {
-		@Override
-		public int compare(File f1, File f2 ) {
-			return Long.compare(f2.length(), f1.length());
-		}
-	};
+	private final static Comparator<File> FILE_SORT_DESC = (f1, f2) -> Long.compare(f2.length(), f1.length());
 
 	/**
 	 * 파일을 length (byte 크기) 로 정렬
