@@ -5,18 +5,8 @@ import com.seomse.commons.annotation.Priority;
 import java.util.Comparator;
 
 /**
- * <pre>
- *  파 일 명 : PriorityUtil.java
- *  설    명 : 우선순위 유틸
- *
- *
- *  작 성 자 : macle
- *  작 성 일 : 2019.05.29
- *  버    전 : 1.1
- *  수정이력 : 2019.10.25
- *  기타사항 :
- * </pre>
- * @author Copyrights 2019 by ㈜섬세한사람들. All right reserved.
+ * 우선 순위 관련 유틸
+ * @author macle
  */
 public class PriorityUtil {
 

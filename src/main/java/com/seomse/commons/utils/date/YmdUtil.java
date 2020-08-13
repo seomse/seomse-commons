@@ -1,5 +1,18 @@
-
-
+/*
+ * Copyright (C) 2020 Seomse Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.seomse.commons.utils.date;
 
 import java.text.SimpleDateFormat;
@@ -8,20 +21,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 /**
- * <pre>
- *  파 일 명 : YmdUtil.java
- *  설    명 : 년월일 형태의 날짜활용 유틸성클래스
- *
- *
- *  작 성 자 : macle
- *  작 성 일 : 2017.10
- *  버    전 : 1.1
- *  수정이력 : 2019.12.20
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017 ~ 2019 by ㈜섬세한사람들. All right reserved.
+ * 년월일 yyyyMMdd 형태를 사용 할때의 유틸성 내용 정리
+ * @author macle
  */
-
 public class YmdUtil {
 	
 	/**

@@ -13,16 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.seomse.commons.handler;
+package com.seomse.commons.callback;
 /**
- * 예외처리 핸들러
+ * call back
  * @author macle
  */
-public interface ExceptionHandler {
-	/**
-	 * 예외
-	 * @param e Exception
-	 */
-	void exception(Exception e);
+public interface Callback {
+    void callback();
 }

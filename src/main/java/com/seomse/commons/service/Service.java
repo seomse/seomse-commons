@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2020 Seomse Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.seomse.commons.service;
 
 import com.seomse.commons.callback.ObjCallback;
@@ -6,16 +22,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <pre>
- *  파 일 명 : Service.java
- *  설    명 : 서비스 형태로 동작하는 이벤트 정의
- *  작 성 자 : macle
- *  작 성 일 : 2019.11.11
- *  버    전 : 1.0
- *  수정이력 :
- *  기타사항 :
- * </pre>
- * @author Copyrights 2019 by ㈜섬세한사람들. All right reserved.
+ * 동작 서비스 단위의 추상 쿨래스
+ *
+ * @author macle
  */
 public abstract class Service extends Thread {
 
@@ -29,10 +38,10 @@ public abstract class Service extends Thread {
     }
 
     /**
-     * START : 실행되고 있는 상태
-     * STAND : 대기 상태
-     * STOP : 서비스 중지
-     * ONE_OFF : 반복이 아닌 일회성 시비스
+     * START : started
+     * STAND : stand
+     * STOP :  stop
+     * ONE_OFF :
      * @author macle
      */
     public enum State{
@@ -96,7 +105,7 @@ public abstract class Service extends Thread {
     }
 
     /**
-     * 서비스가 종료되었는지 확인
+     * 서비스가 종료 되었는지 확인
      * @return is stop
      */
     public boolean isStop(){

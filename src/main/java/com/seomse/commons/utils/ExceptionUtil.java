@@ -1,4 +1,18 @@
-
+/*
+ * Copyright (C) 2020 Seomse Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.seomse.commons.utils;
 
@@ -8,18 +22,10 @@ import java.io.PrintStream;
 import org.slf4j.Logger;
 
 import com.seomse.commons.handler.ExceptionHandler;
+
 /**
- * <pre>
- *  파 일 명 : ExceptionUtil.java
- *  설    명 : Exception을 사용할때 공통으로 사용할만한 메소드들을 정의
- *
- *  작 성 자 : macle
- *  작 성 일 : 2017.07
- *  버    전 : 1.1
- *  수정이력 :  2018.04
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017, 2018 by ㈜섬세한사람들. All right reserved.
+ * 예외처리 관련 유틸
+ * @author macle
  */
 public class ExceptionUtil {
 	/**

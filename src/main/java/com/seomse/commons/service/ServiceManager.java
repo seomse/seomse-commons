@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2020 Seomse Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.seomse.commons.service;
 
 import com.seomse.commons.utils.ExceptionUtil;
@@ -7,16 +22,10 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
- * <pre>
- *  파 일 명 : ServiceManager.java
- *  설    명 : 서비스 관리자
- *  작 성 자 : macle
- *  작 성 일 : 2019.11.11
- *  버    전 : 1.0
- *  수정이력 :
- *  기타사항 :
- * </pre>
- * @author Copyrights 2019 by ㈜섬세한사람들. All right reserved.
+ * 서비스 관리
+ * 전체 시작 종료, 추가 삭제 등의 이벤트 지원
+ * 싱글턴
+ * @author macle
  */
 public class ServiceManager {
 
@@ -36,17 +45,13 @@ public class ServiceManager {
 
 
     /**
-     * 생성자
-     * 싱글턴 생성자 접근제한
+     *
+     * Singleton
      */
     private ServiceManager(){
 
     }
 
-    /**
-     * 서비스 추가
-     * @param service service
-     */
     public void addService(Service service){
         synchronized (lock){
             if(serviceMap.containsKey(service.getServiceId())){
@@ -56,21 +61,12 @@ public class ServiceManager {
         }
     }
 
-    /**
-     * 서비스가 중지될때 호출
-     * 서비스에서 자동 호출.
-     * @param serviceId
-     */
     void removeService(String serviceId){
         synchronized (lock){
             serviceMap.remove(serviceId);
         }
     }
 
-    /**
-     * 서비스 중지
-     * @param serviceId 서비스 아이디
-     */
     public Service stopService(String serviceId){
         synchronized (lock){
             Service service = serviceMap.get(serviceId);
@@ -82,9 +78,6 @@ public class ServiceManager {
         }
     }
 
-    /**
-     * 서비스 전체 중지
-     */
     public void stopServiceAll(){
         synchronized (lock){
             Collection<Service> serviceColl =  serviceMap.values();
@@ -95,10 +88,6 @@ public class ServiceManager {
     }
 
 
-    /**
-     * 서비스 강제 종료
-     * @param serviceId 서비스 아이디
-     */
     public Service killService(String serviceId){
         synchronized (lock){
 
@@ -116,9 +105,6 @@ public class ServiceManager {
         }
     }
 
-    /**
-     * 서비스 전체 강제종료
-     */
     public void killServiceAll(){
         synchronized (lock){
             Collection<Service> serviceColl =  serviceMap.values();
@@ -133,10 +119,6 @@ public class ServiceManager {
     }
 
 
-    /**
-     * 동작중인 서비스 아이디 배열 얻기
-     * @return 동작중인 서비스 아이디 배열
-     */
     public String [] getLiveServices(){
         synchronized (lock){
             List<String> serviceIdList = new ArrayList<>();

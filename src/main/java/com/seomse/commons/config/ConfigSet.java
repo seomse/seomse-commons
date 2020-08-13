@@ -1,19 +1,29 @@
+/*
+ * Copyright (C) 2020 Seomse Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.seomse.commons.config;
+
 /**
- * <pre>
- *  파 일 명 : ConfigSet.java
- *  설    명 : 설정에서 사용되는 초기 로드정보 설정
- *             기본 설정을 변경할 경우
- *             초기 구동시 Config 호출 보다 먼저 호출되게 구현
+ *
+ *  config 설정 정보를 변경할 경우 main 에서 여기 설정을 ㅁ너저 변경 
+ *  설정에서 사용되는 초기 로드정보 설정
+ *  기본 설정을 변경할 경우
+ *  초기 구동시 Config 호출 보다 먼저 호출되게 구현
  *
  *
- *  작 성 자 : macle
- *  작 성 일 : 2019.05.27
- *  버    전 : 1.0
- *  수정이력 :
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017, 2019 by ㈜섬세한사람들. All right reserved.
+ * @author macle
  */
 public class ConfigSet {
 

@@ -1,7 +1,6 @@
 
-package com.seomse.commons.file;
+package com.seomse.commons.utils;
 
-import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.commons.utils.string.Check;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -574,7 +573,7 @@ public class FileUtil {
 	}
 
 
-	private final static Comparator<File> FILE_SORT_ASC = (f1, f2) -> Long.compare(f1.length(), f2.length());
+	private final static Comparator<File> FILE_SORT_ASC = Comparator.comparingLong(File::length);
 
 
 	private final static Comparator<File> FILE_SORT_DESC = (f1, f2) -> Long.compare(f2.length(), f1.length());

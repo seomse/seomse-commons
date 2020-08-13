@@ -1,25 +1,32 @@
+/*
+ * Copyright (C) 2020 Seomse Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 
-package com.seomse.commons.packages.classes.field;
+package com.seomse.commons.utils.packages.classes.field;
 
-import java.lang.reflect.Field;
-
+import com.seomse.commons.utils.ExceptionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.seomse.commons.utils.ExceptionUtil;
+import java.lang.reflect.Field;
+
+
 /**
- * <pre>
- *  파 일 명 : FieldUtil.java
- *  설    명 : 필드를 사용할때 필요한 유틸모음
- *
- *  작 성 자 : macle
- *  작 성 일 : 2017.09
- *  버    전 : 1.0
- *  수정이력 :
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
+ * reflect field 유틸
+ * @author macle
  */
 public class FieldUtil {
 	
@@ -38,17 +45,7 @@ public class FieldUtil {
 		if(classes.getSuperclass() != Object.class){
 			Field [] tempFields = fields;
 			Field [] superFields = classes.getSuperclass().getDeclaredFields();
-			fields = new Field[superFields.length + tempFields.length];
-			int i=0;
-			
-			for(Field field : superFields){
-				fields[i] = field;
-				i++;
-			}
-			for(Field field : tempFields){
-				fields[i] = field;
-				i++;
-			}
+			fields = mergeField(superFields, tempFields);
 			
 			return getFieldArrayToAllParents(classes.getSuperclass(), fields);
 			
@@ -67,17 +64,7 @@ public class FieldUtil {
 		if(classes.getSuperclass() != Object.class){
 			Field [] tempFields = fields;
 			Field [] superFields = classes.getSuperclass().getDeclaredFields();
-			fields = new Field[superFields.length + tempFields.length];
-			int i=0;
-			
-			for(Field field : superFields){
-				fields[i] = field;
-				i++;
-			}
-			for(Field field : tempFields){
-				fields[i] = field;
-				i++;
-			}
+			fields = mergeField(superFields, tempFields);
 			return getFieldArrayToAllParents(classes.getSuperclass(), fields);
 		}
 		
@@ -95,23 +82,31 @@ public class FieldUtil {
 		if(classes.getSuperclass() != Object.class){
 			Field [] tempFields = fields;
 			Field [] superFields = classes.getSuperclass().getDeclaredFields();
-			fields = new Field[superFields.length + tempFields.length];
-			int i=0;
-			
-			for(Field field : superFields){
-				fields[i] = field;
-				i++;
-			}
-			for(Field field : tempFields){
-				fields[i] = field;
-				i++;
-			}
-			
+			fields = mergeField(superFields, tempFields);
 		}
 		
 		return fields;
 	}
-	
+
+
+	public static Field [] mergeField(Field [] fields, Field [] mergeFields){
+		Field [] newFields = new Field[fields.length + mergeFields.length];
+
+		int i=0;
+
+		for(Field field : fields){
+			newFields[i] = field;
+			i++;
+		}
+
+		for(Field field : mergeFields){
+			newFields[i] = field;
+			i++;
+		}
+
+		return newFields;
+	}
+
 	/**
 	 * 같은필드가있을경우 내부데이터를 복사
 	 * @param originalObject originalObject

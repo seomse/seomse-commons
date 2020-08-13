@@ -1,5 +1,18 @@
-
-
+/*
+ * Copyright (C) 2020 Seomse Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.seomse.commons.config;
 
 import ch.qos.logback.classic.LoggerContext;
@@ -13,25 +26,19 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.*;
 /**
- * <pre>
- *  파 일 명 : Config.java
- *  설    명 : 설정
- *
- *
- *  작 성 자 : macle
- *  작 성 일 : 2017.07
- *  버    전 : 1.3
- *  수정이력 : 2019.02, 2019.05.28, 2019.10.27
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017 ~ 2019 by ㈜섬세한사람들. All right reserved.
+ * 설정
+ * 여러 설정의 우선순위를 사용하여 설정을 얻을 수 있음
+ * 시스템 프로퍼티
+ * xml파일
+ * database에 저장된 설정정보등 설정정보에 대한 우선순위를 활용할때 유용함
+ * @author macle
  */
 public class Config {
 	private final static Logger logger = LoggerFactory.getLogger(Config.class);
-	
+
 
 	private static final Config instance = new Config();
-	
+
 	/**
 	 * 예외 핸들러 설정
 	 * @param exceptionHandler exceptionHandler
@@ -39,7 +46,7 @@ public class Config {
 	public static void setExceptionHandler(ExceptionHandler exceptionHandler) {
 		instance.exceptionHandler = exceptionHandler;
 	}
-	
+
 	/**
 	 * 설정값 얻기
 	 * @param key 설정키
@@ -48,7 +55,7 @@ public class Config {
 	public static String getConfig(String key){
 		return instance.getConfigValue(key);
 	}
-	
+
 	/**
 	 * 설정값 얻기
 	 * @param key 설정키
@@ -58,7 +65,7 @@ public class Config {
 	public static String getConfig(String key, String defaultValue){
 		return instance.getConfigValue(key, defaultValue);
 	}
-	
+
 	/**
 	 * 설정값 세팅
 	 * @param key key
@@ -76,8 +83,8 @@ public class Config {
 	public static Long getLong(String key){
 		return getLong(key, null);
 	}
-	
-	/** 
+
+	/**
 	 * 설정값 얻기 Long형
 	 * @param key 설정키
 	 * @param defaultValue 기본값
@@ -88,14 +95,14 @@ public class Config {
 		if(resultValue == null){
 			return defaultValue;
 		}
-		
+
 		resultValue = resultValue.trim();
 		try{
 			return Long.parseLong(resultValue);
 		}catch(Exception e){
 			ExceptionUtil.exception(e, logger, instance.exceptionHandler);
 		}
-		
+
 		return defaultValue;
 	}
 
@@ -107,8 +114,8 @@ public class Config {
 	public static Integer getInteger(String key){
 		return getInteger(key, null);
 	}
-	
-	/** 
+
+	/**
 	 * 설정값 얻기 Integer 형
 	 * @param key 설정키
 	 * @param defaultValue 기본값
@@ -119,18 +126,18 @@ public class Config {
 		if(resultValue == null){
 			return defaultValue;
 		}
-		
+
 		resultValue = resultValue.trim();
 		try{
 			return Integer.parseInt(resultValue);
 		}catch(Exception e){
 			ExceptionUtil.exception(e, logger, instance.exceptionHandler);
 		}
-		
+
 		return defaultValue;
 	}
-	
-	/** 
+
+	/**
 	 * 설정값 얻기 Double 형
 	 * @param key 설정키
 	 * @return config value(double)
@@ -138,8 +145,8 @@ public class Config {
 	public static Double getDouble(String key){
 		return getDouble(key, null);
 	}
-	
-	/** 
+
+	/**
 	 * 설정값 얻기 Double 형
 	 * @param key 설정키
 	 * @param defaultValue 기본값
@@ -150,18 +157,18 @@ public class Config {
 		if(resultValue == null){
 			return defaultValue;
 		}
-		
+
 		resultValue = resultValue.trim();
 		try{
 			return Double.parseDouble(resultValue);
 		}catch(Exception e){
 			ExceptionUtil.exception(e, logger, instance.exceptionHandler);
 		}
-		
+
 		return defaultValue;
 	}
-	
-	
+
+
 	/**
 	 * 설정값 얻기 Boolean 형
 	 * @param key 설정키
@@ -170,7 +177,7 @@ public class Config {
 	public static Boolean getBoolean(String key){
 		return getBoolean(key, null);
 	}
-			
+
 	/**
 	 * 설정값 얻기 Boolean 형
 	 * @param key 설정키
@@ -184,15 +191,15 @@ public class Config {
 		}
 
 		resultValue = resultValue.trim();
-		
+
 		if(resultValue.toUpperCase().equals("Y") || resultValue.toLowerCase().equals("true")){
 			return true;
 		}else if(resultValue.toUpperCase().equals("N") || resultValue.toLowerCase().equals("false")){
 			return false;
 		}else{
 			logger.error("config value error (N,Y) or (true, false) -> " + resultValue);
-			return defaultValue; 
-		}	
+			return defaultValue;
+		}
 	}
 
 
@@ -215,8 +222,8 @@ public class Config {
 			instance.observerList.add(configObserver);
 		}
 	}
-	
-	/**
+
+	/**8
 	 * 옵져버 제거 ( 설정정보 업데이트 내역 )
 	 * @param configObserver configObserver
 	 */
@@ -233,18 +240,18 @@ public class Config {
 	 * @param isErrorLog isErrorLog
 	 */
 	private static void setLogbackConfigPath(String configPath, boolean isErrorLog){
-		File file = new File(configPath);	
+		File file = new File(configPath);
 		if(!file.isFile()){
 			return ;
 		}
 		LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-	    
+
 	    try {
 	      JoranConfigurator configurator = new JoranConfigurator();
 	      configurator.setContext(context);
-	      context.reset(); 
+	      context.reset();
 	      configurator.doConfigure(configPath);
-	    
+
 	    } catch (JoranException je) {
 	    	if(isErrorLog){
 	    		ExceptionUtil.exception(je, logger, instance.exceptionHandler);
@@ -257,16 +264,16 @@ public class Config {
 	private final List<ConfigObserver> observerList = new ArrayList<>();
 	private final Object observerLock = new Object();
 	private final Object notifyLock = new Object();
-	
-	
+
+
 	private final Object tableInfoLock = new Object();
-	
+
 	private ExceptionHandler exceptionHandler;
 
 	private ConfigData [] configDataArray;
 
 
-	private final Comparator<ConfigData> sort = (c1, c2) -> Integer.compare(c1.getPriority(), c2.getPriority());
+	private final Comparator<ConfigData> sort = Comparator.comparingInt(ConfigData::getPriority);
 
 	/**
 	 * 생성자
@@ -451,7 +458,7 @@ public class Config {
 		if(changeInfos == null || changeInfos.length ==0){
 			return;
 		}
-		
+
 		for(ConfigInfo configInfo : changeInfos){
 			logger.trace("Config update key: " + configInfo.key + " value: " + configInfo.value);
 		}
@@ -459,11 +466,11 @@ public class Config {
 		synchronized (observerLock) {
 			configObserverArray = observerList.toArray(new ConfigObserver[0]);
 		}
-		
+
 		synchronized (notifyLock) {
 			for(ConfigObserver configObserver : configObserverArray){
 				configObserver.updateConfig(changeInfos);
-			}	
+			}
 		}
 	}
 }

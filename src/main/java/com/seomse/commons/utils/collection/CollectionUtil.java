@@ -1,22 +1,26 @@
-
-
+/*
+ * Copyright (C) 2020 Seomse Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.seomse.commons.utils.collection;
 
 import java.util.Collection;
 /**
- * <pre>
- *  파 일 명 : CollectionUtil.java
- *  설    명 : Collection 관련 구현체를 사용할떄의 유틸성 내용
+ * java.util.Collection 패지키 유틸성 메소드
  *
- *  작 성 자 : macle
- *  작 성 일 : 2018.03
- *  버    전 : 1.0
- *  수정이력 :
- *  기타사항 :
- * </pre>
- * @author Copyrights 2018 by ㈜섬세한사람들. All right reserved.
+ * @author macle
  */
-
 public class CollectionUtil {
 	/**
 	 * 동등비교 null 인식
