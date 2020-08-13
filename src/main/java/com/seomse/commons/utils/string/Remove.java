@@ -36,14 +36,16 @@ public class Remove {
     /**
      * HTML테그를 제거한다
      * @param str 문자열
-     * @return
+     * @return string
      */
+    @SuppressWarnings({"RegExpSingleCharAlternation", "RegExpRedundantEscape"})
     public static String htmlTag(String str){
         str = Change.enterContinue(str);
         str = Change.spaceContinueTab(str);
 //		"<(.|\n)*?>";
 //		String tag = "<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>";
 //		String tag = "<(|\\n)*?>";  //<> 전부 다지움
+
 
         String tag = "<(/)?([\\?:a-zA-Z0-9\\-\\s-]*)(\\s[\\?:_a-zA-Z0-9\\s-]*=[^>]*)?(\\s)*(/)?>";
         String entry = "&[a-z0-9#]+;";

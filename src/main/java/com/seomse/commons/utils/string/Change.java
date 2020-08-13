@@ -57,7 +57,7 @@ public class Change {
      * 특수문자를 변경한다
      * @param str 변경할 문자열
      * @param changeValue 변경될 값
-     * @return
+     * @return string change value
      */
     public static String special(String str, String changeValue){
         String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]";
@@ -67,8 +67,8 @@ public class Change {
 
     /**
      * 숫자 사이에 있는 .(dot)을 스페이스로 변경한다
-     * @param str
-     * @return
+     * @param str string
+     * @return string change value
      */
     public static String noNumberDot(String str){
 

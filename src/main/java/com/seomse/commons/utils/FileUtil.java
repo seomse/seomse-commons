@@ -1,4 +1,18 @@
-
+/*
+ * Copyright (C) 2020 Seomse Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.seomse.commons.utils;
 
 import com.seomse.commons.utils.string.Check;
@@ -18,20 +32,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * <pre>
- *  파 일 명 : FileUtil.java
- *  설    명 : File을 사용할때 공통으로 사용할만한 메소드들을 정의
- *
- *
- *  작 성 자 : macle
- *  작 성 일 : 2017.09
- *  버    전 : 1.2
- *  수정이력 :  2018.04, 2019.05.28(sortToLength 추가)
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017 ~ 2019 by ㈜섬세한사람들. All right reserved.
+ * 파일처리 관련 유틸성 클래스
+ * @author macle
  */
-
 public class FileUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
@@ -244,7 +247,9 @@ public class FileUtil {
 		
 		return true;
 	}
-	
+
+
+
 	/**
 	 * 파일을 복사한다.
 	 * @param inFileName 복사대상
@@ -275,6 +280,7 @@ public class FileUtil {
 			 return false;
 		 }
 	}
+
 
 	 /**
 	  * 파일 이동

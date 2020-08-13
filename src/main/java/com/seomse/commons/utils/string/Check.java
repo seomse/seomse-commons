@@ -29,7 +29,7 @@ public class Check {
 	/**
 	 * 이메일 유효성 체크 
 	 * @param str 체크할 문자열
-	 * @return
+	 * @return boolean email check flag
 	 */
 	public static boolean isEmailPattern(String str){
 		Pattern pattern=Pattern.compile("^[a-zA-Z0-9]+@[a-zA-Z0-9]+$");
@@ -40,7 +40,7 @@ public class Check {
 	/**
 	 * 문자열이 숫자로만 이루어져 있는지 체크
 	 * @param str 체크할 문자열
-	 * @return
+	 * @return boolean number check flag
 	 */
 	public static boolean isNumber(String str){
 		if(str == null)
@@ -62,7 +62,7 @@ public class Check {
 	/**
 	 * char가 숫자인지 체크
 	 * @param ch 체크할 케릭터
-	 * @return
+	 * @return boolean number check flag
 	 */
 	public static boolean isNumber(char ch){
 		return ch <= 57 && ch >= 48;
@@ -71,7 +71,7 @@ public class Check {
 	/**
 	 * 숫자형 형태인지 체크 (소수점 포함)
 	 * @param str 체크할 문자열
-	 * @return 
+	 * @return boolean number type check flag
 	 */
 	public static boolean isNumberType(String str){
 		if(str == null || str.length()<1){
@@ -110,7 +110,7 @@ public class Check {
 	/**
 	 * 영어로 이루어져 있는지 체크한다.
 	 * @param str 체크할 문자열
-	 * @return
+	 * @return  boolean english check flag
 	 */
 	public static boolean isEng(String str){
 		str = str.toLowerCase();
@@ -125,8 +125,8 @@ public class Check {
 	
 	/**
 	 * 케릭터가 영어로 이루어져 있는지 체크한다.
-	 * @param ch
-	 * @return
+	 * @param ch char
+	 * @return  boolean english check flag
 	 */
 	public static boolean isEng(char ch){
 		
@@ -138,8 +138,8 @@ public class Check {
 	
 	/**
 	 * 한글자모인지 체크
-	 * @param ch
-	 * @return
+	 * @param ch char
+	 * @return  boolean english check flag
 	 */
 	public static boolean isHangulJamo(char ch) {
 	
@@ -154,8 +154,8 @@ public class Check {
 	
 	/**
 	 * 한글인지 체크한다.
-	 * @param ch
-	 * @return
+	 * @param ch char
+	 * @return  boolean hangul check flag
 	 */
 	public static boolean isHangul(char ch) {
 	
@@ -169,8 +169,8 @@ public class Check {
 
 	/**
 	 * 한글 완성형 문자인지 체크한다.
-	 * @param ch
-	 * @return
+	 * @param ch char
+	 * @return boolean hangul check flag
 	 */
 	public static boolean isHangulSyllable(char ch) {
 	
@@ -182,8 +182,8 @@ public class Check {
 	
 	/**
 	 * 한글 완성형 문자인지 체크한다.
-	 * @param str
-	 * @return
+	 * @param str string
+	 * @return boolean hangul check flag
 	 */
 	public static boolean isHangulSyllable(String str) {
 	
@@ -201,10 +201,10 @@ public class Check {
 	
 	/**
 	 * 완성형한글문자와 숫자 스페이스로만 이루어진 글자인지 검사한다.
-	 * @param str
-	 * @return
+	 * @param str string
+	 * @return boolean hangul or number check flag
 	 */
-	public static boolean isHangulAndNumber(String str) {
+	public static boolean isHangulOrNumber(String str) {
 	
 		int length = str.length();
 		for (int i=0; i < length ; i++){
@@ -225,8 +225,8 @@ public class Check {
 	
 	/**
 	 * 음절형인지 체크한다(완성형 한글자이거나, 영문자이거나, 숫자일때 true)
-	 * @param ch
-	 * @return
+	 * @param ch char
+	 * @return boolean hangul type check flag
 	 */
 	public static boolean isSyllableType(char ch){
 		return isHangulSyllable(ch)
