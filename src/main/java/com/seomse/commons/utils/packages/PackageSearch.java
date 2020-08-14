@@ -66,7 +66,7 @@ public class PackageSearch {
 	
 	/**
 	 * 텍스트가 포함된 패키지 리스트 얻기
-	 * @param text
+	 * @param text string  in text
 	 * @return PackageList
 	 */
 	public List<String> getPackageList(String text){
@@ -79,7 +79,7 @@ public class PackageSearch {
 	 * 	INCLUDE //포함되어있으면
 	 *	, START //시작이
 	 *	, END //끝이
-	 * @param text
+	 * @param text string
 	 * @param option PackageList
 	 * @return PackageList
 	 */

@@ -36,8 +36,8 @@ public class FieldUtil {
 	
 	/**
 	 * 상속한 모든부모의 필드까지 얻기 (상속에 상속에 상속 구조)
-	 * @param classes
-	 * @return
+	 * @param classes class
+	 * @return filed [] filed array
 	 */
 	public static Field [] getFieldArrayToAllParents(Class<?> classes){
 		Field [] fields = classes.getDeclaredFields();
@@ -56,9 +56,9 @@ public class FieldUtil {
 	
 	/**
 	 * 상속한 모든부모의 필드까지 얻기 (상속에 상속에 상속 구조)
-	 * @param classes
-	 * @param fields
-	 * @return
+	 * @param classes class
+	 * @param fields field []
+	 * @return field []
 	 */
 	private static Field [] getFieldArrayToAllParents(Class<?> classes, Field [] fields){
 		if(classes.getSuperclass() != Object.class){
@@ -73,8 +73,8 @@ public class FieldUtil {
 	
 	/**
 	 * 자신의 상의부모 필드까지 얻기
-	 * @param classes
-	 * @return
+	 * @param classes class
+	 * @return filed []
 	 */
 	public static Field [] getFieldArrayToParents(Class<?> classes){
 		Field [] fields = classes.getDeclaredFields();
@@ -88,7 +88,12 @@ public class FieldUtil {
 		return fields;
 	}
 
-
+	/**
+	 * merge filed
+	 * @param fields filed []
+	 * @param mergeFields filed []
+	 * @return filed []
+	 */
 	public static Field [] mergeField(Field [] fields, Field [] mergeFields){
 		Field [] newFields = new Field[fields.length + mergeFields.length];
 

@@ -38,9 +38,11 @@ public class TimeUtil {
 	}
 	
 
+
 	/**
 	 * 분단위 값을 가져온다.
-	 * @return milleSecond 천분의 1초 
+	 * @param milleSecond long 1/1000 seconds
+	 * @return double
 	 */
 	public static double getMinute(long milleSecond){
 		return (double)milleSecond/(double)minuteTime;

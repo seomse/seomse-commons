@@ -239,9 +239,9 @@ public class Check {
 	
 	/**
 	 * null 을포함해서 두개의 문자열이 같은지 비교
-	 * @param a
-	 * @param b
-	 * @return
+	 * @param a string
+	 * @param b string
+	 * @return boolean equals check
 	 */
 	public static boolean isEquals(String a, String b){
 		if(a == null && b == null){
@@ -265,8 +265,8 @@ public class Check {
 //		,'！','＇'};
 	/**
 	 * 특수문자여부
-	 * @param ch
-	 * @return
+	 * @param ch char
+	 * @return boolean Special check
 	 */
 	public static boolean isSpecialCharacter(char ch){
 		
@@ -283,10 +283,10 @@ public class Check {
 	
 	/**
 	 * 특수문자여부
-	 * @param 
-	 * @return
+	 * @param str string check value
+	 * @return boolean  all special char  check
 	 */
-	public static boolean isSpecialCharacter(String str){
+	public static boolean isAllSpecialCharacter(String str){
 		
 		String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]";
 
@@ -301,7 +301,7 @@ public class Check {
 	/**
 	 * 문자열에 숫자가 없는지체크
 	 * @param str 체크할 문자열
-	 * @return
+	 * @return boolean not number in check
 	 */
 	public static boolean isNotNumber(String str){
 		if(str == null)

@@ -25,11 +25,12 @@ import java.util.List;
  * @author macle
  */
 public class YmdUtil {
-	
+
 	/**
 	 * 시작일부터 끝일까지의 날짜리스트값 얻기
-	 * @param startYmd startYmd
-	 * @return YmdList
+	 * @param startYmd string yyyyMMdd
+	 * @param endYmd string yyyyMMdd
+	 * @return List yyyyMMdd list
 	 */
 	public static List<String> getYmdList (String startYmd, String endYmd){
 		

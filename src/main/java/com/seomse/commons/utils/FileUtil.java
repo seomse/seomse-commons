@@ -41,7 +41,8 @@ public class FileUtil {
 
 
 	/**
-	 * 파일 내용을 줄바꿈 단위로 가져온다
+	 * 파일 내용을 줄바꿈 단위로 가져 온다
+	 * @param file file target text file
 	 * @param charSet 파일 케릭터셋
 	 * @return 파일 라인 리스트
 	 */
@@ -62,9 +63,10 @@ public class FileUtil {
 		return dataList;
 	}
 	
-	
+
 	/**
 	 * 파일 내용을 줄바꿈 단위로 가져온다
+	 * @param file file target text file
 	 * @param charSet 파일 케릭터셋
 	 * @return 파일 라인 리스트
 	 */
@@ -105,6 +107,11 @@ public class FileUtil {
 		return fileList;
 	}
 
+	/**
+	 * list에 파일 누적
+	 * @param fileList List<File> 파일을 누적 하는 list
+	 * @param file dir or file
+	 */
 	private static void addFiles(List<File> fileList, File file){
 		fileList.add(file);
 		if(file.isDirectory()){
@@ -205,9 +212,9 @@ public class FileUtil {
 	
 	/**
 	 * 경로 전체 복사
-	 * @param inPath 입력경로
-	 * @param outPath 출력경로
-	 * @return 복사 성공여부
+	 * @param inPath string 입력경로
+	 * @param outPath string 출력경로
+	 * @return boolean success, fail flag
 	 */
 	@SuppressWarnings({"unused"})
 	public static boolean copy(String inPath, String outPath){
@@ -254,6 +261,7 @@ public class FileUtil {
 	 * 파일을 복사한다.
 	 * @param inFileName 복사대상
 	 * @param outFileName 복사파일
+	 * @return boolean success, fail flag
 	 */
 	@SuppressWarnings("WeakerAccess")
 	public static boolean fileCopy(String inFileName, String outFileName) {
@@ -287,6 +295,7 @@ public class FileUtil {
 	  * @param inFileName 이동대상
 	  * @param outFileName 이동파일
 	  * @param isNameMake 파일명이 존재하면 이름을 자동생서할지 여부 (1) 형태로 붙어서 생성됨
+	  * @return boolean success, fail flag
 	  */
 	@SuppressWarnings({"unused", "UnusedReturnValue"})
 	public static boolean move(String inFileName, String outFileName, boolean isNameMake) {
@@ -457,10 +466,11 @@ public class FileUtil {
 		File file = new File(filePath);
 		return (file.exists() && file.canRead() && !file.isDirectory());
 	}
-	
+
 	/**
 	 * 디렉토리가 비어있는지 여부
-	 * @return isEmptyDir 디렉토리가 비어있는지 여부
+	 * @param dirPath string dir path
+	 * @return boolean empty dir flag
 	 */
 	@SuppressWarnings("unused")
 	public static boolean isEmptyDir(String dirPath) {

@@ -42,7 +42,7 @@ public class DateUtil {
 	/**
 	 * long형 날짜를 문자열로 변환 시켜주는 유팉
 	 * @param currTime 기준 시간
-	 * @return
+	 * @return string default yyyyMMddHHmmss
 	 */
 	public static String getDateYmd(long currTime){
 		return getDateYmd(currTime , DEFAULT_DATE_FORMATTER);
@@ -51,18 +51,18 @@ public class DateUtil {
 	/**
 	 * long형 날짜를 문자열로 변환 시켜주는 유팉
 	 * @param currTime 기준시간
-	 * @param dateFomatter 날짜포맷 문자열 ex) yyyyMMdd
-	 * @return
+	 * @param dateFormatter 날짜포맷 문자열 ex) yyyyMMdd
+	 * @return string formatter value
 	 */
-	public static String getDateYmd(long currTime , String dateFomatter){
-		SimpleDateFormat sdf = new SimpleDateFormat(dateFomatter);
+	public static String getDateYmd(long currTime , String dateFormatter){
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormatter);
 		return sdf.format(new Date(currTime));
 	}
 	
 	/**
 	 * 날짜 문자열을 long형 시간으로 바꿔주는 유팉
 	 * @param currTime 기준시간
-	 * @return
+	 * @return long unix time
 	 */
 	public static long getDateTime(String currTime){
 		return getDateTime(currTime,DEFAULT_DATE_FORMATTER); 
@@ -70,12 +70,12 @@ public class DateUtil {
 	
 	/**
 	 * 날짜 문자열을 long형 시간으로 바꿔주는 유팉
-	 * @param currTime
-	 * @param dateFomatter 날짜포맷 문자열 ex) yyyyMMdd
-	 * @return
+	 * @param currTime string time text
+	 * @param dateFormatter 날짜포맷 문자열 ex) yyyyMMdd
+	 * @return long unix time
 	 */
-	public static long getDateTime(String currTime , String dateFomatter){
-		SimpleDateFormat sdf = new SimpleDateFormat(dateFomatter);		
+	public static long getDateTime(String currTime , String dateFormatter){
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormatter);
 		long result=-1L;
 		try {
 			result = (sdf.parse(currTime)).getTime();
@@ -90,15 +90,15 @@ public class DateUtil {
 	 * @param currTime 기준시간 
 	 * @param calendarType Calandar 날짜타입 (예시)Calandar.HOUR 
 	 * @param addTime add 시간 (예시) -3
-	 * @param dateFomatter  yyyyMMddHHmmss
-	 * @return
+	 * @param dateFormatter  yyyyMMddHHmmss
+	 * @return string formatter value
 	 */
-	public static String addDateYmd(String currTime , int calendarType , int addTime , String dateFomatter ){
+	public static String addDateYmd(String currTime , int calendarType , int addTime , String dateFormatter ){
 		
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime( new Date( getDateTime(currTime , dateFomatter) ));
+		calendar.setTime( new Date( getDateTime(currTime , dateFormatter) ));
 		calendar.add(calendarType, addTime); // 3개월 치 시간 데이터 계산
-		return DateUtil.getDateYmd(calendar.getTime().getTime() , dateFomatter);
+		return DateUtil.getDateYmd(calendar.getTime().getTime() , dateFormatter);
 		
 	}
 	/**
@@ -106,7 +106,7 @@ public class DateUtil {
 	 * @param currTime 기준시간 기본 : yyyyMMddHHmmss
 	 * @param calendarType Calandar 날짜타입 (예시)Calandar.HOUR 
 	 * @param addTime add 시간 (예시) -3
-	 * @return
+	 * @return  string default yyyyMMddHHmmss
 	 */
 	public static String addDateYmd(String currTime , int calendarType , int addTime  ){
 		return addDateYmd(currTime, calendarType, addTime , DEFAULT_DATE_FORMATTER);
@@ -114,14 +114,14 @@ public class DateUtil {
 	
 	/**
 	 * 파싱가능한 날짜포맷인지 체크한다.
-	 * @param pattern
-	 * @param value
+	 * @param dateFormatter yyyyMMddHHmmss
+	 * @param value value
 	 * @return boolean
 	 */
-	public static boolean isValidDateFormat(String pattern, String value) {
+	public static boolean isValidDateFormat(String dateFormatter, String value) {
 		Date date = null;
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+			SimpleDateFormat sdf = new SimpleDateFormat(dateFormatter);
 			date = sdf.parse(value);
 			if (!value.equals(sdf.format(date))) {
 				date = null;

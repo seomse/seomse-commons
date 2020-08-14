@@ -29,8 +29,9 @@ public class NetworkUtil {
 
 	/**
 	 * hostAddress 정보가 있는 inetAddress 얻기
-	 * @param hostAddress hostAddress
+	 * @param hostAddress string host address
 	 * @return inetAddress
+	 * @throws SocketException  SocketException
 	 */
 	public static InetAddress getInetAddress(String hostAddress ) throws SocketException{
 
@@ -54,7 +55,8 @@ public class NetworkUtil {
 	/**
 	 * 맥주소 얻기
 	 * @param inetAddress inetAddress
-	 * @return MacAddress
+	 * @return string mac address
+	 * @throws SocketException SocketException
 	 */
 	public static  String getMacAddress(InetAddress inetAddress) throws SocketException {
 		

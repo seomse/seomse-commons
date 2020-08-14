@@ -9,7 +9,7 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Seomse Commons</name>
+    <name>seomse-commons</name>
     <description>config, utils, service</description>
     <url>https://github.com/seomse/seomse-commons</url>
 
@@ -33,22 +33,19 @@
     </scm>
 
     <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
         <repository>
-            <id>seomse-commons</id>
-            <url>https://api.bintray.com/maven/seomse/seomse-commons/commons/;publish=1</url>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
-    </distributionManagement>
 
+    </distributionManagement>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <bintray.repo>seomse/seomse-commons</bintray.repo>
-        <bintray.package>commons</bintray.package>
-        <!-- Logging -->
-        <logback.version>1.2.3</logback.version>
-        <slf4j.version>1.7.25</slf4j.version>
-        <!-- Test -->
-        <junit.version>4.12</junit.version>
     </properties>
 
     <build>
@@ -95,11 +92,10 @@
                 </executions>
             </plugin>
 
-            <!-- GPG sign -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
+                <version>1.4</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
@@ -110,10 +106,14 @@
                     </execution>
                 </executions>
             </plugin>
+
+
         </plugins>
     </build>
 
+
     <dependencies>
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
@@ -127,10 +127,11 @@
         </dependency>
 
         <dependency>
-            <groupId>och.qos.logback</groupId>
+            <groupId>ch.qos.logback</groupId>
             <artifactId>logback-access</artifactId>
             <version>1.2.3</version>
         </dependency>
 
     </dependencies>
+
 </project>
