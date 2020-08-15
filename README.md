@@ -24,6 +24,9 @@
 # gradle
 implementation 'com.seomse.commons:seomse-commons:1.0.0'
 
+# etc
+https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.0.0
+
 # communication
 blog, homepage
 - www.seomse.com
