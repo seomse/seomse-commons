@@ -21,7 +21,7 @@
  서비스 관리
  - 서비스로 실행되는 Thread 관리기능 제공
  
-#gradle
+# gradle
 implementation 'com.seomse.commons:seomse-commons:1.0.0'
 
 # communication
