@@ -21,12 +21,19 @@
  서비스 관리
  - 서비스로 실행되는 Thread 관리기능 제공
  
-#문서자료
-구성 부분에 있는 기능들의 상세한 사용 방법은 지원 하려 합니다.
- - 아직 문서화는 진행 되지 않았습니다.
-
-https://seomse.com/ 
-주소에 업데이트 될 예정 입니다.
-
 #gradle
 implementation 'com.seomse.commons:seomse-commons:1.0.0'
+
+# communication
+blog, homepage
+- www.seomse.com
+- seomse.com
+
+카카오톡 오픈톡
+ - https://open.kakao.com/o/g6vzOKqb
+
+슬랙 slack
+ - https://seomse.slack.com/
+
+email (협업, 외주)
+ - comseomse@gmail.com
