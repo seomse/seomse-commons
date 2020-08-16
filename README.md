@@ -28,7 +28,7 @@ implementation 'com.seomse.commons:seomse-commons:1.1.0'
 https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.1.0
 
 # communication
-###blog, homepage
+### blog, homepage
 - https://seomse.tistory.com/
 - www.seomse.com
 - seomse.com
