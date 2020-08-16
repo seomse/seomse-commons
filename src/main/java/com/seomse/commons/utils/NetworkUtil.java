@@ -21,7 +21,7 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 /**
- * 예외처리 관련 유틸
+ * ip, mac 관련 유틸
  * @author macle
  */
 public class NetworkUtil {

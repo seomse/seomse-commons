@@ -289,8 +289,38 @@ public class FileUtil {
 		 }
 	}
 
+	/**
+	 * nio 와 io 둘다 활용 하여 체크
+	 * 둘중에 하나만 사용 하면 각자 다른 nio, io 이용 했을때 인식을 못할 떄 가 있음
+	 * @param filePath string
+	 * @return boolean
+	 */
+	public static boolean isFile(String filePath){
+		return Files.isRegularFile(Paths.get(filePath)) || new File(filePath).isFile();
+	}
 
-	 /**
+	/**
+	 * nio 와 io 둘다 활용 하여 체크
+	 * 둘중에 하나만 사용 하면 각자 다른 nio, io 이용 했을때 인식을 못할 떄 가 있음
+	 * @param directoryPath string
+	 * @return boolean
+	 */
+	public static boolean isDirectory(String directoryPath){
+		return Files.isDirectory(Paths.get(directoryPath)) || new File(directoryPath).isDirectory();
+	}
+
+	/**
+	 * nio 와 io 둘다 활용 하여 체크
+	 * 둘중에 하나만 사용 하면 각자 다른 nio, io 이용 했을때 인식을 못할 떄 가 있음
+	 * @param path string
+	 * @return boolean
+	 */
+	public static boolean exists(String path){
+		return Files.exists(Paths.get(path)) || new File(path).exists();
+	}
+
+
+	/**
 	  * 파일 이동
 	  * @param inFileName 이동대상
 	  * @param outFileName 이동파일
@@ -303,7 +333,7 @@ public class FileUtil {
 		try{
 			if(isNameMake){
 				File file = new File(outFileName);
-				if(file.isFile()){
+				if(isFile(outFileName)){
 					outFileName = makeName(file);
 				}
 			}
@@ -370,7 +400,7 @@ public class FileUtil {
 
 		}
 
-		while (new File(parentPath + "/" + fileName + "(" + makeIndex + ")" + extension).isFile()) {
+		while (isFile(parentPath + "/" + fileName + "(" + makeIndex + ")" + extension)) {
 			makeIndex++;
 		}
 		
