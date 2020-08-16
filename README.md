@@ -29,7 +29,7 @@ https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.1.0
 
 # communication
 ### blog, homepage
-- https://seomse.tistory.com/
+- seomse.tistory.com
 - www.seomse.com
 - seomse.com
 
