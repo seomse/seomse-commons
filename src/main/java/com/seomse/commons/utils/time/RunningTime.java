@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.seomse.commons.utils.date;
+package com.seomse.commons.utils.time;
 
 /**
  * 실행 시간 측정
