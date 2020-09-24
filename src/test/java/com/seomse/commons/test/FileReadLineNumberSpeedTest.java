@@ -31,7 +31,7 @@ public class FileReadLineNumberSpeedTest {
         String testFilePath = "D:\\seomse\\index\\20200201\\index_0.md";
 		for (int i = 0; i <223 ; i++) {
             //일치여부 테스트
-			if(!FileUtil.getLineNio(testFilePath, i).equals(FileUtil.getLineIo(testFilePath, i))){
+			if(!FileUtil.getLineNio(testFilePath, i).equals(FileUtil.getLine(testFilePath, i))){
 				System.out.println(i);
 			}
 		}
@@ -43,21 +43,21 @@ public class FileReadLineNumberSpeedTest {
         System.out.println("line value Nio 속도: " + TimeUtil.getSecond(System.currentTimeMillis()-startTime));
         startTime = System.currentTimeMillis();
         for (int i = 0; i <500 ; i++) {
-            FileUtil.getLineIo(testFilePath, 77);
+            FileUtil.getLine(testFilePath, 77);
         }
         System.out.println("line value core 기술 구현체 속도: " + TimeUtil.getSecond(System.currentTimeMillis()-startTime));
 
         startTime = System.currentTimeMillis();
         for (int i = 0; i <500 ; i++) {
-            FileUtil.getLineNumberNio(testFilePath);
+            FileUtil.getLineCountNio(testFilePath);
         }
-        System.out.println("line count  Nio 속도: " + TimeUtil.getSecond(System.currentTimeMillis()-startTime) + " " + FileUtil.getLineNumberNio(testFilePath));
+        System.out.println("line count  Nio 속도: " + TimeUtil.getSecond(System.currentTimeMillis()-startTime) + " " + FileUtil.getLineCountNio(testFilePath));
 
         startTime = System.currentTimeMillis();
         for (int i = 0; i <500 ; i++) {
-            FileUtil.getLineNumberIo(testFilePath);
+            FileUtil.getLineCount(testFilePath);
 		}
-        System.out.println("line count core 기술 구현체 속도: " + TimeUtil.getSecond(System.currentTimeMillis()-startTime) +" " + FileUtil.getLineNumberIo(testFilePath));
+        System.out.println("line count core 기술 구현체 속도: " + TimeUtil.getSecond(System.currentTimeMillis()-startTime) +" " + FileUtil.getLineCount(testFilePath));
 
     }
 }

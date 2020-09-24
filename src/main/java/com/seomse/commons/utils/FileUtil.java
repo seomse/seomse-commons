@@ -771,8 +771,8 @@ public class FileUtil {
 	 * @param lineIndex int start index 0
 	 * @return String line text
 	 */
-	public static String getLineIo(String path, int lineIndex){
-		return getLineIo(path, StandardCharsets.UTF_8, lineIndex);
+	public static String getLine(String path, int lineIndex){
+		return getLine(path, StandardCharsets.UTF_8, lineIndex);
 	}
 
 	/**
@@ -785,7 +785,7 @@ public class FileUtil {
 	 * @param lineIndex int start index 0
 	 * @return String line text
 	 */
-	public static String getLineIo(String path, Charset cs, int lineIndex){
+	public static String getLine(String path, Charset cs, int lineIndex){
 		try (
 				FileInputStream stream = new FileInputStream(path)
 		){
@@ -860,7 +860,7 @@ public class FileUtil {
 	 * @param path String filePath
 	 * @return long
 	 */
-	public static long getLineNumberIo(String path){
+	public static long getLineCount(String path){
 
 		File file = new File(path);
 		if(file.length() == 0){
@@ -889,7 +889,7 @@ public class FileUtil {
 	 * @param path String filePath
 	 * @return long
 	 */
-	public static long getLineNumberNio(String path){
+	public static long getLineCountNio(String path){
 		try {
 			return Files.lines(Paths.get(path)).count();
 		}catch(Exception e){
