@@ -24,8 +24,8 @@ public class Remove {
 
     /**
      * tab enter 제거
-     * @param str string
-     * @return string
+     * @param str String
+     * @return String
      */
     public static String tabEnter(String str){
         str = str.replace("\n", "");
@@ -35,8 +35,8 @@ public class Remove {
 
     /**
      * HTML테그를 제거한다
-     * @param str 문자열
-     * @return string
+     * @param str String 문자열
+     * @return String
      */
     @SuppressWarnings({"RegExpSingleCharAlternation", "RegExpRedundantEscape"})
     public static String htmlTag(String str){

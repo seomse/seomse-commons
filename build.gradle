@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.seomse.commons'
-version '1.1.6-SNAPSHOT'
+version '1.1.8-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -14,4 +14,6 @@ dependencies {
     implementation 'ch.qos.logback:logback-core:1.2.3'
     implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation 'ch.qos.logback:logback-access:1.2.3'
+
+    testImplementation  group: 'org.json', name: 'json', version: '20200518'
 }

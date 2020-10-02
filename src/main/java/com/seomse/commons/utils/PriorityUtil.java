@@ -20,7 +20,7 @@ public class PriorityUtil {
     /**
      * 우선순위 순서 값 얻기
      * @param classes classes
-     * @return seq
+     * @return int seq
      */
     public static int getSeq(Class<?> classes){
         int seq ;

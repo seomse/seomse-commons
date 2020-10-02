@@ -21,7 +21,13 @@ package com.seomse.commons.utils.time;
  */
 public class TrendTime {
 
-
+    /**
+     * trend index
+     * @param time long
+     * @param trendTimes long []
+     * @param gap long
+     * @return int
+     */
     public static int getIndex (long time, long [] trendTimes, long gap){
 
         int end  = trendTimes.length - 1;
@@ -49,9 +55,9 @@ public class TrendTime {
 
     /**
      * trend times set
-     * @param standardTime 기준시간  long
-     * @param gap 시간갭 long
-     * @param trendCount 트랜트 개수 int
+     * @param standardTime long 기준시간
+     * @param gap gap 시간갭 long
+     * @param trendCount int 트랜트 개수
      * @return long []
      */
     public static long [] getTrendTimes(long standardTime, long gap, int trendCount ){

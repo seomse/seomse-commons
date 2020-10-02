@@ -23,7 +23,7 @@ package com.seomse.commons.utils.string;
 public class Change {
     /**
      * 이중공백을 하나의 스페이스로 치환한다.
-     * @param str 문자열
+     * @param str String 문자열
      * @return String
      */
     public static String spaceContinue(String str){
@@ -34,7 +34,7 @@ public class Change {
 
     /**
      * 두개이상의 엔터가 하나의 엔터로 치환된다.
-     * @param str 문자열
+     * @param str String 문자열
      * @return String
      */
     public static String enterContinue(String str){
@@ -46,7 +46,7 @@ public class Change {
 
     /**
      * 2개이상의 Space,Tab가 하나의 Space로 치환된다.
-     * @param str 문자열
+     * @param str String 문자열
      * @return String
      */
     public static String spaceContinueTab(String str){
@@ -55,8 +55,8 @@ public class Change {
 
     /**
      * 특수문자를 변경한다
-     * @param str 변경할 문자열
-     * @param changeValue 변경될 값
+     * @param str String 변경할 문자열
+     * @param changeValue String 변경될 값
      * @return string change value
      */
     public static String special(String str, String changeValue){
@@ -67,8 +67,8 @@ public class Change {
 
     /**
      * 숫자 사이에 있는 .(dot)을 스페이스로 변경한다
-     * @param str string
-     * @return string change value
+     * @param str String string
+     * @return String change value
      */
     public static String noNumberDot(String str){
 

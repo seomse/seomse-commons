@@ -41,8 +41,8 @@ public class DateUtil {
 	
 	/**
 	 * long형 날짜를 문자열로 변환 시켜주는 유팉
-	 * @param currTime 기준 시간
-	 * @return string default yyyyMMddHHmmss
+	 * @param currTime long 기준 시간
+	 * @return String default yyyyMMddHHmmss
 	 */
 	public static String getDateYmd(long currTime){
 		return getDateYmd(currTime , DEFAULT_DATE_FORMATTER);
@@ -50,9 +50,9 @@ public class DateUtil {
 	
 	/**
 	 * long형 날짜를 문자열로 변환 시켜주는 유팉
-	 * @param currTime 기준시간
-	 * @param dateFormatter 날짜포맷 문자열 ex) yyyyMMdd
-	 * @return string formatter value
+	 * @param currTime long 기준시간
+	 * @param dateFormatter String 날짜포맷 문자열 ex) yyyyMMdd
+	 * @return String formatter value
 	 */
 	public static String getDateYmd(long currTime , String dateFormatter){
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormatter);
@@ -61,7 +61,7 @@ public class DateUtil {
 	
 	/**
 	 * 날짜 문자열을 long형 시간으로 바꿔주는 유팉
-	 * @param currTime 기준시간
+	 * @param currTime String 기준시간
 	 * @return long unix time
 	 */
 	public static long getDateTime(String currTime){
@@ -70,8 +70,8 @@ public class DateUtil {
 	
 	/**
 	 * 날짜 문자열을 long형 시간으로 바꿔주는 유팉
-	 * @param currTime string time text
-	 * @param dateFormatter 날짜포맷 문자열 ex) yyyyMMdd
+	 * @param currTime String time text
+	 * @param dateFormatter String 날짜포맷 문자열 ex) yyyyMMdd
 	 * @return long unix time
 	 */
 	public static long getDateTime(String currTime , String dateFormatter){
@@ -87,11 +87,11 @@ public class DateUtil {
 	}
 	/**
 	 * 문자열 데이터에 대한 더하기 연산을 담당한다.
-	 * @param currTime 기준시간 
-	 * @param calendarType Calandar 날짜타입 (예시)Calandar.HOUR 
-	 * @param addTime add 시간 (예시) -3
-	 * @param dateFormatter  yyyyMMddHHmmss
-	 * @return string formatter value
+	 * @param currTime String 기준시간
+	 * @param calendarType int Calandar 날짜타입 (예시)Calandar.HOUR
+	 * @param addTime int add 시간 (예시) -3
+	 * @param dateFormatter  String yyyyMMddHHmmss
+	 * @return String formatter value
 	 */
 	public static String addDateYmd(String currTime , int calendarType , int addTime , String dateFormatter ){
 		
@@ -103,10 +103,10 @@ public class DateUtil {
 	}
 	/**
 	 * 문자열 데이터에 대한 더하기 연산을 담당한다.
-	 * @param currTime 기준시간 기본 : yyyyMMddHHmmss
-	 * @param calendarType Calandar 날짜타입 (예시)Calandar.HOUR 
-	 * @param addTime add 시간 (예시) -3
-	 * @return  string default yyyyMMddHHmmss
+	 * @param currTime String 기준시간 기본 : yyyyMMddHHmmss
+	 * @param calendarType int Calandar 날짜타입 (예시)Calandar.HOUR
+	 * @param addTime int add 시간 (예시) -3
+	 * @return String default yyyyMMddHHmmss
 	 */
 	public static String addDateYmd(String currTime , int calendarType , int addTime  ){
 		return addDateYmd(currTime, calendarType, addTime , DEFAULT_DATE_FORMATTER);
@@ -114,8 +114,8 @@ public class DateUtil {
 	
 	/**
 	 * 파싱가능한 날짜포맷인지 체크한다.
-	 * @param dateFormatter yyyyMMddHHmmss
-	 * @param value value
+	 * @param dateFormatter String yyyyMMddHHmmss
+	 * @param value String value
 	 * @return boolean
 	 */
 	public static boolean isValidDateFormat(String dateFormatter, String value) {

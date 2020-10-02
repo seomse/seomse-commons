@@ -27,7 +27,7 @@ public class AverageUtil {
 	/**
 	 * 분포평균 얻기 (10%[0.1] 를지정하면 상위10% 하위10%를 제거한 중간값들의 평균)
 	 * @param valueArray double []
-	 * @param percent 0.1을 지정하면 상위10% 하위10%를 제거한 중간값들의 평균
+	 * @param percent double 0.1을 지정하면 상위10% 하위10%를 제거한 중간값들의 평균
 	 * @return double 분포평균
 	 */
 	public static double getAverageDistribution(double [] valueArray, double percent){

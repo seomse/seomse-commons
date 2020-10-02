@@ -13,38 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.seomse.commons.utils;
+
+package com.seomse.commons.data;
+
 /**
- * 코드체계 관련 유틸
+ * StartEnd
+ * 구현체
  * @author macle
  */
-public class CodeUtil {
-	
-	/**
-	 * 자리수만큼 00문자열을 생성해서 돌려줌
-	 * @param codeNum int codeNum
-	 * @param length int length
-	 * @return String CodeNumberValue
-	 */
-	public static String getCodeNumberValue(int codeNum, int length){
-		
-		String numValue = Integer.toString(codeNum);
-		
-		int gap = length - numValue.length();
-		
-		if(gap == 0){
-			return numValue;
-		}
-		
-		StringBuilder sb = new StringBuilder();
-		
-		for(int i=0 ; i < gap ; i++){
-			sb.append("0");
-		}
-		
-		sb.append(numValue);
-		
-		return sb.toString();
-	}
+public class StartEndImpl implements StartEnd{
 
+    private final int start;
+    private final int end;
+
+    /**
+     * 생성자
+     * @param start int
+     * @param end int
+     */
+    public StartEndImpl(int start, int end){
+        this.start = start;
+        this.end = end;
+    }
+
+    @Override
+    public int getStart() {
+        return start;
+    }
+
+    @Override
+    public int getEnd() {
+        return end;
+    }
 }

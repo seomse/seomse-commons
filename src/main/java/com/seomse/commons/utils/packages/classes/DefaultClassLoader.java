@@ -25,8 +25,10 @@ import java.io.InputStream;
  * @author macle
  */
 public class DefaultClassLoader extends ClassLoader {
-       
-	
+
+    /**
+     * 생성자
+     */
 	public DefaultClassLoader(){
 		super(DefaultClassLoader.class.getClassLoader());
 	}

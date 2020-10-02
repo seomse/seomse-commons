@@ -39,7 +39,7 @@ public class ClassSearch {
 	
 	/**
 	 * 생성자
-	 * @param targetPath string path
+	 * @param targetPath String path
 	 */
 	public ClassSearch(String targetPath){
 		this.targetPath = targetPath;
@@ -48,7 +48,7 @@ public class ClassSearch {
 
 	/**
 	 * 클래스패쓰얻기
-	 * @return string class path
+	 * @return String class path
 	 */
 	public String getClassPath(){
 		return this.getClass().getResource("/").getPath();
@@ -58,8 +58,8 @@ public class ClassSearch {
 	 * 패키지내의 클래스 목록 얻기
 	 * file을 사용하므로 jar로 묶여있지 않아아햠.
 	 * 클래스가 .jar로 묶여있지 않고 classes등의 폴더에 
-	 * @param packageName 패키지명
-	 * @return list 클래스 리스트
+	 * @param packageName String 패키지명
+	 * @return List 클래스 리스트
 	 */
 	public List<Class<?>> getClassesForPackage(String packageName) {
 

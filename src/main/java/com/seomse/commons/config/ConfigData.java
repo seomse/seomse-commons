@@ -26,12 +26,16 @@ public abstract class ConfigData {
 
     /**
      * 값 얻기
-     * @param key 설정 키
-     * @return 저장된 설정된 값
+     * @param key String 설정 키
+     * @return String 저장된 설정된 값
      */
     public abstract String getConfig(String key);
 
-
+    /**
+     * 설정키 존재 여부
+     * @param key String
+     * @return boolean
+     */
     public abstract boolean containsKey(String key);
 
 
@@ -39,7 +43,7 @@ public abstract class ConfigData {
     /**
      * 호출 우선순위
      * 필수구현
-     * @return 우선순위
+     * @return int 우선순위
      */
     public abstract int getPriority();
 
@@ -47,17 +51,17 @@ public abstract class ConfigData {
 
     /**
      * 설정삭제
-     * @param key key
-     * @return remove value
+     * @param key String key
+     * @return String remove value
      */
     protected abstract String remove(String key);
 
     /**
      * 초기 설정이 끝나고 업데이트 될경우
      * 설정하기
-     * @param key 설정키
-     * @param value 설정된 값
-     * @return 변화여부
+     * @param key String 설정키
+     * @param value String 설정된 값
+     * @return boolean 변화여부
      */
     @SuppressWarnings("UnusedReturnValue")
     public boolean setConfig(String key, String value){
@@ -78,6 +82,11 @@ public abstract class ConfigData {
         return true;
     }
 
+    /**
+     * 설정 정보 변경
+     * @param configInfo ConfigInfo
+     * @return boolean
+     */
     public boolean setConfig(ConfigInfo configInfo){
         if(configInfo.isDelete){
             Object obj = remove(configInfo.key);
@@ -108,7 +117,7 @@ public abstract class ConfigData {
      * 초기 세팅이 완료된후
      * 이후 변경 과정 업데이트
      * 반드시 Config 클래스에 notify 시킬것
-     * @param configInfos configInfo array
+     * @param configInfos ConfigInfo [] configInfo array
      */
     public void setConfig(ConfigInfo [] configInfos){
         List<ConfigInfo> changeList = null;

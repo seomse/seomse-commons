@@ -29,5 +29,9 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Priority {
+	/**
+	 * 우선순위
+	 * @return int
+	 */
 	int seq() default 1000;
 }

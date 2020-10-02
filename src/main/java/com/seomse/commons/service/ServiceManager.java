@@ -45,7 +45,6 @@ public class ServiceManager {
 
 
     /**
-     *
      * Singleton
      */
     private ServiceManager(){

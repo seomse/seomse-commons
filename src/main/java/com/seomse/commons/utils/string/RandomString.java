@@ -23,7 +23,7 @@ public class RandomString {
 
 	/**
 	 * 8~13자리의 랜덤한 문자열을 생성한다 
-	 * @return 랜덤 문자열 얻기
+	 * @return String 랜덤 문자열 얻기
 	 */
 	public String create(){
 		int  length =(int)((Math.random()*5)+8);
@@ -33,12 +33,12 @@ public class RandomString {
 	
 	/**
 	 * 랜덤한 문자열을 생성한다
-	 * @param lower 소문자 사용여부
-	 * @param upper 대문자 사용여부
-	 * @param number 숫자 사용여부
-	 * @param special 특수문자 사용여부
-	 * @param length 생성할 문자열의 길이
-	 * @return 랜덤으로 생성한 패스워드
+	 * @param lower boolean 소문자 사용여부
+	 * @param upper boolean 대문자 사용여부
+	 * @param number boolean 숫자 사용여부
+	 * @param special boolean 특수문자 사용여부
+	 * @param length int 생성할 문자열의 길이
+	 * @return String 랜덤으로 생성한 패스워드
 	 */
 	public String create(boolean lower, boolean upper, boolean number, boolean special, int length){	
 		if(length < 0)
@@ -110,23 +110,20 @@ public class RandomString {
 		return (char)((int)((Math.random()*10)+48));
 	}
 
+	//	private static char [] specials = {'!','@','#','$','%','^','&','*','(',')','-','=','_','+','`','~','[',']','{','}','|','"','<','>',',','?','/'};
 	private  char [] specials = {'!','@','#','$','%','^','*','(',')','-','=','_','+','`','~','[',']','{','}','|',',','?'};
 	
 	/**
 	 * 특수문자 배열설정
-	 * @param specials 특수문자 배열 얻기
+	 * @param specials char[] 특수문자 배열 얻기
 	 */
 	public void setSpecials(char[] specials) {
 		this.specials = specials;
 	}
 
-	//	private static char [] specials = {'!','@','#','$','%','^','&','*','(',')','-','=','_','+','`','~','[',']','{','}','|','"','<','>',',','?','/'};
 	private char special(){
 		return specials[((int)(Math.random()*specials.length))];
 	}
 
-//	public static void main(String args[]){
-//
-//		System.out.println(new RandomString().create(true,true,false,false,12) );
-//	}
+
 }

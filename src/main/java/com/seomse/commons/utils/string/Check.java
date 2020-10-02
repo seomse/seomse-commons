@@ -28,7 +28,7 @@ public class Check {
 
 	/**
 	 * 이메일 유효성 체크 
-	 * @param str 체크할 문자열
+	 * @param str String 체크할 문자열
 	 * @return boolean email check flag
 	 */
 	public static boolean isEmailPattern(String str){
@@ -39,7 +39,7 @@ public class Check {
 
 	/**
 	 * 문자열이 숫자로만 이루어져 있는지 체크
-	 * @param str 체크할 문자열
+	 * @param str String 체크할 문자열
 	 * @return boolean number check flag
 	 */
 	public static boolean isNumber(String str){
@@ -61,7 +61,7 @@ public class Check {
 	
 	/**
 	 * char가 숫자인지 체크
-	 * @param ch 체크할 케릭터
+	 * @param ch char 체크할 케릭터
 	 * @return boolean number check flag
 	 */
 	public static boolean isNumber(char ch){
@@ -70,7 +70,7 @@ public class Check {
 	
 	/**
 	 * 숫자형 형태인지 체크 (소수점 포함)
-	 * @param str 체크할 문자열
+	 * @param str String 체크할 문자열
 	 * @return boolean number type check flag
 	 */
 	public static boolean isNumberType(String str){
@@ -109,7 +109,7 @@ public class Check {
 
 	/**
 	 * 영어로 이루어져 있는지 체크한다.
-	 * @param str 체크할 문자열
+	 * @param str String 체크할 문자열
 	 * @return  boolean english check flag
 	 */
 	public static boolean isEng(String str){
@@ -125,8 +125,8 @@ public class Check {
 	
 	/**
 	 * 케릭터가 영어로 이루어져 있는지 체크한다.
-	 * @param ch char
-	 * @return  boolean english check flag
+	 * @param ch char char
+	 * @return boolean english check flag
 	 */
 	public static boolean isEng(char ch){
 		
@@ -139,7 +139,7 @@ public class Check {
 	/**
 	 * 한글자모인지 체크
 	 * @param ch char
-	 * @return  boolean english check flag
+	 * @return boolean english check flag
 	 */
 	public static boolean isHangulJamo(char ch) {
 	
@@ -155,7 +155,7 @@ public class Check {
 	/**
 	 * 한글인지 체크한다.
 	 * @param ch char
-	 * @return  boolean hangul check flag
+	 * @return boolean hangul check flag
 	 */
 	public static boolean isHangul(char ch) {
 	
@@ -182,7 +182,7 @@ public class Check {
 	
 	/**
 	 * 한글 완성형 문자인지 체크한다.
-	 * @param str string
+	 * @param str String
 	 * @return boolean hangul check flag
 	 */
 	public static boolean isHangulSyllable(String str) {
@@ -239,8 +239,8 @@ public class Check {
 	
 	/**
 	 * null 을포함해서 두개의 문자열이 같은지 비교
-	 * @param a string
-	 * @param b string
+	 * @param a String
+	 * @param b String
 	 * @return boolean equals check
 	 */
 	public static boolean isEquals(String a, String b){
@@ -283,7 +283,7 @@ public class Check {
 	
 	/**
 	 * 특수문자여부
-	 * @param str string check value
+	 * @param str String check value
 	 * @return boolean  all special char  check
 	 */
 	public static boolean isAllSpecialCharacter(String str){
@@ -300,7 +300,7 @@ public class Check {
 	
 	/**
 	 * 문자열에 숫자가 없는지체크
-	 * @param str 체크할 문자열
+	 * @param str String 체크할 문자열
 	 * @return boolean not number in check
 	 */
 	public static boolean isNotNumber(String str){

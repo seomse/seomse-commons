@@ -23,14 +23,17 @@ public class RunningTime {
 	
 	private long startTime;
 	private long lastTime = -1;
-	
+
+	/**
+	 * 생성자
+	 */
 	public RunningTime(){
 		startTime = System.currentTimeMillis();
 	}
 	
 	/**
 	 * 작업 시작 타임을 가져온다.
-	 * @return 작업시작시간
+	 * @return long 작업시작시간
 	 */
 	public long getStartTime() {
 		return startTime;
@@ -38,7 +41,7 @@ public class RunningTime {
 
 	/**
 	 * 작업 시작 타임을 설정한다. 
-	 * @param startTime 작업 시작시간
+	 * @param startTime long 작업 시작시간
 	 */
 	public void setStartTime(long startTime) {
 		this.startTime = startTime;
@@ -60,7 +63,7 @@ public class RunningTime {
 	}
 	/**
 	 * 작업 종료 타임을 얻어온다
-	 * @return LastTime
+	 * @return long LastTime
 	 */
 	public long getLastTime() {
 		if(lastTime == -1){
@@ -71,7 +74,7 @@ public class RunningTime {
 
 	/**
 	 * 작업 종료 타임을 설정한다
-	 * @param lastTime 작업 종료 타임
+	 * @param lastTime long 작업 종료 타임
 	 */
 	public void setLastTime(long lastTime) {
 		this.lastTime = lastTime;
@@ -79,7 +82,7 @@ public class RunningTime {
 	
 	/**
 	 * 작업시간을 얻어온다(밀리 세컨드)
-	 * @return 작업시간
+	 * @return long 작업시간
 	 */
 	public long getRunningTime(){
 		lastTime = System.currentTimeMillis();
@@ -90,7 +93,7 @@ public class RunningTime {
 
 	/**
 	 * 작업시간을 얻어온다 (초단위)0
-	 * @return 작업시간(초)
+	 * @return long 작업시간(초)
 	 */
 	public long getRunningSecond(){
 		return (long)TimeUtil.getSecond(getRunningTime());
@@ -98,7 +101,7 @@ public class RunningTime {
 	
 	/**
 	 * 작업시간을 얻어온다 (분단위)
-	 * @return 작업시간(분)
+	 * @return double 작업시간(분)
 	 */
 	public double getRunningMinute(){
 		return TimeUtil.getMinute(getRunningTime());
@@ -106,7 +109,7 @@ public class RunningTime {
 
 	/**
 	 * 작업시간을 얻어온다 (시간단위)
-	 * @return 작업시간(시간)
+	 * @return double 작업시간(시간)
 	 */
 	public double getRunningHour(){
 		return TimeUtil.getHour(getRunningTime());

@@ -41,7 +41,7 @@ public class Config {
 
 	/**
 	 * 예외 핸들러 설정
-	 * @param exceptionHandler exceptionHandler
+	 * @param exceptionHandler ExceptionHandler
 	 */
 	public static void setExceptionHandler(ExceptionHandler exceptionHandler) {
 		instance.exceptionHandler = exceptionHandler;
@@ -49,8 +49,8 @@ public class Config {
 
 	/**
 	 * 설정값 얻기
-	 * @param key 설정키
-	 * @return config value
+	 * @param key String 설정키
+	 * @return String config value
 	 */
 	public static String getConfig(String key){
 		return instance.getConfigValue(key);
@@ -58,9 +58,9 @@ public class Config {
 
 	/**
 	 * 설정값 얻기
-	 * @param key 설정키
-	 * @param defaultValue 기본값
-	 * @return config value
+	 * @param key String 설정키
+	 * @param defaultValue String 기본값
+	 * @return String config value
 	 */
 	public static String getConfig(String key, String defaultValue){
 		return instance.getConfigValue(key, defaultValue);
@@ -68,8 +68,8 @@ public class Config {
 
 	/**
 	 * 설정값 세팅
-	 * @param key key
-	 * @param value value
+	 * @param key String key
+	 * @param value String value
 	 */
 	public static void setConfig(String key, String value){
 		instance.setConfigValue(key, value);
@@ -77,8 +77,8 @@ public class Config {
 
 	/**
 	 * 설정값 얻기 Long형
-	 * @param key 설정키
-	 * @return config value(long)
+	 * @param key String 설정키
+	 * @return Long config value(long)
 	 */
 	public static Long getLong(String key){
 		return getLong(key, null);
@@ -86,9 +86,9 @@ public class Config {
 
 	/**
 	 * 설정값 얻기 Long형
-	 * @param key 설정키
-	 * @param defaultValue 기본값
-	 * @return config value(long)
+	 * @param key String 설정키
+	 * @param defaultValue Long 기본값
+	 * @return Long config value(long)
 	 */
 	public static Long getLong(String key, Long defaultValue){
 		String resultValue = instance.getConfigValue(key);
@@ -108,8 +108,8 @@ public class Config {
 
 	/**
 	 * 설정값 얻기 Integer 형
-	 * @param key 설정키
-	 * @return config value(integer)
+	 * @param key String 설정키
+	 * @return Integer config value(integer)
 	 */
 	public static Integer getInteger(String key){
 		return getInteger(key, null);
@@ -117,9 +117,9 @@ public class Config {
 
 	/**
 	 * 설정값 얻기 Integer 형
-	 * @param key 설정키
-	 * @param defaultValue 기본값
-	 * @return config value(integer)
+	 * @param key String 설정키
+	 * @param defaultValue Integer 기본값
+	 * @return Integer config value(integer)
 	 */
 	public static Integer getInteger(String key, Integer defaultValue){
 		String resultValue = instance.getConfigValue(key);
@@ -139,8 +139,8 @@ public class Config {
 
 	/**
 	 * 설정값 얻기 Double 형
-	 * @param key 설정키
-	 * @return config value(double)
+	 * @param key String 설정키
+	 * @return Double config value(double)
 	 */
 	public static Double getDouble(String key){
 		return getDouble(key, null);
@@ -148,9 +148,9 @@ public class Config {
 
 	/**
 	 * 설정값 얻기 Double 형
-	 * @param key 설정키
-	 * @param defaultValue 기본값
-	 * @return config value(double)
+	 * @param key String 설정키
+	 * @param defaultValue Double 기본값
+	 * @return Double config value(double)
 	 */
 	public static Double getDouble(String key, Double defaultValue){
 		String resultValue = instance.getConfigValue(key);
@@ -171,8 +171,8 @@ public class Config {
 
 	/**
 	 * 설정값 얻기 Boolean 형
-	 * @param key 설정키
-	 * @return config value(boolean)
+	 * @param key String 설정키
+	 * @return Boolean config value(boolean)
 	 */
 	public static Boolean getBoolean(String key){
 		return getBoolean(key, null);
@@ -180,9 +180,9 @@ public class Config {
 
 	/**
 	 * 설정값 얻기 Boolean 형
-	 * @param key 설정키
-	 * @param defaultValue 기본값
-	 * @return config value(boolean)
+	 * @param key String 설정키
+	 * @param defaultValue Boolean 기본값
+	 * @return Boolean config value(boolean)
 	 */
 	public static Boolean getBoolean(String key, Boolean defaultValue){
 		String resultValue = instance.getConfigValue(key);
@@ -207,7 +207,7 @@ public class Config {
      * 설정 정보 데이터 추가
      * synchronized 하지 않으므로 꼭 순서대로 동작하게 구현
      * 설정 우선순위 동작하므로 시스템 초기에 등록할 것
-     * @param configData config data (설정정보를 가지고 있는 객체)
+     * @param configData ConfigData(설정정보를 가지고 있는 객체)
      */
 	public static void addConfigData(ConfigData configData){
         instance.addConfig(configData);
@@ -215,7 +215,7 @@ public class Config {
 
 	/**
 	 * 옵져버 추가 ( 설정정보 업데이트 내역 )
-	 * @param configObserver configObserver
+	 * @param configObserver ConfigObserver
 	 */
 	public static void addObserver(ConfigObserver configObserver){
 		synchronized (instance.observerLock) {
@@ -225,7 +225,7 @@ public class Config {
 
 	/**8
 	 * 옵져버 제거 ( 설정정보 업데이트 내역 )
-	 * @param configObserver configObserver
+	 * @param configObserver ConfigObserver
 	 */
 	public static void removeObserver(ConfigObserver configObserver){
 		synchronized (instance.observerLock) {
@@ -236,8 +236,8 @@ public class Config {
 	/**
 	 * 로그백 설정파일 경로설정
 	 * isErrorLog 는 초기생성자에서 에러를 출력하지않기위한 로그
-	 * @param configPath logback xml path
-	 * @param isErrorLog isErrorLog
+	 * @param configPath String logback xml path
+	 * @param isErrorLog boolean isErrorLog
 	 */
 	private static void setLogbackConfigPath(String configPath, boolean isErrorLog){
 		File file = new File(configPath);
@@ -322,8 +322,8 @@ public class Config {
 
 	/**
 	 * 설정값 얻기
-	 * @param key 설정키
-	 * @return config value
+	 * @param key String 설정키
+	 * @return String config value
 	 */
 	private String getConfigValue(String key){
 	    return getConfigValue(key , null);
@@ -332,9 +332,9 @@ public class Config {
 
 	/**
 	 * 설정값 얻기
-	 * @param key 설정키
-	 * @param defaultValue 기본값
-	 * @return config value
+	 * @param key String 설정키
+	 * @param defaultValue String 기본값
+	 * @return String config value
 	 */
 	private String getConfigValue(String key, String defaultValue){
         ConfigData [] configDataArray = this.configDataArray;
@@ -356,8 +356,8 @@ public class Config {
 	/**
 	 * 설정값 세팅
      * 최우선순위 설정값을 변경함
-	 * @param key 설정 키
-	 * @param value 설정 값
+	 * @param key String 설정 키
+	 * @param value String 설정 값
 	 */
 	private void setConfigValue(String key, String value){
         configDataArray[0].setConfig(key, value);
@@ -452,7 +452,7 @@ public class Config {
 
 	/**
 	 * 설정변경정보 알림
-	 * @param changeInfos 변경된 설정 정보
+	 * @param changeInfos ConfigInfo [] 변경된 설정 정보
 	 */
 	private void notifyConfig(ConfigInfo [] changeInfos){
 		if(changeInfos == null || changeInfos.length ==0){

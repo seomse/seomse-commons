@@ -33,6 +33,10 @@ public abstract class Service extends Thread {
 
     private String serviceId;
 
+    /**
+     * 서비스 아이디 설정
+     * @param serviceId String
+     */
     public void setServiceId(String serviceId) {
         this.serviceId = serviceId;
     }
@@ -55,6 +59,10 @@ public abstract class Service extends Thread {
 
     protected State state = State.STAND;
 
+    /**
+     * 상태설정 
+     * @param state State
+     */
     public void setState(State state) {
         this.state = state;
     }
@@ -69,10 +77,19 @@ public abstract class Service extends Thread {
      */
     private ObjCallback endCallback = null;
 
+    /**
+     * 종료 객체 설정
+     * @param endObject Object
+     */
     public void setEndObject(Object endObject) {
         this.endObject = endObject;
     }
 
+    /**
+     * 종로 콜백 설정
+     * endObject 가 전달죔
+     * @param endCallback ObjCallback
+     */
     public void setEndCallback(ObjCallback endCallback) {
         this.endCallback = endCallback;
     }
@@ -85,7 +102,7 @@ public abstract class Service extends Thread {
 
     /**
      * 지연 시작 시간 설정
-     * @param delayTime delayTime
+     * @param delayTime Long delayTime
      */
     public void setDelayStartTime(Long delayTime) {
         this.delayStartTime = delayTime;
@@ -93,7 +110,7 @@ public abstract class Service extends Thread {
 
     /**
      * 반복 대기 시간 설정
-     * @param sleepTime sleepTime
+     * @param sleepTime Long sleepTime
      */
     public void setSleepTime(Long sleepTime) {
         this.sleepTime = sleepTime;
@@ -106,7 +123,7 @@ public abstract class Service extends Thread {
 
     /**
      * 서비스가 종료 되었는지 확인
-     * @return is stop
+     * @return boolean is stop
      */
     public boolean isStop(){
         return isStop;
@@ -180,7 +197,10 @@ public abstract class Service extends Thread {
         }
     }
 
-
+    /**
+     * 서비스 아이디 얻기
+     * @return String
+     */
     public String getServiceId() {
         return serviceId;
     }

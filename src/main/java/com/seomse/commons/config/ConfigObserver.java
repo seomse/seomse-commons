@@ -23,7 +23,7 @@ package com.seomse.commons.config;
 public interface ConfigObserver {
 	/**
 	 * 설정정보 변경정보
-	 * @param changeInfos 변경된 설정 정보
+	 * @param changeInfos ConfigInfo [] 변경된 설정 정보
 	 */
 	void updateConfig(ConfigInfo [] changeInfos);
 }

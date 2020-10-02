@@ -26,7 +26,7 @@ public class CollectionUtil {
 	 * 동등비교 null 인식
 	 * @param obj Collection
 	 * @param obj2 Collection
-	 * @return equals
+	 * @return boolean equals
 	 */
 	@SuppressWarnings("rawtypes") 
 	public static boolean equals(Collection obj , Collection obj2) {

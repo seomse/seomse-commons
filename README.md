@@ -22,10 +22,10 @@
  - 서비스로 실행되는 Thread 관리기능 제공
  
 # gradle
-implementation 'com.seomse.commons:seomse-commons:1.1.6'
+implementation 'com.seomse.commons:seomse-commons:1.1.8'
 
 # etc
-https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.1.6
+https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.1.8
 
 # communication
 ### blog, homepage

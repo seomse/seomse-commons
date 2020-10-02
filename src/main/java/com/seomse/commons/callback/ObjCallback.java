@@ -20,5 +20,9 @@ package com.seomse.commons.callback;
  * @author macle
  */
 public interface ObjCallback {
+    /**
+     * callback
+     * @param obj Object
+     */
     void callback(Object obj);
 }

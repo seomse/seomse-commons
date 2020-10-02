@@ -31,7 +31,7 @@ public class ExceptionUtil {
 	/**
 	 *  Exception.printStackTrace 내용을 String 으로 가져오기
 	 * @param e Exception e
-	 * @return stackTrace String Value
+	 * @return String stackTrace String Value
 	 */
 	public static  String getStackTrace(Exception e){
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -49,9 +49,9 @@ public class ExceptionUtil {
 	
 	/**
 	 * 기본 예외처리
-	 * @param e exception
-	 * @param logger logger
-	 * @param exceptionHandler exceptionHandler
+	 * @param e Exception
+	 * @param logger Logger
+	 * @param exceptionHandler ExceptionHandler
 	 */
 	public static  void exception(Exception e, Logger logger, ExceptionHandler exceptionHandler){
 		if(exceptionHandler == null) {

@@ -19,5 +19,8 @@ package com.seomse.commons.callback;
  * @author macle
  */
 public interface Callback {
+    /**
+     * callback
+     */
     void callback();
 }

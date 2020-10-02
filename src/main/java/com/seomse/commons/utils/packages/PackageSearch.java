@@ -50,8 +50,8 @@ public class PackageSearch {
 	
 	/**
 	 * 생성자
-	 * @param targetPath targetPath
-	 * @param startPackage startPackage
+	 * @param targetPath String targetPath
+	 * @param startPackage String startPackage
 	 */
 	public PackageSearch(String targetPath, String startPackage){
 		this.startPackage = startPackage;
@@ -66,8 +66,8 @@ public class PackageSearch {
 	
 	/**
 	 * 텍스트가 포함된 패키지 리스트 얻기
-	 * @param text string  in text
-	 * @return PackageList
+	 * @param text String in text
+	 * @return List PackageList
 	 */
 	public List<String> getPackageList(String text){
 		return getPackageList(text, Option.INCLUDE);
@@ -79,9 +79,9 @@ public class PackageSearch {
 	 * 	INCLUDE //포함되어있으면
 	 *	, START //시작이
 	 *	, END //끝이
-	 * @param text string
-	 * @param option PackageList
-	 * @return PackageList
+	 * @param text String
+	 * @param option Option PackageList
+	 * @return List PackageList
 	 */
 	public List<String> getPackageList(String text, Option option){
 		List<String> packageList = new ArrayList<>();

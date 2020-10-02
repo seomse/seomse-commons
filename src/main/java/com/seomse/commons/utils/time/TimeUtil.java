@@ -30,8 +30,8 @@ public class TimeUtil {
 	private static final long dayTime = 86400000L;
 	/**
 	 * 초단위 값을 가져온다.
-	 * @param milleSecond 천분의 1초 
-	 * @return second
+	 * @param milleSecond long 천분의 1초
+	 * @return double second
 	 */
 	public static double getSecond(long milleSecond){
 		return (double)milleSecond/(double)1000;
@@ -51,8 +51,8 @@ public class TimeUtil {
 	
 	/**
 	 * 시간단위 값으로 변환해서 가져온다.
-	 * @param milleSecond 천분의 1초
-	 * @return hour
+	 * @param milleSecond long 천분의 1초
+	 * @return double hour
 	 */
 	public static double getHour(long milleSecond){
 		return (double)milleSecond/(double)hourTime;
@@ -60,8 +60,8 @@ public class TimeUtil {
 	
 	/**
 	 * 일,시간,분,초, 나머지 밀리세컨드 형태의 문자열로 가져온다.
-	 * @param milleSecond 천분의 1초
-	 * @return TimeValue
+	 * @param milleSecond long 천분의 1초
+	 * @return String TimeValue
 	 */
 	public static String getTimeValue(long milleSecond){
 		
