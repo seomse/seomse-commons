@@ -28,12 +28,13 @@ public class YmdUtil {
 
 	/**
 	 * 시작일부터 끝일까지의 날짜리스트값 얻기
+	 *
 	 * @param startYmd String yyyyMMdd
-	 * @param endYmd String yyyyMMdd
+	 * @param endYmd   String yyyyMMdd
 	 * @return List yyyyMMdd list
 	 */
-	public static List<String> getYmdList (String startYmd, String endYmd){
-		
+	public static List<String> getYmdList(String startYmd, String endYmd) {
+
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 		List<String> dayList = new ArrayList<>();
 
@@ -56,17 +57,18 @@ public class YmdUtil {
 				dayList.add(day);
 				calendar.add(Calendar.DATE, 1);
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 		return dayList;
 	}
-	
+
 	/**
 	 * ymd 얻기
-	 * @param ymd String ymd
+	 *
+	 * @param ymd String yyyyMMdd
 	 * @param day int day
-	 * @return String ymd
+	 * @return String yyyyMMdd
 	 */
 	public static String getYmd(String ymd, int day) {
 		try {
@@ -78,10 +80,37 @@ public class YmdUtil {
 			calendar.add(Calendar.DATE, day);
 
 			return new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
-		}catch(Exception e){
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		
+
 	}
 
-}	
+	/**
+	 * time 얻기
+	 * @param ymd String yyyyMMdd
+	 * @return long (unix time)
+	 */
+	public static long getTime(String ymd) {
+		try {
+			return new SimpleDateFormat("yyyyMMdd").parse(ymd).getTime();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+
+	/**
+	 * Date 얻기
+	 * @param ymd String yyyyMMdd
+	 * @return Date
+	 */
+	public static Date getDate(String ymd) {
+		try {
+			return new SimpleDateFormat("yyyyMMdd").parse(ymd);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+}

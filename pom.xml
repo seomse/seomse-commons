@@ -6,7 +6,7 @@
 
     <groupId>com.seomse.commons</groupId>
     <artifactId>seomse-commons</artifactId>
-    <version>1.1.8</version>
+    <version>1.1.9</version>
     <packaging>jar</packaging>
 
     <name>seomse-commons</name>
@@ -23,8 +23,11 @@
 
     <developers>
         <developer>
-            <name>macle86</name>
+            <name>macle</name>
             <email>ysys86a@gmail.com</email>
+            <id>macle86</id>
+            <organization>seomse</organization>
+
         </developer>
     </developers>
 
