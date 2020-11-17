@@ -21,16 +21,20 @@
 ### 서비스 관리
  - 서비스로 실행되는 Thread 관리기능 제공
  
+### 공통에 많은 기능이 있는 문제
+아직은 규모가 크지 않아서 공통에 작업하고 있는 부분들은 내부 규모가 커지면 개별 artifact 로 분리될 수 있습니다.
+ 
 # gradle
-implementation 'com.seomse.commons:seomse-commons:1.1.9'
+implementation 'com.seomse.commons:seomse-commons:1.2.0'
 
 # etc
-https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.1.9
+https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.2.0
 
 # communication
 ### blog, homepage
-- seomse.tistory.com
 - www.seomse.com
+- seomse.github.io
+- seomse.tistory.com
 - seomse.com
 
 ### 카카오톡 오픈톡

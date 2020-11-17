@@ -111,6 +111,18 @@ public class YmdUtil {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
 	}
+
+	/**
+	 * 오늘날자의 ymd 얻기
+	 * @return String yyyyMMdd
+	 */
+	public static String now(){
+		try{
+			return new SimpleDateFormat("yyyyMMdd").format(new Date());
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
+	}
+
 }
