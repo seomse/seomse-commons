@@ -33,15 +33,19 @@ https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.2.0
 # communication
 ### blog, homepage
 - www.seomse.com
-- seomse.github.io
+- github.com/seomse/
 - seomse.tistory.com
+- seomse.github.io
 - seomse.com
-
 ### 카카오톡 오픈톡
  - https://open.kakao.com/o/g6vzOKqb
 
 ### 슬랙 slack
  - https://seomse.slack.com/
 
-### email (협업, 외주)
+### email
  - comseomse@gmail.com
+ 
+ # dev
+ - macle
+    -  github.com/macle86/
