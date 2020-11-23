@@ -13,22 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.seomse.commons.data;
+
 /**
- * start, end
+ * StartEnd
+ * 구현체
  * @author macle
  */
-public interface StartEnd {
+public class BeginEndImpl implements BeginEnd {
+
+    private final int begin;
+    private final int end;
 
     /**
-     * start
-     * @return int
+     * 생성자
+     * @param begin int
+     * @param end int
      */
-    int getStart();
+    public BeginEndImpl(int begin, int end){
+        this.begin = begin;
+        this.end = end;
+    }
 
-    /**
-     * end
-     * @return int
-     */
-    int getEnd();
+    @Override
+    public int getBegin() {
+        return begin;
+    }
+
+    @Override
+    public int getEnd() {
+        return end;
+    }
 }

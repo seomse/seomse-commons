@@ -16,20 +16,20 @@
 
 package com.seomse.commons.utils.string.highlight;
 
-import com.seomse.commons.data.StartEnd;
+import com.seomse.commons.data.BeginEnd;
 
 /**
  * 하이라이트 키워드
  * @author macle
  */
-class HighlightKeyword implements StartEnd {
+class HighlightKeyword implements BeginEnd {
     int index;
-    int start;
+    int begin;
     int end;
 
     @Override
-    public int getStart() {
-        return start;
+    public int getBegin() {
+        return begin;
     }
 
     @Override

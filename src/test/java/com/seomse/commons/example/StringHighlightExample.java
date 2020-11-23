@@ -16,7 +16,7 @@
 
 package com.seomse.commons.example;
 
-import com.seomse.commons.data.StartEnd;
+import com.seomse.commons.data.BeginEnd;
 import com.seomse.commons.utils.string.highlight.StringHighlight;
 
 /**
@@ -28,9 +28,9 @@ public class StringHighlightExample {
 
         String text = "섬세한사람들 작더라도 쓸모있게 만드는 개발자 모임이다.";
 
-        StartEnd se1 = new StartEnd() {
+        BeginEnd se1 = new BeginEnd() {
             @Override
-            public int getStart() {
+            public int getBegin() {
                 return 0;
             }
 
@@ -40,9 +40,9 @@ public class StringHighlightExample {
             }
         };
 
-        StartEnd se2 = new StartEnd() {
+        BeginEnd se2 = new BeginEnd() {
             @Override
-            public int getStart() {
+            public int getBegin() {
                 return 21;
             }
 
@@ -52,9 +52,9 @@ public class StringHighlightExample {
             }
         };
 
-        StartEnd se3 = new StartEnd() {
+        BeginEnd se3 = new BeginEnd() {
             @Override
-            public int getStart() {
+            public int getBegin() {
                 return 25;
             }
 
@@ -64,12 +64,12 @@ public class StringHighlightExample {
             }
         };
 
-        StartEnd [] startEnds = new StartEnd[3];
-        startEnds[0] = se1;
-        startEnds[1] = se2;
-        startEnds[2] = se3;
+        BeginEnd[] beginEnds = new BeginEnd[3];
+        beginEnds[0] = se1;
+        beginEnds[1] = se2;
+        beginEnds[2] = se3;
 
-        System.out.println(StringHighlight.make(text,"<em>","</em>", startEnds));
+        System.out.println(StringHighlight.make(text,"<em>","</em>", beginEnds));
     }
 
 }
