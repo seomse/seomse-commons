@@ -25,29 +25,23 @@
 아직은 규모가 크지 않아서 공통에 작업하고 있는 부분들은 내부 규모가 커지면 개별 artifact 로 분리될 수 있습니다.
  
 # gradle
-implementation 'com.seomse.commons:seomse-commons:1.2.1'
+implementation 'com.seomse.commons:seomse-commons:1.2.0'
 
 # etc
-https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.2.1
+https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.2.0
 
 # communication
 ### blog, homepage
 - www.seomse.com
-- github.com/seomse/
-- seomse.tistory.com
 - seomse.github.io
+- seomse.tistory.com
 - seomse.com
 
 ### 카카오톡 오픈톡
  - https://open.kakao.com/o/g6vzOKqb
 
 ### 슬랙 slack
-- https://seomse.slack.com/
+ - https://seomse.slack.com/
 
-### email
+### email (협업, 외주)
  - comseomse@gmail.com
- 
- 
-# dev
- - macle
-    -  [github.com/macle86](https://github.com/macle86)
