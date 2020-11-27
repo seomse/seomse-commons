@@ -283,31 +283,35 @@ public class Config {
 
         String logbackPath = ConfigSet.LOG_BACK_PATH;
         File logbackFile = new File(logbackPath);
-		if(logbackFile.exists()){
+		if(logbackFile.isFile()){
 			logger.debug("logback path: " + logbackFile.getAbsolutePath());
 			//기본경로에 로그백 설정파일이존재할경우 호출
 			setLogbackConfigPath(logbackPath, false);
 		}
 
 		File file = new File( ConfigSet.CONFIG_PATH);
-		logger.debug("config path: " + file.getAbsolutePath());
-
+		List<ConfigData> configDataList = new ArrayList<>();
         XmlFileConfigData fileConfigData ;
-        try {
-            fileConfigData =  new XmlFileConfigData(file);
-        }catch(Exception e){
-            throw new RuntimeException(e);
+
+        if(file.isFile()) {
+			try {
+				logger.debug("config path: " + file.getAbsolutePath());
+				fileConfigData = new XmlFileConfigData(file);
+				configDataList.add(fileConfigData);
+			} catch (Exception e) {
+				logger.error(ExceptionUtil.getStackTrace(e));
+
+			}
+		}
+        if(ConfigSet.IS_SYSTEM_PROPERTIES_USE){
+			configDataList.add(new SystemPropertiesData());
         }
 
-        if(ConfigSet.IS_SYSTEM_PROPERTIES_USE){
-            configDataArray = new ConfigData[2];
-            configDataArray[0] = fileConfigData;
-            configDataArray[1] = new SystemPropertiesData();
-            Arrays.sort(configDataArray, sort);
-        }else{
-            configDataArray = new ConfigData[1];
-            configDataArray[0] = fileConfigData;
-        }
+		configDataArray = configDataList.toArray(new ConfigData[0]);
+
+        if(configDataArray.length > 1){
+			Arrays.sort(configDataArray, sort);
+		}
     }
 
 

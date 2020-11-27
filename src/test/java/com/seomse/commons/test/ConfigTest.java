@@ -16,12 +16,16 @@
 package com.seomse.commons.test;
 
 import com.seomse.commons.config.Config;
+import com.seomse.commons.config.ConfigSet;
+
 /**
  * config test
  * @author macle
  */
 public class ConfigTest {
     public static void main(String[] args) {
-        System.out.println(Config.getConfig("os.name"));
+        ConfigSet.IS_SYSTEM_PROPERTIES_USE = true;
+
+        System.out.println(Config.getConfig("application.jdbc.type"));
     }
 }
