@@ -315,12 +315,17 @@ public class Config {
     }
 
 
+    private final Object addLock = new Object();
+
     private void addConfig(ConfigData configData){
-       ConfigData [] newDataArray = new ConfigData[configDataArray.length + 1];
-       System.arraycopy(configDataArray, 0, newDataArray, 0, configDataArray.length);
-       newDataArray[newDataArray.length-1] = configData;
-       Arrays.sort(newDataArray, sort);
-       this.configDataArray = newDataArray;
+
+    	synchronized (addLock) {
+			ConfigData[] newDataArray = new ConfigData[configDataArray.length + 1];
+			System.arraycopy(configDataArray, 0, newDataArray, 0, configDataArray.length);
+			newDataArray[newDataArray.length - 1] = configData;
+			Arrays.sort(newDataArray, sort);
+			this.configDataArray = newDataArray;
+		}
     }
 
 
@@ -364,6 +369,16 @@ public class Config {
 	 * @param value String 설정 값
 	 */
 	private void setConfigValue(String key, String value){
+		if(configDataArray.length == 0){
+			synchronized (addLock){
+				if(configDataArray.length == 0){
+					ConfigData[] newDataArray = new ConfigData[1];
+					ConfigDataImpl configDataImpl = new ConfigDataImpl();
+					newDataArray [0] =  configDataImpl;
+					this.configDataArray = newDataArray ;
+				}
+			}
+		}
         configDataArray[0].setConfig(key, value);
 	}
 
@@ -478,4 +493,3 @@ public class Config {
 		}
 	}
 }
-

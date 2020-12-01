@@ -119,10 +119,28 @@ public class YmdUtil {
 	 */
 	public static String now(){
 		try{
-			return new SimpleDateFormat("yyyyMMdd").format(new Date());
+			return getYmd(new Date());
 		}catch(Exception e){
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * ymd 얻기
+	 * @param time unix time
+	 * @return String yyyyMMdd
+	 */
+	public static String getYmd(long time) {
+		return getYmd(new Date(time));
+	}
+
+	/**
+	 * ymd 얻기
+	 * @param date date
+	 * @return String yyyyMMdd
+	 */
+	public static String getYmd(Date date) {
+		return new SimpleDateFormat("yyyyMMdd").format(date);
 	}
 
 }
