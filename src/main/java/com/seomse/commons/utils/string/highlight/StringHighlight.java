@@ -17,6 +17,7 @@
 package com.seomse.commons.utils.string.highlight;
 
 import com.seomse.commons.data.BeginEnd;
+import com.seomse.commons.exception.OutOfRangeException;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -69,39 +70,33 @@ public class StringHighlight {
                     if(check == null
                             || check.list.get(0).begin + length <  highlightKeyword.end
                     ){
+                        HighlightSearch search = new HighlightSearch();
+                        search.list.add(highlightKeyword);
+                        search.keywordIndexSet.add(jj);
 
-                        if(check == null) {
-                            check = new HighlightSearch();
-
-                        }
-                        check.list.add(highlightKeyword);
-                        check.keywordIndexSet.add(jj);
+                        check = search;
 
                         if(max == null){
-                            max = check;
+                            max = search;
                         }
 
                     }else{
+                        check.list.add(highlightKeyword);
+                        check.keywordIndexSet.add(jj);
 
                         if(
                                 max.keywordIndexSet.size() < check.keywordIndexSet.size()
                                         || (max.keywordIndexSet.size() == check.keywordIndexSet.size() && max.list.size() < check.list.size())
                         ){
                             max = check;
-
                         }
-
-                        if(max.keywordIndexSet.size() == keywords.length){
-                            break outer;
-                        }
-
-                        HighlightSearch search = new HighlightSearch();
-                        search.list.add(highlightKeyword);
-                        search.keywordIndexSet.add(jj);
-                        check = search;
-
 
                     }
+
+                    if(max.keywordIndexSet.size() == keywords.length){
+                        break outer;
+                    }
+
 
 
                     break;
@@ -132,20 +127,17 @@ public class StringHighlight {
 
 
             //범위확장 가능여부 체크
-            int beginSplitIndex = 0;
             int splitBegin = -1;
 
-            for (int i = 0; i < splitBeginEnds.length ; i++) {
-                BeginEnd beginEnd = splitBeginEnds[i];
-                if(beginEnd.getBegin() <= highlightBegin && beginEnd.getEnd() > highlightBegin){
+            for (BeginEnd beginEnd : splitBeginEnds) {
+                if (beginEnd.getBegin() <= highlightBegin && beginEnd.getEnd() > highlightBegin) {
                     splitBegin = beginEnd.getBegin();
-                    beginSplitIndex = i;
                     break;
                 }
             }
 
             if(splitBegin == -1){
-                throw new RuntimeException("splitBeginEnds error");
+                throw new OutOfRangeException("splitBeginEnds error");
             }
 
             //앞부분 확장
@@ -153,6 +145,7 @@ public class StringHighlight {
                 highlightBegin = splitBegin;
 
             }else{
+
                 int spaceIndex = text.lastIndexOf(' ', highlightBegin);
                 if(spaceIndex == -1){
                     if(highlightBegin < gap){
@@ -162,12 +155,12 @@ public class StringHighlight {
 
                     int checkIndex = spaceIndex+1;
 
-                    if(checkIndex != highlightBegin && beginSplitIndex - checkIndex < gap){
+                    if(checkIndex != highlightBegin && highlightBegin - checkIndex < gap){
                         highlightBegin = checkIndex;
                     }
                 }
             }
-            
+
             //뒷 부분 확장
             gap = length - (highlightEnd - highlightBegin);
 
@@ -219,9 +212,6 @@ public class StringHighlight {
         }
         StringBuilder sb = new StringBuilder();
         int lastIndex = 0;
-
-
-
 
         for(BeginEnd beginEnd : beginEnds){
             sb.append(text, lastIndex, beginEnd.getBegin());
