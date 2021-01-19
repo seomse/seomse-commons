@@ -69,39 +69,46 @@ public class StringHighlight {
                     if(check == null
                             || check.list.get(0).begin + length <  highlightKeyword.end
                     ){
-                        HighlightSearch search = new HighlightSearch();
-                        search.list.add(highlightKeyword);
-                        search.keywordIndexSet.add(jj);
 
-                        check = search;
+                        if(check == null) {
+                            check = new HighlightSearch();
+
+                        }
+                        check.list.add(highlightKeyword);
+                        check.keywordIndexSet.add(jj);
 
                         if(max == null){
-                            max = search;
+                            max = check;
                         }
 
                     }else{
-                        check.list.add(highlightKeyword);
-                        check.keywordIndexSet.add(jj);
 
                         if(
                                 max.keywordIndexSet.size() < check.keywordIndexSet.size()
                                         || (max.keywordIndexSet.size() == check.keywordIndexSet.size() && max.list.size() < check.list.size())
                         ){
                             max = check;
+
                         }
 
-                    }
+                        if(max.keywordIndexSet.size() == keywords.length){
+                            break outer;
+                        }
 
-                    if(max.keywordIndexSet.size() == keywords.length){
-                        break outer;
-                    }
+                        HighlightSearch search = new HighlightSearch();
+                        search.list.add(highlightKeyword);
+                        search.keywordIndexSet.add(jj);
+                        check = search;
 
+
+                    }
 
 
                     break;
                 }
             }
         }
+
 
         if(max == null){
             if(length > text.length()){
@@ -212,6 +219,9 @@ public class StringHighlight {
         }
         StringBuilder sb = new StringBuilder();
         int lastIndex = 0;
+
+
+
 
         for(BeginEnd beginEnd : beginEnds){
             sb.append(text, lastIndex, beginEnd.getBegin());
