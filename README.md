@@ -25,9 +25,9 @@
 아직은 규모가 크지 않아서 공통에 작업하고 있는 부분들은 내부 규모가 커지면 개별 artifact 로 분리될 수 있습니다.
  
 # gradle
-implementation 'com.seomse.commons:seomse-commons:1.2.3'
+implementation 'com.seomse.commons:seomse-commons:1.2.4'
 - etc 
-    - https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.2.3
+    - https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.2.4
 
 
 # communication

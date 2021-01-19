@@ -6,7 +6,7 @@
 
     <groupId>com.seomse.commons</groupId>
     <artifactId>seomse-commons</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
     <packaging>jar</packaging>
 
     <name>seomse-commons</name>
@@ -26,8 +26,13 @@
             <name>macle</name>
             <email>ysys86a@gmail.com</email>
             <id>macle86</id>
+            <url>https://macle.dev</url>
             <organization>seomse</organization>
-
+            <organizationUrl>https://seomse.com</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
         </developer>
     </developers>
 
