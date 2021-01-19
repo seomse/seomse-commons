@@ -15,6 +15,9 @@
  */
 package com.seomse.commons.utils.time;
 
+import com.seomse.commons.exception.ParseRuntimeException;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,8 +60,8 @@ public class YmdUtil {
 				dayList.add(day);
 				calendar.add(Calendar.DATE, 1);
 			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+		} catch (ParseException e) {
+			throw new ParseRuntimeException(e);
 		}
 		return dayList;
 	}
@@ -80,8 +83,8 @@ public class YmdUtil {
 			calendar.add(Calendar.DATE, day);
 
 			return new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+		} catch (ParseException e) {
+			throw new ParseRuntimeException(e);
 		}
 
 	}
@@ -94,8 +97,8 @@ public class YmdUtil {
 	public static long getTime(String ymd) {
 		try {
 			return new SimpleDateFormat("yyyyMMdd").parse(ymd).getTime();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+		} catch (ParseException e) {
+			throw new ParseRuntimeException(e);
 		}
 	}
 
@@ -108,8 +111,8 @@ public class YmdUtil {
 	public static Date getDate(String ymd) {
 		try {
 			return new SimpleDateFormat("yyyyMMdd").parse(ymd);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+		} catch (ParseException e) {
+			throw new ParseRuntimeException(e);
 		}
 	}
 
@@ -118,11 +121,7 @@ public class YmdUtil {
 	 * @return String yyyyMMdd
 	 */
 	public static String now(){
-		try{
-			return getYmd(new Date());
-		}catch(Exception e){
-			throw new RuntimeException(e);
-		}
+		return getYmd(new Date());
 	}
 
 	/**

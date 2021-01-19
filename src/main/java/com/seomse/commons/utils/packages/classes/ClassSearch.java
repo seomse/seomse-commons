@@ -17,6 +17,8 @@
 
 package com.seomse.commons.utils.packages.classes;
 
+import com.seomse.commons.exception.ClassNotFoundRuntimeException;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,9 +64,7 @@ public class ClassSearch {
 	 * @return List 클래스 리스트
 	 */
 	public List<Class<?>> getClassesForPackage(String packageName) {
-
-
-	    
+		
 	    //패키지 절대경로
 
 		File directory ;
@@ -86,7 +86,7 @@ public class ClassSearch {
 	                    classes.add(Class.forName(className));
 	                } 
 	                catch (ClassNotFoundException e) {
-	                    throw new RuntimeException("ClassNotFoundException loading " + className);
+	                    throw new ClassNotFoundRuntimeException("ClassNotFoundException loading " + className);
 	                }
 	            }
 	        }

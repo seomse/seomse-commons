@@ -15,6 +15,7 @@
  */
 package com.seomse.commons.utils;
 
+import com.seomse.commons.exception.IORuntimeException;
 import com.seomse.commons.utils.string.Check;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,8 +59,8 @@ public class FileUtil {
 	          while ((line = br.readLine()) != null) {
 	        	  dataList.add(line);
 	          }
-		}catch(Exception e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+		}catch(IOException e){
+			throw new IORuntimeException(e);
 		}
 
 
@@ -86,14 +87,14 @@ public class FileUtil {
 	        	  sb.append(line);
 	         }
 	     
-		}catch(Exception e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+		}catch(IOException e){
+			throw new IORuntimeException(e);
 		}
 		if(sb.length() == 0){
 			return "";
 		}
 		
-		return sb.toString().substring(1);
+		return sb.substring(1);
 	}
 	
 	
@@ -208,7 +209,8 @@ public class FileUtil {
 			out.write(outValue.getBytes(charSet));
 			out.flush();
 			out.getFD().sync();
-		}catch(Exception e){
+		}catch(IOException e){
+			//io, nio 패키지를 같이쓰면 잘 써지고도 에러나는 경우가 있으므로 예외처리
 			logger.error(ExceptionUtil.getStackTrace(e));
 		}
 	}
@@ -287,6 +289,7 @@ public class FileUtil {
 			 fos.close();
 			 return true;
 		 } catch (Exception e) {
+			 //io, nio 패키지를 같이쓰면 잘 되도 에러나는 경우가 있으므로 로그처리
 			 logger.error(ExceptionUtil.getStackTrace(e));
 			 return false;
 		 }
@@ -346,6 +349,8 @@ public class FileUtil {
 			Files.move(file , movePath);
 			return true;
 		}catch(Exception e){
+			//io, nio 패키지를 같이쓰면 잘 되도 에러나는 경우가 있으므로 로그처리
+
 			logger.error(ExceptionUtil.getStackTrace(e));
 			return false;
 		}
@@ -705,7 +710,7 @@ public class FileUtil {
 
 
 		}catch(IOException e){
-			throw new RuntimeException(e);
+			throw new IORuntimeException(e);
 		}
 
 	}
@@ -741,8 +746,8 @@ public class FileUtil {
 		try (Stream<String> lines = Files.lines(Paths.get(path), StandardCharsets.UTF_8)) {
 			//noinspection OptionalGetWithoutIsPresent
 			return lines.skip(lineIndex).findFirst().get();
-		}catch(Exception e){
-			throw new RuntimeException(e);
+		}catch(IOException e){
+			throw new IORuntimeException(e);
 		}
 	}
 
@@ -757,8 +762,8 @@ public class FileUtil {
 		try (Stream<String> lines = Files.lines(Paths.get(path), cs)) {
 			//noinspection OptionalGetWithoutIsPresent
 			return lines.skip(lineIndex).findFirst().get();
-		}catch(Exception e){
-			throw new RuntimeException(e);
+		}catch(IOException e){
+			throw new IORuntimeException(e);
 		}
 	}
 
@@ -834,8 +839,8 @@ public class FileUtil {
 				return "";
 			}
 			return toStringBytesList(byteList, size, cs);
-		}catch(Exception e){
-			throw new RuntimeException(e);
+		}catch(IOException e){
+			throw new IORuntimeException(e);
 		}
 	}
 
@@ -879,8 +884,8 @@ public class FileUtil {
 				}
 			}
 			return ++count;
-		}catch(Exception e){
-			throw new RuntimeException(e);
+		}catch(IOException e){
+			throw new IORuntimeException(e);
 		}
 	}
 
@@ -892,8 +897,8 @@ public class FileUtil {
 	public static long getLineCountNio(String path){
 		try {
 			return Files.lines(Paths.get(path)).count();
-		}catch(Exception e){
-			throw new RuntimeException(e);
+		}catch(IOException e){
+			throw new IORuntimeException(e);
 		}
 	}
 

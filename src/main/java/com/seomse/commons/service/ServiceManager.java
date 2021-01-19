@@ -15,6 +15,7 @@
  */
 package com.seomse.commons.service;
 
+import com.seomse.commons.exception.OverlapException;
 import com.seomse.commons.utils.ExceptionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +55,7 @@ public class ServiceManager {
     public void addService(Service service){
         synchronized (lock){
             if(serviceMap.containsKey(service.getServiceId())){
-                throw new RuntimeException("service id overlap: " + service.getServiceId());
+                throw new OverlapException("service id overlap: " + service.getServiceId());
             }
             serviceMap.put(service.getServiceId(), service);
         }
