@@ -33,7 +33,7 @@ public class ClassNotFoundRuntimeException extends RuntimeException{
      * 생성자
      * @param e 예외
      */
-    public ClassNotFoundRuntimeException(Exception e){
+    public ClassNotFoundRuntimeException(ClassNotFoundException e){
         super(e);
     }
 

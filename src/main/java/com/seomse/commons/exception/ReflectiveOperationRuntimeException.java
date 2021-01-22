@@ -16,34 +16,17 @@
 
 package com.seomse.commons.exception;
 
-import java.io.IOException;
 
 /**
- * IOException
+ * ReflectiveOperationException
  * @author macle
  */
-public class IORuntimeException extends RuntimeException{
-
+public class ReflectiveOperationRuntimeException  extends RuntimeException{
     /**
      * 생성자
+     * @param e exception
      */
-    public IORuntimeException(){
-        super();
-    }
-
-    /**
-     * 생성자
-     * @param e 예외
-     */
-    public IORuntimeException(IOException e){
+    public ReflectiveOperationRuntimeException(ReflectiveOperationException e){
         super(e);
-    }
-
-    /**
-     * 생성자
-     * @param message exception meesage
-     */
-    public IORuntimeException(String message){
-        super(message);
     }
 }
