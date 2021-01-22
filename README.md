@@ -29,7 +29,8 @@ implementation 'com.seomse.commons:seomse-commons:1.2.4'
 - etc 
     - https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.2.4
 
-
+# post
+- [java 파일 라인수 얻기, 특정라인 빨리 읽기 (빠른 라인처리)](https://macle.dev/posts/java_file_fast_read_line/)
 # communication
 ### blog, homepage
 - [www.seomse.com](https://www.seomse.com/)
