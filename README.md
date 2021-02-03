@@ -22,12 +22,12 @@
  - 서비스로 실행되는 Thread 관리기능 제공
  
 ### 공통에 많은 기능이 있는 문제
-아직은 규모가 크지 않아서 공통에 작업하고 있는 부분들은 내부 규모가 커지면 개별 artifact 로 분리될 수 있습니다.
- 
+- 아직은 규모가 크지 않아서 공통에 작업하고 있는 부분들은 내부 규모가 커지면 개별 artifact 로 분리될 수 있습니다.
+- 너무 많은 부분이 공통이 모이는 문제는 많이 경계 하고 있습니다.. 아무래도 데이터 처리 관련 일을 많이 하다 보니 관련 부분에 대한 공통이 많이질 것 같네요.. 
 # gradle
-implementation 'com.seomse.commons:seomse-commons:1.2.4'
+implementation 'com.seomse.commons:seomse-commons:1.2.5'
 - etc 
-    - https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.2.4
+    - https://mvnrepository.com/artifact/com.seomse.commons/seomse-commons/1.2.5
 
 # post
 - [java 파일 라인수 얻기, 특정라인 빨리 읽기 (빠른 라인처리)](https://macle.dev/posts/java_file_fast_read_line/)
