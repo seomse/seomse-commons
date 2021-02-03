@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Seomse Inc.
+ * Copyright (C) 2021 Seomse Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,32 +17,15 @@
 package com.seomse.commons.data;
 
 /**
- * begin end
- * 구현체
+ * text, begin, end
  * @author macle
  */
-public class BeginEndImpl implements BeginEnd {
-
-    private final int begin;
-    private final int end;
+public interface TextBeginEnd extends BeginEnd{
 
     /**
-     * 생성자
-     * @param begin int
-     * @param end int
+     * text get
+     * @return text
      */
-    public BeginEndImpl(int begin, int end){
-        this.begin = begin;
-        this.end = end;
-    }
+    String getText();
 
-    @Override
-    public int getBegin() {
-        return begin;
-    }
-
-    @Override
-    public int getEnd() {
-        return end;
-    }
 }

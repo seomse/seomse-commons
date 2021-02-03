@@ -29,6 +29,7 @@ import java.util.Comparator;
 public class StringHighlight {
 
     /**
+     * 토큰 중복위치에 따른 처리가 필요함
      * Highlight 문자열 생성
      * @param text String
      * @param tokens String []
@@ -68,7 +69,7 @@ public class StringHighlight {
 
 
                     if(check == null
-                            || check.list.get(0).begin + length <  highlightKeyword.end
+                            ||  highlightKeyword.end - check.list.get(0).begin > length
                     ){
                         HighlightSearch search = new HighlightSearch();
                         search.list.add(highlightKeyword);
@@ -81,6 +82,14 @@ public class StringHighlight {
                         }
 
                     }else{
+                        //추가인지 교체인지 체크하기
+                        //--겹쳐있으면 시작위치가 같으면 큰걸로 교체하고, 시작위치가 다른 겹친범위는 무시한다. (경우가 발생하지 않음)
+                        //글자수로 정렬되어 있기때문에 겹친 범위는 전무 무시하게 한다.
+
+                        if(check.isOverlap(highlightKeyword.getBegin(), highlightKeyword.getEnd())){
+                            continue ;
+                        }
+
                         check.list.add(highlightKeyword);
                         check.keywordIndexSet.add(jj);
 
