@@ -5,4 +5,6 @@ include 'modules:sync'
 findProject(':modules:sync')?.name = 'sync'
 include 'modules:api'
 findProject(':modules:api')?.name = 'api'
+include 'modules:poi'
+findProject(':modules:poi')?.name = 'poi'
 
