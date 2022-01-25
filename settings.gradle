@@ -9,4 +9,6 @@ include 'modules:poi'
 findProject(':modules:poi')?.name = 'poi'
 include 'modules:crypto'
 findProject(':modules:crypto')?.name = 'crypto'
+include 'modules:jdbc'
+findProject(':modules:jdbc')?.name = 'jdbc'
 

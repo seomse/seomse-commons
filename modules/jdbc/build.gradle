@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group 'com.seomse.commons'
+version '1.0.5'
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    //json
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    //jdbc
+    //maria db
+    testImplementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.3'
+    //oracle
+    testImplementation 'com.oracle.ojdbc:ojdbc8:19.3.0.0'
+    //postgresql db
+    testImplementation group: 'org.postgresql', name: 'postgresql', version: '42.3.1'
+    implementation 'ch.qos.logback:logback-core:1.2.10'
+    implementation 'ch.qos.logback:logback-classic:1.2.10'
+    implementation 'ch.qos.logback:logback-access:1.2.10'
+
+    //connection pool
+    implementation 'com.zaxxer:HikariCP:4.0.3'
+
+    //seomse
+    implementation 'com.seomse.commons:commons:1.2.6'
+    implementation 'com.seomse.commons:crypto:0.1.0'
+
+
+    //dev commons
+//    implementation project(path: ':commons')
+
+}
