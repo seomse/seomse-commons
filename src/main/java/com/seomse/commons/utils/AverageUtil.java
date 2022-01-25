@@ -22,8 +22,7 @@ import java.util.Arrays;
  * 평균 관련 유틸성 클래스
  * @author macle
  */
-public class AverageUtil
-{
+public class AverageUtil {
 
 	/**
 	 * 분포평균 얻기 (10%[0.1] 를지정하면 상위10% 하위10%를 제거한 중간값들의 평균)

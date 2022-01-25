@@ -134,6 +134,7 @@ public class FieldUtil {
 					} catch (IllegalArgumentException | IllegalAccessException e) {
 						logger.error(ExceptionUtil.getStackTrace(e));
 					}
+
 				}
 			}
 		}
