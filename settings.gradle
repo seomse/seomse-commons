@@ -1,2 +1,6 @@
 rootProject.name = 'seomse-commons'
+include 'modules:commons'
+findProject(':modules:commons')?.name = 'commons'
+include 'modules:sync'
+findProject(':modules:sync')?.name = 'sync'
 

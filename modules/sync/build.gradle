@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+
+group 'com.seomse.commons'
+version '1.0.3'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+
+    //reflections
+    implementation 'org.reflections:reflections:0.9.10'
+
+    //seomse
+    implementation 'com.seomse.api:seomse-api:1.0.6'
+}
+
+test {
+    useJUnitPlatform()
+}
