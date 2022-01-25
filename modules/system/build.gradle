@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group 'com.seomse.commons'
+version '1.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    //seomse
+    implementation 'com.seomse.commons:api:1.0.7'
+    implementation 'com.seomse.commons:sync:1.0.3'
+    implementation 'com.seomse.commons:jdbc:1.0.5'
+
+    implementation group: 'org.moara.ftp', name: 'moara-ftp', version: '0.1.0'
+}
+
+test {
+    useJUnitPlatform()
+}

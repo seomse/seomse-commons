@@ -11,4 +11,8 @@ include 'modules:crypto'
 findProject(':modules:crypto')?.name = 'crypto'
 include 'modules:jdbc'
 findProject(':modules:jdbc')?.name = 'jdbc'
+include 'modules:system'
+findProject(':modules:system')?.name = 'system'
+include 'modules:crawling'
+findProject(':modules:crawling')?.name = 'crawling'
 

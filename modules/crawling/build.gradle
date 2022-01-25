@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    implementation group: 'org.json', name: 'json', version: '20211205'
+    //seomse
+    implementation 'com.seomse.commons:system:1.0.1'
+
+}
+
+test {
+    useJUnitPlatform()
+}
