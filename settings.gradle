@@ -3,4 +3,6 @@ include 'modules:commons'
 findProject(':modules:commons')?.name = 'commons'
 include 'modules:sync'
 findProject(':modules:sync')?.name = 'sync'
+include 'modules:api'
+findProject(':modules:api')?.name = 'api'
 
