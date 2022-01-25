@@ -158,8 +158,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.seomse.api</groupId>
-            <artifactId>seomse-api</artifactId>
+            <groupId>com.seomse.commons</groupId>
+            <artifactId>api</artifactId>
             <version>1.0.6</version>
         </dependency>
 
