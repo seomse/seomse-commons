@@ -12,7 +12,6 @@ modules 디렉토리 안에 모듈별로 설명되어 있습니다.
 - [github.com/seomse](https://github.com/seomse)
 - [github.com/runonio](https://github.com/runonio)
 
-
 ### 카카오톡 오픈톡
 - https://open.kakao.com/o/g6vzOKqb
     - 참여코드: runon
