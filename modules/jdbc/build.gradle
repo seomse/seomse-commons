@@ -21,7 +21,7 @@ dependencies {
     //oracle
     testImplementation 'com.oracle.ojdbc:ojdbc8:19.3.0.0'
     //postgresql db
-    testImplementation group: 'org.postgresql', name: 'postgresql', version: '42.3.1'
+    testImplementation group: 'org.postgresql', name: 'postgresql', version: '42.3.2'
     implementation 'ch.qos.logback:logback-core:1.2.10'
     implementation 'ch.qos.logback:logback-classic:1.2.10'
     implementation 'ch.qos.logback:logback-access:1.2.10'
