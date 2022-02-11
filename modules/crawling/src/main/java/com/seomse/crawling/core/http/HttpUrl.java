@@ -136,6 +136,8 @@ public class HttpUrl {
 						// Redirected URL 받아오기
 						String redirectedUrl = conn.getHeaderField("Location");
 						conn = newHttpURLConnection(redirectedUrl, optionData);
+						System.out.println("moved");
+
 					}
 					else {
 						break;
@@ -184,12 +186,15 @@ public class HttpUrl {
 		BufferedReader br = null;
 		try {
 			if (conn != null && conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				if(charSet ==null){
-					br = new BufferedReader(
-						new InputStreamReader(conn.getInputStream()));
-				}else{
-					br = new BufferedReader(
-							new InputStreamReader(conn.getInputStream(), charSet));
+				if(Objects.equals(conn.getContentEncoding(), "gzip")) {
+					try {
+						br = new BufferedReader(new InputStreamReader(new GZIPInputStream(conn.getInputStream()), charSet));
+					} catch (IOException e) {
+						br = new BufferedReader(new InputStreamReader(conn.getInputStream(), charSet));
+					}
+				}
+				else {
+					br = new BufferedReader(new InputStreamReader(conn.getInputStream(), charSet));
 				}
 						
 				for (;;) {
@@ -439,9 +444,6 @@ public class HttpUrl {
 	 * - error : 수집실패결과 String
 	 * - cookie : 쿠키결과 jsonArray
 	 *
-	 * @param url
-	 * @param optionData
-	 * @return
 	 */
 	public static JsonObject getObject(String url, JSONObject optionData) {
 		JsonObject resultObj = new JsonObject();
@@ -484,12 +486,7 @@ public class HttpUrl {
 				}
 			}
 
-			if(message != null) {
-				resultObj.addProperty("script", message.toString());
-			}
-			else {
-				resultObj.addProperty("script", getScript(conn, charSet));
-			}
+			resultObj.addProperty("script", getScript(conn, charSet));
 
 			resultObj.add("cookie", cookieArray);
 			return resultObj;
@@ -507,4 +504,6 @@ public class HttpUrl {
 			return resultObj;
 		}
 	}
+
+
 }
