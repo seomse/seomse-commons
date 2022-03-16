@@ -133,19 +133,42 @@ public class TelegramMessage {
      * @param futureTradeType 선물 거래 유형
      * @return
      */
-    public static String coinFutureLiquidationMessageToMe(String symbol , BigDecimal price , double profit,
-                                                    BigDecimal tradePrice , BigDecimal depositVolume , FutureTradeType futureTradeType){
+    public static String coinFutureLiquidationMessageToMe(String symbol , BigDecimal price , BigDecimal profit,
+                                                          BigDecimal tradePrice , BigDecimal depositVolume , FutureTradeType futureTradeType){
+        return coinFutureLiquidationMessageToMe(symbol, price, profit, tradePrice, depositVolume, futureTradeType, "청산");
+    }
+
+    /**
+     * 코인 청산 메세지를 자기 텔레그램 API 로 보낸다.
+     * @param symbol 심볼
+     * @param price 기준 가격
+     * @param tradePrice 행사 가격
+     * @param depositVolume 계좌 잔고
+     * @param futureTradeType 선물 거래 유형
+     * @return
+     */
+    public static String coinFutureLiquidationMessageToMe(String symbol , BigDecimal price , BigDecimal profit,
+                                                    BigDecimal tradePrice , BigDecimal depositVolume , FutureTradeType futureTradeType, String custom){
         String priceStr = price.setScale(2, RoundingMode.DOWN).toString();
         String volumeStr = tradePrice.setScale(2, RoundingMode.DOWN).toString();
         String depositVolumeStr = depositVolume.setScale(2, RoundingMode.DOWN).toString();
-        String profitStr = String.format("%s%.2f",( profit > 0.0 ? "+" : "" ), profit);
+        String profitStr;
+        if(profit.setScale(2, RoundingMode.DOWN).compareTo(new BigDecimal(0.0)) > 0) {
+            profitStr = "+"+ profit.setScale(2, RoundingMode.DOWN);
+        } else {
+            profitStr = profit.setScale(2, RoundingMode.DOWN).toString();
+        }
+        if(custom == null || custom.equals("")){
+            custom = "청산";
+        }
         return toMe(
-                String.format("\\[*%s* 청산 => %s]" +
+                String.format("\\[*%s* %s => %s]" +
                                 "\n%s" +
-                                "\n기준 : %s" +
-                                "\n금액 : %s" +
+                                "\n구매가 : %s" +
+                                "\n종료가 : %s" +
                                 "\n잔고 : %s",
                         futureTradeType.name(),
+                        custom,
                         profitStr,
                         symbol,
                         priceStr,
