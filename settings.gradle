@@ -15,4 +15,6 @@ include 'modules:system'
 findProject(':modules:system')?.name = 'system'
 include 'modules:crawling'
 findProject(':modules:crawling')?.name = 'crawling'
+include 'modules:telegram'
+findProject(':modules:telegram')?.name = 'telegram'
 
