@@ -131,4 +131,12 @@ public class DateUtil {
 		}
 		return date != null;
 	}
+
+	public static String getDateText(int dateInt){
+
+		if(dateInt < 10){
+			return "0" + dateInt;
+		}
+		return Integer.toString(dateInt);
+	}
 }
