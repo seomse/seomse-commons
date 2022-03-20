@@ -43,7 +43,6 @@ public class FileUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
-
 	/**
 	 * 파일 내용을 줄바꿈 단위로 가져 온다
 	 * @param file File target text file
@@ -63,10 +62,8 @@ public class FileUtil {
 			throw new IORuntimeException(e);
 		}
 
-
 		return dataList;
 	}
-	
 
 	/**
 	 * 파일 내용을 줄바꿈 단위로 가져온다
@@ -96,8 +93,7 @@ public class FileUtil {
 		
 		return sb.substring(1);
 	}
-	
-	
+
 	/**
 	 * 경로내에 있는 모들 파일을 파일형태로 불러온다.
 	 * @param path String 폴더경로 또는 파일경로
@@ -109,6 +105,10 @@ public class FileUtil {
 		File file = new File(path);
 		addFiles(fileList, file);
 		return fileList;
+	}
+
+	public static File [] getFiles(String path){
+		return getFileList(path).toArray(new File[0]);
 	}
 
 	/**
@@ -153,8 +153,7 @@ public class FileUtil {
 
 		return resultFileList;
 	}
-	
-	
+
 	/**
 	 * 경로내에 있는 파일중에 파일명이 정규식에 해당하는 파일들을 불러온다.
 	 * @param path String 파일경로
@@ -180,7 +179,6 @@ public class FileUtil {
 
 		return resultFileList;
 	}
-	
 
 	/**
 	 * 파일에 내용을 기입한다.
@@ -273,12 +271,10 @@ public class FileUtil {
 		 try {
 			 FileInputStream fis = new FileInputStream(inFileName);
 			 FileOutputStream fos = new FileOutputStream(outFileName);
-	   
-			 
+
 			 FileChannel fcin =  fis.getChannel();
 			 FileChannel fcout = fos.getChannel();
-			 
-			 
+
 			 long size = fcin.size();
 			 fcin.transferTo(0, size, fcout);
 
@@ -324,7 +320,6 @@ public class FileUtil {
 	public static boolean exists(String path){
 		return Files.exists(Paths.get(path)) || new File(path).exists();
 	}
-
 
 	/**
 	  * 파일 이동
@@ -401,24 +396,16 @@ public class FileUtil {
 					makeIndex = Integer.parseInt(numValue);
 					makeIndex ++ ;
 				}
-				
-				
 			}
-			
-
 		}
 
 		while (isFile(parentPath + "/" + fileName + "(" + makeIndex + ")" + extension)) {
 			makeIndex++;
 		}
-		
-		
-		
+
 		return parentPath + "/" + fileName + "(" + makeIndex +")" + extension;
 	}
-	
-	
-	 
+
 	/**
 	 * 파일의 내용을 변경한다.
 	 * @param path String 변경할 최상위 경로
@@ -454,9 +441,7 @@ public class FileUtil {
 					isFileNameChange = true;
 				}
 			}
-			
-			
-			
+
 			String contents = getFileContents(file, charSet);
 			if(isRegex){
 				contents = contents.replaceAll(value, newValue);
@@ -471,9 +456,7 @@ public class FileUtil {
 				file.delete();
 			}
 		}
-		
 	}
-	 
 
 	/**
 	 * 경로에 있는 파일을 불러와서 언어셋을 변경한다.
@@ -515,7 +498,6 @@ public class FileUtil {
 		
 		File file = new File(dirPath);	
 		return isEmptyDir(file);
-		
 	}
 	
 	/**
@@ -528,11 +510,8 @@ public class FileUtil {
 		if(!dirFile.isDirectory()) {
 			return false;
 		}
-
-
 		//noinspection ConstantConditions
 		return dirFile.list() != null && dirFile.list().length == 0;
-
 	}
 
 	/**
@@ -606,8 +585,7 @@ public class FileUtil {
 					}
 				}
 			}
-			
-			
+
 			boolean chkResult = file.delete();
 			if(!chkResult) {
 				logger.error("file delete fail: " + file.getAbsolutePath());
@@ -626,11 +604,17 @@ public class FileUtil {
 		}
 	}
 
+	public final static Comparator<File> FILE_SORT_ASC = Comparator.comparingLong(File::length);
 
-	private final static Comparator<File> FILE_SORT_ASC = Comparator.comparingLong(File::length);
+	public final static Comparator<File> FILE_SORT_DESC = (f1, f2) -> Long.compare(f2.length(), f1.length());
 
+	public final static Comparator<File> SORT_NAME = Comparator.comparing(File::getName);
 
-	private final static Comparator<File> FILE_SORT_DESC = (f1, f2) -> Long.compare(f2.length(), f1.length());
+	public final static Comparator<File> SORT_NAME_DESC = (f1, f2) -> f2.getName().compareTo(f1.getName());
+
+	public final static Comparator<File> SORT_NAME_LONG = Comparator.comparingLong(f -> Long.parseLong(f.getName()));
+
+	public final static Comparator<File> SORT_NAME_LONG_DESC = (f1, f2) -> Long.compare(Long.parseLong(f2.getName()), Long.parseLong(f1.getName()));
 
 	/**
 	 * 파일을 length (byte 크기) 로 정렬
@@ -647,6 +631,35 @@ public class FileUtil {
 		Arrays.sort(files, sort);
 	}
 
+	/**
+	 * 파일을 이름으로 정렬
+	 * @param files File [] 정렬대상 파일 목록
+	 * @param isAsc boolean 오름차순여부
+	 */
+	public static void sortToName(File [] files, boolean isAsc){
+		Comparator<File> sort;
+		if(isAsc){
+			sort = SORT_NAME;
+		}else{
+			sort = SORT_NAME_DESC;
+		}
+		Arrays.sort(files, sort);
+	}
+
+	/**
+	 * 파일이름을 숫자로 변경하여 정렬
+	 * @param files File [] 정렬대상 파일 목록
+	 * @param isAsc boolean 오름차순여부
+	 */
+	public static void sortToNameLong(File [] files, boolean isAsc){
+		Comparator<File> sort;
+		if(isAsc){
+			sort = SORT_NAME_LONG;
+		}else{
+			sort = SORT_NAME_LONG_DESC;
+		}
+		Arrays.sort(files, sort);
+	}
 
 	/**
 	 * 라인카운트에 맞게 파일쪼개기
@@ -662,8 +675,6 @@ public class FileUtil {
 		String defaultPath = dirFile.getAbsolutePath() +"/split_line";
 		splitLine(file, defaultPath, lineCount, charSet);
 	}
-
-
 
 	/**
 	 * 라인카운트에 맞게 파일쪼개기
@@ -687,7 +698,6 @@ public class FileUtil {
 				dirFile.mkdirs();
 			}
 
-
 			String line;
 
 			int count = 0;
@@ -708,13 +718,10 @@ public class FileUtil {
 				fileOutput(sb.substring(1),charSet,outDirPath+"/"+fileNameIndex, false);
 			}
 
-
 		}catch(IOException e){
 			throw new IORuntimeException(e);
 		}
-
 	}
-
 
 	/**
 	 * 앞에 문자를 지정하여 파일명 변경
@@ -725,16 +732,13 @@ public class FileUtil {
 	public static void renamePrefix(String path, String prefix){
 
 		List<File> fileList = getFileList(path);
-
 		for(File file :fileList){
 			if(file.isDirectory()){
 				continue;
 			}
 			move(file.getAbsolutePath(), file.getParentFile().getAbsolutePath()+"/" +prefix + file.getName(),true);
 		}
-
 	}
-
 
 	/**
 	 * nio를 활용한 파일 라인 읽기
@@ -834,7 +838,6 @@ public class FileUtil {
 				}
 			}
 
-
 			if(size == 0){
 				return "";
 			}
@@ -901,7 +904,4 @@ public class FileUtil {
 			throw new IORuntimeException(e);
 		}
 	}
-
-
-
 }
