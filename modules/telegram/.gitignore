@@ -1,0 +1,4 @@
+# gradle stuff
+.gradle/
+build/
+out/
