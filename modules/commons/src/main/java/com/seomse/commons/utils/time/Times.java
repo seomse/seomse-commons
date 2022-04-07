@@ -15,6 +15,10 @@
  */
 package com.seomse.commons.utils.time;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 /**
  * 트레이딩에서의 기준 시간정보
  * @author macle
@@ -49,9 +53,47 @@ public class Times {
     public static final long DAY_3= DAY_1 * 3L;
     public static final long DAY_5= DAY_1 * 5L;
 
-
     //주
     public static final long WEEK_1= DAY_1 * 7L;
 
 
+    /**
+     * 년원일시분
+     *
+     * @param time unix time
+     * @param zoneId example ZoneId.of("Asia/Seoul")
+     * @return yyyyMMdd HHmm
+     */
+    public static String ymdhm(long time, ZoneId zoneId){
+        Instant i = Instant.ofEpochMilli(time);
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(i, zoneId);
+
+        return zonedDateTime.getYear() + DateUtil.getDateText(zonedDateTime.getMonthValue()) + DateUtil.getDateText(zonedDateTime.getDayOfMonth()) + " " + DateUtil.getDateText(zonedDateTime.getHour()) + DateUtil.getDateText(zonedDateTime.getMinute()) ;
+    }
+
+    /**
+     * 년월일시
+     * @param time unix time
+     * @param zoneId example ZoneId.of("Asia/Seoul")
+     * @return yyyyMMddHH
+     */
+    public static String ymdh(long time, ZoneId zoneId){
+        Instant intent = Instant.ofEpochMilli(time);
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(intent, zoneId);
+        return zonedDateTime.getYear() + DateUtil.getDateText(zonedDateTime.getMonthValue())
+                + DateUtil.getDateText(zonedDateTime.getDayOfMonth()) + DateUtil.getDateText(zonedDateTime.getHour());
+    }
+
+    /**
+     * 년월일
+     * @param time unix time
+     * @param zoneId example ZoneId.of("Asia/Seoul")
+     * @return yyyyMMdd
+     */
+    public static String ymd(long time, ZoneId zoneId){
+        Instant intent = Instant.ofEpochMilli(time);
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(intent, zoneId);
+        return zonedDateTime.getYear() + DateUtil.getDateText(zonedDateTime.getMonthValue())
+                + DateUtil.getDateText(zonedDateTime.getDayOfMonth());
+    }
 }
