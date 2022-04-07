@@ -26,6 +26,14 @@ import java.time.ZonedDateTime;
 public class Times {
 
 
+    //초정리
+    public static final long SECOND_3 = 1000L*3L;
+    public static final long SECOND_5 = 1000L*5L;
+    public static final long SECOND_10 = 1000L*10L;
+    public static final long SECOND_15 = 1000L*15L;
+    public static final long SECOND_30 = 1000L*30L;
+
+
     //분정리
     public static final long MINUTE_1 = 1000L*60L;
     public static final long MINUTE_2 = MINUTE_1 * 2L;
