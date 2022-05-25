@@ -53,7 +53,7 @@ public class FileUtil {
 	public static  List<String> getFileContentsList(File file, String charSet){
 		List<String> dataList = new ArrayList<>();
 		
-		try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet))){
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), charSet))){
 			 String line;
 	          while ((line = br.readLine()) != null) {
 	        	  dataList.add(line);
@@ -76,7 +76,7 @@ public class FileUtil {
 		
 		StringBuilder sb = new StringBuilder();
 
-		try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet))){
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), charSet))){
 			 String line;
 
 	         while ((line = br.readLine()) != null) {
@@ -680,15 +680,15 @@ public class FileUtil {
 	 * 라인카운트에 맞게 파일쪼개기
 	 * 파일명은 확장자없는 숫자
 	 * 생긴 숫자형 파일이 덮어쓰일 수 있으므로 숫자이름의 파일이 없는 폴더로 실행할 것
-	 * @param file File file
-	 * @param outDirPath String outPath
-	 * @param lineCount int line count
-	 * @param charSet String char set
+	 * @param file  file
+	 * @param outDirPath  outPath
+	 * @param lineCount  line count
+	 * @param charSet  char set
 	 */
 	public static void splitLine(File file, String outDirPath, int lineCount, String charSet){
 		StringBuilder sb = new StringBuilder();
 
-		try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charSet)) ){
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), charSet)) ){
 
 			int fileNameIndex = 1;
 
@@ -781,7 +781,12 @@ public class FileUtil {
 	 * @return String line text
 	 */
 	public static String getLine(String path, int lineIndex){
-		return getLine(path, StandardCharsets.UTF_8, lineIndex);
+		return getLine(new File(path), StandardCharsets.UTF_8, lineIndex);
+	}
+
+
+	public static String getLine(String path, Charset cs, int lineIndex){
+		return getLine(new File(path), cs, lineIndex);
 	}
 
 	/**
@@ -789,14 +794,14 @@ public class FileUtil {
 	 * core 엔진을 위한 메소드로 빠르게 처리할 수 있는 방법으로함
 	 * BufferReader 를 이요한 방법과
 	 * nio를 이용한 방법보다 10배 가까임 빠름
-	 * @param path String
+	 * @param file file
 	 * @param cs Charset
 	 * @param lineIndex int start index 0
 	 * @return String line text
 	 */
-	public static String getLine(String path, Charset cs, int lineIndex){
+	public static String getLine(File file, Charset cs, int lineIndex){
 		try (
-				FileInputStream stream = new FileInputStream(path)
+				FileInputStream stream = new FileInputStream(file)
 		){
 
 			int lastLineIndex = 0;
@@ -847,6 +852,7 @@ public class FileUtil {
 		}
 	}
 
+
 	private static String toStringBytesList(List<byte[]> byteList, int size,  Charset cs){
 
 		int i=0;
@@ -860,6 +866,7 @@ public class FileUtil {
 		return new String(buffer, cs);
 	}
 
+
 	/**
 	 * 파일 라인 수 얻기 java.io 활용
 	 * core 엔진 용으로 최적의 성능을 내는 소스로 개발
@@ -869,8 +876,19 @@ public class FileUtil {
 	 * @return long
 	 */
 	public static long getLineCount(String path){
+		return getLineCount(new File(path));
+	}
 
-		File file = new File(path);
+	/**
+	 * 파일 라인 수 얻기 java.io 활용
+	 * core 엔진 용으로 최적의 성능을 내는 소스로 개발
+	 * LineNumberReader 를 활용한 방법과
+	 * Nio 메소드 보다도 10배 가까이 빠름
+	 * @param file file
+	 * @return long
+	 */
+	public static long getLineCount(File file){
+
 		if(file.length() == 0){
 			return 0;
 		}
@@ -892,6 +910,33 @@ public class FileUtil {
 		}
 	}
 
+	public static String getLastTextLine(String path){
+		File file = new File(path);
+		return getLastTextLine(file);
+	}
+
+	public static String getLastTextLine(File file){
+
+		int lastIndex = (int)getLineCount(file)-1;
+
+		if(lastIndex < 0){
+			return "";
+		}
+
+		if(lastIndex == 0){
+			return getLine(file, StandardCharsets.UTF_8, 0);
+		}
+
+		for (int i = lastIndex; i > -1 ; i--) {
+			String line = getLine(file, StandardCharsets.UTF_8, i);
+			if(!"".equals(line.trim())){
+				return line;
+			}
+		}
+
+		return getLine(file, StandardCharsets.UTF_8, lastIndex);
+	}
+
 	/**
 	 * 파일 라인 수 얻기 java.nio 활용
 	 * @param path String filePath
@@ -899,6 +944,7 @@ public class FileUtil {
 	 */
 	public static long getLineCountNio(String path){
 		try {
+			//noinspection resource
 			return Files.lines(Paths.get(path)).count();
 		}catch(IOException e){
 			throw new IORuntimeException(e);
