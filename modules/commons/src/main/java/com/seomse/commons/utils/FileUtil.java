@@ -17,6 +17,7 @@ package com.seomse.commons.utils;
 
 import com.seomse.commons.exception.IORuntimeException;
 import com.seomse.commons.utils.string.Check;
+import com.seomse.commons.validation.FileValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,6 +111,37 @@ public class FileUtil {
 	public static File [] getFiles(String path){
 		return getFileList(path).toArray(new File[0]);
 	}
+
+	public static File [] getFiles(String path, FileValidation validation){
+		return getFiles(path, validation, null);
+	}
+	public static File [] getFiles(String path, FileValidation validation, Comparator<File> sort){
+		List<File> fileList = getFileList(path);
+
+		if(validation != null){
+			List<File> list = new ArrayList<>();
+			for(File file : fileList){
+				if(validation.isValid(file)){
+					list.add(file);
+				}
+			}
+
+			fileList.clear();
+			fileList = list;
+		}
+
+		if(fileList.size() == 0){
+			return new File[0];
+		}
+
+		File [] files = fileList.toArray(new File[0]);
+		if(sort != null){
+			Arrays.sort(files, sort);
+		}
+
+		return files;
+	}
+
 
 	/**
 	 * list에 파일 누적
