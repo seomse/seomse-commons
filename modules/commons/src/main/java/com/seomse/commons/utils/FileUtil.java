@@ -18,6 +18,7 @@ package com.seomse.commons.utils;
 import com.seomse.commons.exception.IORuntimeException;
 import com.seomse.commons.utils.string.Check;
 import com.seomse.commons.validation.FileValidation;
+import com.seomse.commons.validation.NumberNameFileValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,10 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -108,15 +106,32 @@ public class FileUtil {
 		return fileList;
 	}
 
+	public static List<File> getFileList(File file){
+		List<File> fileList = new ArrayList<>();
+		addFiles(fileList, file);
+		return fileList;
+	}
+
+
 	public static File [] getFiles(String path){
 		return getFileList(path).toArray(new File[0]);
 	}
+	public static File [] getFiles(File f){
+		return getFileList(f).toArray(new File[0]);
+	}
 
 	public static File [] getFiles(String path, FileValidation validation){
-		return getFiles(path, validation, null);
+		return getFiles(new File(path), validation, null);
+	}
+	public static File [] getFiles(File f, FileValidation validation){
+		return getFiles(f, validation, null);
 	}
 	public static File [] getFiles(String path, FileValidation validation, Comparator<File> sort){
-		List<File> fileList = getFileList(path);
+		return getFiles(new File(path), validation, sort);
+	}
+
+	public static File [] getFiles(File f, FileValidation validation, Comparator<File> sort){
+		List<File> fileList = getFileList(f);
 
 		if(validation != null){
 			List<File> list = new ArrayList<>();
@@ -135,7 +150,7 @@ public class FileUtil {
 		}
 
 		File [] files = fileList.toArray(new File[0]);
-		if(sort != null){
+		if(sort != null && files.length > 1){
 			Arrays.sort(files, sort);
 		}
 
@@ -166,7 +181,103 @@ public class FileUtil {
 			}
 		}
 	}
-	
+	public static String [] getLines(File file, Charset charset, FileValidation validation, Comparator<File> sort, int limit){
+		if(limit < 1){
+			return getLines(file, charset, validation, sort);
+		}
+		if(charset == null){
+			charset = StandardCharsets.UTF_8;
+		}
+		File [] files = FileUtil.getFiles(file.getAbsolutePath(), validation, sort);
+
+		if(file.length() == 0){
+			return new String[0];
+		}
+
+		List<List<String>> contentsList = new LinkedList<>();
+
+		int sizeSum = 0;
+
+		for (int i = files.length-1; i > -1 ; i--) {
+			List<String> lineList = getLineList(files[i], charset);
+			sizeSum += lineList.size();
+			contentsList.add(0, lineList);
+			if(sizeSum >= limit){
+				break;
+			}
+		}
+
+		int firstLineIndex;
+		int length;
+
+		if(limit >= sizeSum){
+			firstLineIndex = 0;
+			length = sizeSum;
+		}else{
+			firstLineIndex = sizeSum - limit;
+			length = limit;
+		}
+
+		String [] lines = new String[length];
+		int index = 0;
+		List<String> lineList = contentsList.get(0);
+
+		for (int i = firstLineIndex; i <lineList.size() ; i++) {
+			lines[index++] = lineList.get(i);
+		}
+		for (int i = 1; i <contentsList.size() ; i++) {
+			lineList = contentsList.get(i);
+			for (String s : lineList) {
+				lines[index++] = s;
+			}
+		}
+
+		return lines;
+
+	}
+
+
+	public static String [] getLines(File file, Charset charset, FileValidation validation, Comparator<File> sort){
+
+		if(charset == null){
+			charset = StandardCharsets.UTF_8;
+		}
+		List<String> list = new ArrayList<>();
+
+		File [] files = FileUtil.getFiles(file.getAbsolutePath(), validation, sort);
+
+		if(file.length() == 0){
+			return new String[0];
+		}
+
+		for(File f : files){
+			addLine(list, f, charset);
+		}
+
+		String [] array = list.toArray(new String[0]);
+		list.clear();
+		return array;
+	}
+
+	public static List<String> getLineList(File file, Charset charset){
+		List<String> list = new ArrayList<>();
+		addLine(list, file, charset);
+		return list;
+	}
+
+	public static void addLine(List<String> list, File file, Charset charset){
+
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), charset))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				list.add(line);
+			}
+		} catch (IOException e) {
+			throw new IORuntimeException(e);
+		}
+	}
+
+
 	/**
 	 * 경로내에 있는 파일중에 확장자를 지정하여 불러온다
 	 * @param path String 파일경로
