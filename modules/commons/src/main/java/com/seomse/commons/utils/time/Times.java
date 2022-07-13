@@ -104,4 +104,30 @@ public class Times {
         return zonedDateTime.getYear() + DateUtil.getDateText(zonedDateTime.getMonthValue())
                 + DateUtil.getDateText(zonedDateTime.getDayOfMonth());
     }
+
+    /**
+     * 년월
+     * @param time unix time
+     * @param zoneId example ZoneId.of("Asia/Seoul")
+     * @return yyyyMM
+     */
+    public static String ym(long time, ZoneId zoneId){
+        Instant intent = Instant.ofEpochMilli(time);
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(intent, zoneId);
+        return zonedDateTime.getYear() + DateUtil.getDateText(zonedDateTime.getMonthValue())
+                ;
+    }
+
+    /**
+     * 년
+     * @param time unix time
+     * @param zoneId example ZoneId.of("Asia/Seoul")
+     * @return yyyy
+     */
+    public static String year(long time, ZoneId zoneId){
+        Instant intent = Instant.ofEpochMilli(time);
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(intent, zoneId);
+        return Integer.toString(zonedDateTime.getYear());
+    }
+
 }

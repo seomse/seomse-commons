@@ -149,6 +149,10 @@ public class FileUtil {
 	 * @param file File dir or file
 	 */
 	private static void addFiles(List<File> fileList, File file){
+		if(!file.isFile() && !file.isDirectory()){
+			return;
+		}
+
 		fileList.add(file);
 		if(file.isDirectory()){
 			File [] files = file.listFiles();
