@@ -15,15 +15,14 @@
  */
 package com.seomse.crawling.core.http;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.seomse.commons.config.Config;
+import com.seomse.commons.exception.ConnectRuntimeException;
+import com.seomse.commons.exception.IORuntimeException;
+import com.seomse.commons.exception.SocketTimeoutRuntimeException;
 import com.seomse.commons.utils.ExceptionUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.*;
 import java.io.*;
@@ -32,8 +31,6 @@ import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.zip.GZIPInputStream;
 
@@ -41,9 +38,8 @@ import java.util.zip.GZIPInputStream;
  * HttpURLConnection 을 활용한 script
  * @author macle
  */
+@Slf4j
 public class HttpUrl {
-
-	private final static Logger logger = LoggerFactory.getLogger(HttpUrl.class);
 
 	/**
 	 * Rest Get 형태로 활용
@@ -85,7 +81,11 @@ public class HttpUrl {
 	 * @return chrome user agent
 	 */
 	public static String getChromeUserAgent(){
-		return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36";
+		return Config.getConfig("chrome.user.agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36");
+	}
+
+	public static String getScript(String url, String jsonValue) {
+		return getScript(url, new JSONObject(jsonValue), true);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class HttpUrl {
 	 * @return String script
 	 */
 	public static String getScript(String url, JSONObject optionData) {
-		return getScript(url, optionData, true);
+		return getScript(url, optionData, false);
 	}
 
 	/**
@@ -124,7 +124,18 @@ public class HttpUrl {
 	 * @return String script
 	 */
 	public static String getScript(String url, JSONObject optionData, boolean isErrorLog) {
+		return getMessage(url, optionData, isErrorLog).message;
+	}
 
+	public static HttpMessage getMessage(String url, JSONObject optionData){
+		return getMessage(url, optionData, false);
+	}
+
+	public static HttpMessage getMessage(String url, String jsonOptionValue){
+		return getMessage(url, new JSONObject(jsonOptionValue), false);
+	}
+
+	public static HttpMessage getMessage(String url, JSONObject optionData, boolean isErrorLog){
 
 		try {
 			HttpURLConnection conn = newHttpURLConnection(url, optionData);
@@ -136,7 +147,6 @@ public class HttpUrl {
 						// Redirected URL 받아오기
 						String redirectedUrl = conn.getHeaderField("Location");
 						conn = newHttpURLConnection(redirectedUrl, optionData);
-						System.out.println("moved");
 
 					}
 					else {
@@ -146,9 +156,11 @@ public class HttpUrl {
 
 			} catch (IOException e) {
 				if(isErrorLog) {
-					logger.error(ExceptionUtil.getStackTrace(e));
+					log.error(ExceptionUtil.getStackTrace(e));
 				}
 			}
+			HttpMessage httpMessage = new HttpMessage();
+			httpMessage.headerFields = conn.getHeaderFields();
 
 			String charSet = "UTF-8";
 
@@ -157,20 +169,19 @@ public class HttpUrl {
 					charSet = optionData.getString(HttpOptionDataKey.CHARACTER_SET);
 				} catch (JSONException e) {
 					if(isErrorLog) {
-						logger.error(ExceptionUtil.getStackTrace(e));
+						log.error(ExceptionUtil.getStackTrace(e));
 					}
 				}
 			}
+			httpMessage.message = getScript(conn, charSet);
 
-			return getScript(conn, charSet);
+			return httpMessage;
 		}catch(SocketTimeoutException e){
-			return HttpError.SOCKET_TIME_OUT.message() +"{" + ExceptionUtil.getStackTrace(e) + "}";
+			throw new SocketTimeoutRuntimeException(e);
 		}catch(ConnectException e){
-			return HttpError.CONNECT_FAIL.message() +"{" + ExceptionUtil.getStackTrace(e) + "}";
+			throw new ConnectRuntimeException(e);
 		}catch(IOException e){
-			return HttpError.IO.message() +"{" + ExceptionUtil.getStackTrace(e) + "}";
-		}catch(Exception e){
-			return HttpError.ERROR.message() +"{" + ExceptionUtil.getStackTrace(e) + "}";
+			throw new IORuntimeException(e);
 		}
 	}
 
@@ -233,12 +244,11 @@ public class HttpUrl {
 				}
 			}
 		} finally{
-			//noinspection CatchMayIgnoreException
 			try{
 				if(br != null) {
 					br.close();
 				}
-			}catch(Exception e){}
+			}catch(Exception ignore){}
 		}
 		
 		return message.toString();
@@ -356,25 +366,21 @@ public class HttpUrl {
 				conn.setRequestMethod("GET");
 			}
 
-
-
-
 			int readTimeout = 30000;
 			if (!optionData.isNull(HttpOptionDataKey.READ_TIME_OUT)) {
 				try {
 					readTimeout = optionData.getInt(HttpOptionDataKey.READ_TIME_OUT);
 				} catch (JSONException e) {
-					logger.error(ExceptionUtil.getStackTrace(e));
+					log.error(ExceptionUtil.getStackTrace(e));
 				}
 			}
 			conn.setReadTimeout(readTimeout);
-
 
 			if (!optionData.isNull(HttpOptionDataKey.CONNECT_TIME_OUT)) {
 				try {
 					connectTimeout = optionData.getInt(HttpOptionDataKey.CONNECT_TIME_OUT);
 				} catch (JSONException e) {
-					logger.error(ExceptionUtil.getStackTrace(e));
+					log.error(ExceptionUtil.getStackTrace(e));
 				}
 			}
 			conn.setConnectTimeout(connectTimeout);
@@ -384,7 +390,7 @@ public class HttpUrl {
 				try {
 					charSet = optionData.getString(HttpOptionDataKey.CHARACTER_SET);
 				} catch (JSONException e) {
-					logger.error(ExceptionUtil.getStackTrace(e));
+					log.error(ExceptionUtil.getStackTrace(e));
 				}
 			}
 
@@ -397,7 +403,6 @@ public class HttpUrl {
 				outSteam.flush();
 				outSteam.close();
 			}
-
         }
 
         return conn;
@@ -432,78 +437,7 @@ public class HttpUrl {
         } catch (Exception e) { 
                 e.printStackTrace(); 
         } 
-    } 
-
+    }
 	private final static HostnameVerifier DO_NOT_VERIFY = (arg0, arg1) -> true;
-
-
-	/**
-	 * url 에 해당하는 수집 결과 얻기
-	 * scriptObject result
-	 * - script : 수집결과 String
-	 * - error : 수집실패결과 String
-	 * - cookie : 쿠키결과 jsonArray
-	 *
-	 */
-	public static JsonObject getObject(String url, JSONObject optionData) {
-		JsonObject resultObj = new JsonObject();
-		StringBuilder message = null;
-		try {
-			HttpURLConnection conn = newHttpURLConnection(url, optionData);
-			try {
-				int MAX_REDIRECT_COUNT = 3;
-				for (int i = 0; i < MAX_REDIRECT_COUNT; i++) {
-					if (conn.getResponseCode() == HttpsURLConnection.HTTP_MOVED_TEMP
-							|| conn.getResponseCode() == HttpsURLConnection.HTTP_MOVED_PERM) {
-						// Redirected URL 받아오기
-						String redirectedUrl = conn.getHeaderField("Location");
-						conn = newHttpURLConnection(redirectedUrl, optionData);
-					}
-
-					else {
-						break;
-					}
-				}
-
-			} catch (IOException e) {
-				logger.error(ExceptionUtil.getStackTrace(e));
-			}
-
-			JsonArray cookieArray = new JsonArray();
-			Map<String, List<String>> headerFieldsMap = conn.getHeaderFields();
-			List<String> cookieList = headerFieldsMap.get("Set-Cookie");
-			if(cookieList != null) {
-				cookieArray = JsonParser.parseString(new Gson().toJson(cookieList)).getAsJsonArray();
-			}
-
-			String charSet = "UTF-8";
-
-			if (optionData!= null && !optionData.isNull(HttpOptionDataKey.CHARACTER_SET)) {
-				try {
-					charSet = optionData.getString(HttpOptionDataKey.CHARACTER_SET);
-				} catch (JSONException e) {
-					logger.error(ExceptionUtil.getStackTrace(e));
-				}
-			}
-
-			resultObj.addProperty("script", getScript(conn, charSet));
-
-			resultObj.add("cookie", cookieArray);
-			return resultObj;
-		}catch(SocketTimeoutException e){
-			resultObj.addProperty("error", HttpError.SOCKET_TIME_OUT.message() +"{" + ExceptionUtil.getStackTrace(e) + "}");
-			return resultObj;
-		}catch(ConnectException e){
-			resultObj.addProperty("error", HttpError.CONNECT_FAIL.message() +"{" + ExceptionUtil.getStackTrace(e) + "}");
-			return resultObj;
-		}catch(IOException e){
-			resultObj.addProperty("error", HttpError.IO.message() +"{" + ExceptionUtil.getStackTrace(e) + "}");
-			return resultObj;
-		}catch(Exception e){
-			resultObj.addProperty("error", HttpError.ERROR.message() +"{" + ExceptionUtil.getStackTrace(e) + "}");
-			return resultObj;
-		}
-	}
-
 
 }

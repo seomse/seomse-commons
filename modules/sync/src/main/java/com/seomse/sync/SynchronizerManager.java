@@ -22,14 +22,13 @@ import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.commons.utils.PriorityUtil;
 import com.seomse.commons.utils.time.RunningTime;
 import com.seomse.commons.utils.time.TimeUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -39,9 +38,9 @@ import java.util.Set;
  * 동기화 관리자
  * @author macle
  */
+@Slf4j
 public class SynchronizerManager {
 
-    private static final Logger logger = LoggerFactory.getLogger(SynchronizerManager.class);
 
 
     private static class Singleton{
@@ -85,7 +84,7 @@ public class SynchronizerManager {
 
             String syncPackagesValue = Config.getConfig("sync.package");
             if(syncPackagesValue == null){
-                syncPackagesValue = Config.getConfig("default.package", "com.seomse");
+                syncPackagesValue = Config.getConfig("default.package", "com.seomse,io.runon");
             }
 
             String [] syncPackages = syncPackagesValue.split(",");
@@ -106,7 +105,7 @@ public class SynchronizerManager {
                         }
 
                     } catch (Exception e) {
-                        logger.error(ExceptionUtil.getStackTrace(e));
+                        log.error(ExceptionUtil.getStackTrace(e));
                     }
                 }
             }
@@ -118,7 +117,7 @@ public class SynchronizerManager {
 
             changeArray();
         }catch(Exception e){
-            logger.error(ExceptionUtil.getStackTrace(e));
+            log.error(ExceptionUtil.getStackTrace(e));
         }
     }
 
@@ -190,13 +189,13 @@ public class SynchronizerManager {
             for (int i = 0; i < syncArray.length; i++) {
                 try {
                     Synchronizer sync = syncArray[i];
-                    logger.debug("sync : " + sync.getClass().getName());
+                    log.debug("sync : " + sync.getClass().getName());
                     sync.sync();
 
-                    logger.debug(TimeUtil.getTimeValue(runningTime.getRunningTime()));
+                    log.debug(TimeUtil.getTimeValue(runningTime.getRunningTime()));
 
                 } catch (Exception e) {
-                    ExceptionUtil.exception(e, logger, exceptionHandler);
+                    ExceptionUtil.exception(e, log, exceptionHandler);
                 }
             }
             isIng = false;

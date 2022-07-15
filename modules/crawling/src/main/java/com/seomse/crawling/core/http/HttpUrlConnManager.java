@@ -15,17 +15,13 @@
  */
 package com.seomse.crawling.core.http;
 
-import com.google.gson.JsonObject;
-import com.seomse.api.ApiRequest;
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.crawling.CrawlingServer;
 import com.seomse.crawling.exception.NodeEndException;
 import com.seomse.crawling.node.CrawlingNode;
-import com.seomse.crawling.node.CrawlingNodeScript;
-import com.seomse.crawling.node.CrawlingProxyNode;
+import com.seomse.crawling.node.CrawlingNodeMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,10 +32,10 @@ import java.util.Map;
  * 소스가 너무 가독성이 떨어지는 경우를 위해서 클래스 분리
  * @author macle
  */
+@Slf4j
 public class HttpUrlConnManager {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HttpUrlConnManager.class);
-	
+
 	private final CrawlingServer server;
 	
 	private final Map<String, CrawlingNode> lastNodeMap;
@@ -68,9 +64,9 @@ public class HttpUrlConnManager {
 	 * @param optionData JSONObject
 	 * @return String
 	 */
-	public String getHttpUrlScript(String checkUrl, long connLimitTime, String url, JSONObject optionData) {
+	public String getHttpScript(String checkUrl, long connLimitTime, String url, JSONObject optionData) {
 
-		CrawlingNodeScript crawlingNodeScript = getNodeScript(checkUrl, connLimitTime, url, optionData);
+		CrawlingNodeMessage crawlingNodeScript = getNodeMessage(checkUrl, connLimitTime, url, optionData);
 		if(crawlingNodeScript == null){
 			return null;
 		}
@@ -88,34 +84,30 @@ public class HttpUrlConnManager {
 	 * @param optionData JSONObject
 	 * @return CrawlingNodeScript
 	 */
-	public CrawlingNodeScript getNodeScript(String checkUrl, long connLimitTime, String url, JSONObject optionData) {
+	public CrawlingNodeMessage getNodeMessage(String checkUrl, long connLimitTime, String url, JSONObject optionData) {
 
 		CrawlingNode [] nodeArray = server.getNodeArray();
 		if(nodeArray.length == 0) {
 			if(isNodeNullLog) {
-				logger.error("node null...");
+				log.error("node null...");
 				isNodeNullLog = false;
 			}
 			return null;
 		}
 
-		logger.debug("node length: " + nodeArray.length);
+		log.debug("node length: " + nodeArray.length);
 
 		isNodeNullLog = true;
 
 		Object lockObj = lockMap.get(checkUrl);
 		if(lockObj == null) {
 			synchronized (lock) {
-				lockObj = lockMap.get(checkUrl);
-				if(lockObj == null) {
-					lockObj = new Object();
-					lockMap.put(checkUrl, lockObj);
-				}
+				lockObj = lockMap.computeIfAbsent(checkUrl, k -> new Object());
 			}
 		}
 
 		CrawlingNode node;
-		CrawlingNodeScript crawlingNodeScript = null;
+		CrawlingNodeMessage crawlingNodeMessage = null;
 		boolean isNodeExecute = true;
 		//noinspection SynchronizationOnLocalVariableOrMethodParameter
 		synchronized (lockObj) {
@@ -166,67 +158,30 @@ public class HttpUrlConnManager {
 						try {
 							Thread.sleep(connLimitTime - gap);
 						}catch(Exception e) {
-							logger.error(ExceptionUtil.getStackTrace(e));
+							log.error(ExceptionUtil.getStackTrace(e));
 						}
 					}
 				}
 
 			}
 			try {
-				JsonObject scriptObj = node.getHttpUrlObject(url, optionData);
-				String script = null;
-				if(scriptObj.has("script")) {
-					script = scriptObj.get("script").getAsString();
-				}
-				else {
-					script = scriptObj.get("error").getAsString();
-				}
 
-				if(script != null && node instanceof CrawlingProxyNode && (script.equals(ApiRequest.TIME_OVER ) || script.equals(ApiRequest.CONNECT_FAIL))){
-					server.endNode(node);
-					isNodeExecute = false;
-
-					logger.debug("node connect fail retry");
-
-				}else{
-					node.updateLastConnectTime(checkUrl);
-					crawlingNodeScript = new CrawlingNodeScript(node, script, scriptObj);
-					lastNodeMap.put(checkUrl, node);
-				}
+				node.updateLastConnectTime(checkUrl);
+				crawlingNodeMessage = new CrawlingNodeMessage(node, node.getHttpMessage(url, optionData));
+				lastNodeMap.put(checkUrl, node);
 
 			}catch(NodeEndException e) {
-				logger.debug("node end. other node request");
+				log.debug("node end. other node request");
 				isNodeExecute = false;
 				server.endNode(node);
 			}
 		}
 
 		if(!isNodeExecute){
-			return getNodeScript(checkUrl, connLimitTime, url, optionData);
+			return getNodeMessage(checkUrl, connLimitTime, url, optionData);
 		}
 
-		return crawlingNodeScript;
+		return crawlingNodeMessage;
 	}
 
-	/**
-	 * HttpUrlConnection 을 이용한 scriptObject 결과 얻기
-	 * scriptObject result
-	 * - script : 수집결과 String
-	 * - error : 수집실패결과 String
-	 * - cookie : 쿠키결과 jsonArray
-	 *
-	 * @param checkUrl String
-	 * @param connLimitTime long
-	 * @param url String
-	 * @param optionData JSONObject
-	 * @return scriptObject JsonObject
-	 */
-	public JsonObject getHttpUrlObject(String checkUrl, long connLimitTime, String url, JSONObject optionData) {
-		CrawlingNodeScript crawlingNodeScript = getNodeScript(checkUrl, connLimitTime, url, optionData);
-		if(crawlingNodeScript == null){
-			return null;
-		}
-
-		return crawlingNodeScript.getScriptObj();
-	}
 }

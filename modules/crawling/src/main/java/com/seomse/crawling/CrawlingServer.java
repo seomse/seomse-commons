@@ -17,7 +17,6 @@
 
 package com.seomse.crawling;
 
-import com.google.gson.JsonObject;
 import com.seomse.api.server.ApiRequestConnectHandler;
 import com.seomse.api.server.ApiRequestServer;
 import com.seomse.commons.callback.ObjCallback;
@@ -25,11 +24,10 @@ import com.seomse.commons.handler.ExceptionHandler;
 import com.seomse.crawling.core.http.HttpUrlConnManager;
 import com.seomse.crawling.node.CrawlingLocalNode;
 import com.seomse.crawling.node.CrawlingNode;
-import com.seomse.crawling.node.CrawlingNodeScript;
+import com.seomse.crawling.node.CrawlingNodeMessage;
 import com.seomse.crawling.node.CrawlingProxyNode;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
 import java.net.Socket;
@@ -42,10 +40,10 @@ import java.util.Map;
  * CrawlingServer
  * @author macle
  */
+@Slf4j
 public class CrawlingServer {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CrawlingServer.class);
-	
+
 	private static final CrawlingNode [] EMPTY_NODE_ARRAY = new CrawlingNode[0];
 	
 	private final ApiRequestServer requestServer;
@@ -102,7 +100,7 @@ public class CrawlingServer {
 						array[i].setSeq(i);
 					}
 					nodeArray = array;
-					logger.debug("new proxy node connect: " + nodeKey + ", node length: " + nodeArray.length);
+					log.debug("new proxy node connect: " + nodeKey + ", node length: " + nodeArray.length);
 				}
 			}
 		};
@@ -145,10 +143,10 @@ public class CrawlingServer {
 
 				if(crawlingNode instanceof CrawlingProxyNode){
 					CrawlingProxyNode crawlingProxyNode =(CrawlingProxyNode)crawlingNode;
-					logger.info("proxy node end: " + crawlingProxyNode.getNodeKey() +", " + crawlingProxyNode.getSeq());
+					log.info("proxy node end: " + crawlingProxyNode.getNodeKey() +", " + crawlingProxyNode.getSeq());
 					proxyNodeMap.remove(crawlingProxyNode.getNodeKey());
 				}else{
-					logger.info("node end: " + crawlingNode.getSeq());
+					log.info("node end: " + crawlingNode.getSeq());
 
 
 				}
@@ -166,14 +164,14 @@ public class CrawlingServer {
 	public void setLocalNode() {
 		
 		if(localNode != null) {
-			logger.error("local node already");
+			log.error("local node already");
 			return;
 		}
 		
 		synchronized (lock) {
 			//동기화 구간에서 한번더 체크 
 			if(localNode != null) {
-				logger.error("local node already");
+				log.error("local node already");
 				return;
 			}
 
@@ -186,7 +184,7 @@ public class CrawlingServer {
 			for(int i=0 ; i<nodeArray.length ; i++) {
 				nodeArray[i].setSeq(i);
 			}
-			logger.debug("local node add: " + nodeArray.length);
+			log.debug("local node add: " + nodeArray.length);
 		}
 	}
 	
@@ -223,8 +221,8 @@ public class CrawlingServer {
 	 * @param optionData JSONObject
 	 * @return String script
 	 */
-	public String getHttpUrlScript(String check, long connLimitTime, String url, JSONObject optionData) {
-		return httpUrlConnManager.getHttpUrlScript(check, connLimitTime, url, optionData);
+	public String getHttpScript(String check, long connLimitTime, String url, JSONObject optionData) {
+		return httpUrlConnManager.getHttpScript(check, connLimitTime, url, optionData);
 	}
 
 	/**
@@ -235,26 +233,10 @@ public class CrawlingServer {
 	 * @param optionData JSONObject
 	 * @return String script
 	 */
-	public CrawlingNodeScript getNodeScript(String check, long connLimitTime, String url, JSONObject optionData){
-		return httpUrlConnManager.getNodeScript(check, connLimitTime, url, optionData);
+	public CrawlingNodeMessage getNodeMessage(String check, long connLimitTime, String url, JSONObject optionData){
+		return httpUrlConnManager.getNodeMessage(check, connLimitTime, url, optionData);
 	}
 
-	/**
-	 * HttpUrlConnection 을 활용하여 node 정보와 같이 수집결과 얻기
-	 * scriptObject result JsonObject
-	 * - script : 수집결과 String
-	 * - error : 수집실패결과 String
-	 * - cookie : 쿠키결과 jsonArray
-	 *
-	 * @param check limit 체크 시간에 사용하는 키값
-	 * @param connLimitTime long
-	 * @param url String
-	 * @param optionData JSONObject
-	 * @return scriptObject JsonObject
-	 */
-	public JsonObject getHttpUrlObject(String check, long connLimitTime, String url, JSONObject optionData){
-		return httpUrlConnManager.getHttpUrlObject(check, connLimitTime, url, optionData);
-	}
 
 
 	/**

@@ -15,29 +15,27 @@
  */
 package com.seomse.crawling.node;
 
-import com.google.gson.JsonObject;
+import com.seomse.crawling.core.http.HttpMessage;
 import com.seomse.crawling.core.http.HttpUrl;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 /**
  * local node
  * @author macle
  */
+@Slf4j
 public class CrawlingLocalNode extends CrawlingNode {
 
-	private static final Logger logger = LoggerFactory.getLogger(CrawlingLocalNode.class);
-	
 	@Override
-	public String getHttpUrlScript(String url, JSONObject optionData){
-		logger.debug("local node seq: " + seq);
+	public String getHttpScript(String url, JSONObject optionData){
+		log.debug("local node seq: " + seq);
 		return HttpUrl.getScript(url, optionData);
 
 	}
 
 	@Override
-	public JsonObject getHttpUrlObject(String url, JSONObject optionData) {
-		logger.debug("local node seq: " + seq);
-		return HttpUrl.getObject(url, optionData);
+	public HttpMessage getHttpMessage(String url, JSONObject optionData) {
+		log.debug("local node seq: " + seq);
+		return HttpUrl.getMessage(url, optionData);
 	}
 }

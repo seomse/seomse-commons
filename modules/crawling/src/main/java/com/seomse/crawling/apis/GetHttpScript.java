@@ -30,7 +30,7 @@ public class GetHttpScript extends ApiMessage {
     @Override
     public void receive(String message) {
         try {
-            sendMessage(CrawlingManager.getInstance().getServer().getHttpUrlScript(message,1000L, message,null));
+            sendMessage(CrawlingManager.getInstance().getServer().getHttpScript(message,1000L, message,null));
         }catch(Exception e){
             sendMessage(Messages.FAIL + ExceptionUtil.getStackTrace(e));
         }

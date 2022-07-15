@@ -19,8 +19,7 @@ package com.seomse.crawling.proxy;
 import com.seomse.api.ApiCommunication;
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.commons.utils.time.Times;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -29,10 +28,10 @@ import java.net.Socket;
  * CrawlingProxy remote proxy
  * @author macle
  */
+
+@Slf4j
 public class CrawlingProxy {
 	
-	
-	private static final Logger logger = LoggerFactory.getLogger(CrawlingProxy.class);
 
 	private boolean isEnd = false;
 
@@ -57,7 +56,7 @@ public class CrawlingProxy {
 			ApiCommunication apiCommunication = new ApiCommunication("com.seomse.crawling.proxy.api", socket);
 			apiCommunication.setEndCallback(arg0 -> {
 				synchronized (lock) {
-					logger.info("connect end");
+					log.info("connect end");
 					endCount++;
 					if(endCount == communicationCount){
 						isEnd = true;
@@ -94,7 +93,7 @@ public class CrawlingProxy {
 				}
 
 			}catch(Exception e){
-				logger.error(ExceptionUtil.getStackTrace(e));
+				log.error(ExceptionUtil.getStackTrace(e));
 				return false;
 			}
 		}
@@ -113,7 +112,7 @@ public class CrawlingProxy {
 			try {
 				communication.disConnect();
 			}catch(Exception e){
-				logger.error(ExceptionUtil.getStackTrace(e));
+				log.error(ExceptionUtil.getStackTrace(e));
 			}
 		}
 		apiCommunicationArray = null;

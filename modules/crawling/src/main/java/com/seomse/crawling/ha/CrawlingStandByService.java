@@ -28,8 +28,7 @@ import com.seomse.system.commons.CommonConfigs;
 import com.seomse.system.commons.PingApi;
 import com.seomse.system.engine.Engine;
 import com.seomse.system.engine.console.EngineConsole;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
@@ -37,10 +36,9 @@ import java.util.*;
  * standby, active 가 종료 되었는지 체크
  * @author macle
  */
+@Slf4j
 public class CrawlingStandByService extends Service implements Synchronizer {
 
-
-    private static final Logger logger = LoggerFactory.getLogger(CrawlingStandByService.class);
 
     private CrawlingStandBy crawlingStandBy = null;
 
@@ -121,7 +119,7 @@ public class CrawlingStandByService extends Service implements Synchronizer {
                 try{
                     ApiRequests.sendToReceiveMessage(standByEngines[i].hostAddress, standByEngines[i].port,"com.seomse.sync", "SyncApi","");
                 }catch(Exception e){
-                    logger.error(ExceptionUtil.getStackTrace(e));
+                    log.error(ExceptionUtil.getStackTrace(e));
                 }
             }
 
@@ -129,7 +127,7 @@ public class CrawlingStandByService extends Service implements Synchronizer {
             setState(State.STOP);
 
         }catch(Exception e){
-            logger.error(ExceptionUtil.getStackTrace(e));
+            log.error(ExceptionUtil.getStackTrace(e));
         }
     }
 
@@ -138,7 +136,7 @@ public class CrawlingStandByService extends Service implements Synchronizer {
         String activeId = CommonConfigs.getConfig(CrawlingHighAvailabilityKey.ACTIVE_ENGINE_ID);
 
         if(activeId == null){
-            logger.debug("crawling active engine id null key: " + CrawlingHighAvailabilityKey.ACTIVE_ENGINE_ID);
+            log.debug("crawling active engine id null key: " + CrawlingHighAvailabilityKey.ACTIVE_ENGINE_ID);
             return;
         }
 
