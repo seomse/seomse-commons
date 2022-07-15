@@ -20,10 +20,9 @@ import com.seomse.api.communication.HostAddrPort;
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.commons.utils.FileUtil;
 import com.seomse.system.commons.PingApi;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
@@ -31,9 +30,9 @@ import java.io.File;
  * CrawlingProxyStarter remote proxy
  * @author macle
  */
+@Slf4j
 public class CrawlingProxyStarter extends Thread{
 
-    private static final Logger logger = LoggerFactory.getLogger(CrawlingProxyStarter.class);
 
     //10초에 한번씩 체크
     private static final long sleepTime = 1000L * 10L;
@@ -63,7 +62,7 @@ public class CrawlingProxyStarter extends Thread{
         //무한 접속 체크
         while(!isStop){
             try {
-                logger.debug("connect request");
+                log.debug("connect request");
                 //noinspection ForLoopReplaceableByForEach
                 for (int i = 0; i <hostAddrPortArray.length ; i++) {
                     try {
@@ -86,7 +85,7 @@ public class CrawlingProxyStarter extends Thread{
                             }
                             if (PingApi.ping(addr, port)) {
                                 crawlingProxy = new CrawlingProxy(addr, crawlingPort, communicationCount);
-                                logger.debug("connect success");
+                                log.debug("connect success");
 
                                 break;
                             }
@@ -112,7 +111,7 @@ public class CrawlingProxyStarter extends Thread{
                    crawlingProxy.disConnect();
                    crawlingProxy = null;
                }catch(Exception e){
-                   logger.error(ExceptionUtil.getStackTrace(e));
+                   log.error(ExceptionUtil.getStackTrace(e));
                }
                
                try {
@@ -120,11 +119,11 @@ public class CrawlingProxyStarter extends Thread{
                    //noinspection BusyWait
                    Thread.sleep(2000L);
                }catch(Exception e){
-                   logger.error(ExceptionUtil.getStackTrace(e));
+                   log.error(ExceptionUtil.getStackTrace(e));
                }
 
             } catch (Exception e) {
-                logger.error(ExceptionUtil.getStackTrace(e));
+                log.error(ExceptionUtil.getStackTrace(e));
                 try{ //noinspection BusyWait
                     Thread.sleep(sleepTime); }catch (Exception ignore){}
             }

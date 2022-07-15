@@ -16,13 +16,12 @@
 
 package com.seomse.crawling.node;
 
-import com.google.gson.JsonObject;
 import com.seomse.api.ApiRequest;
 import com.seomse.commons.utils.ExceptionUtil;
+import com.seomse.crawling.core.http.HttpMessage;
 import com.seomse.crawling.exception.NodeEndException;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,9 +29,8 @@ import java.util.List;
  * proxy node
  * @author macle
  */
+@Slf4j
 public class CrawlingProxyNode extends CrawlingNode {
-	
-	private static final Logger logger = LoggerFactory.getLogger(CrawlingProxyNode.class);
 	
 	private final List<ProxyNodeRequest> requestList = new LinkedList<>();
 	
@@ -64,7 +62,7 @@ public class CrawlingProxyNode extends CrawlingNode {
 				try {
 					request.disConnect();
 				}catch(Exception e) {
-					ExceptionUtil.exception(e, logger, exceptionHandler);
+					ExceptionUtil.exception(e, log, exceptionHandler);
 				}
 			}
 			
@@ -74,12 +72,12 @@ public class CrawlingProxyNode extends CrawlingNode {
 	}
 	
 	@Override
-	public String getHttpUrlScript(String url, JSONObject optionData) {
+	public String getHttpScript(String url, JSONObject optionData) {
 
-		logger.debug("proxy node seq: " + seq);
+		log.debug("proxy node seq: " + seq);
 		
 		ProxyNodeRequest minRequest = getMinRequest();
-		return minRequest.getHttpUrlScript(url, optionData);
+		return minRequest.getHttpScript(url, optionData);
 	}
 
 	/**
@@ -140,7 +138,11 @@ public class CrawlingProxyNode extends CrawlingNode {
 	}
 
 	@Override
-	public JsonObject getHttpUrlObject(String url, JSONObject optionData) {
-		return null;
+	public HttpMessage getHttpMessage(String url, JSONObject optionData) {
+
+		log.debug("proxy node seq: " + seq);
+
+		ProxyNodeRequest minRequest = getMinRequest();
+		return minRequest.getHttpMessage(url, optionData);
 	}
 }

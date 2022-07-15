@@ -19,31 +19,30 @@ import com.seomse.commons.config.Config;
 import com.seomse.system.commons.CommonConfigs;
 import com.seomse.system.engine.Engine;
 import com.seomse.system.engine.EngineInitializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * system engine 기능을 활용한 ha
  * @author macle
  */
+@Slf4j
 public class CrawlingHighAvailabilityInitializer implements EngineInitializer {
 
-    private static final Logger logger = LoggerFactory.getLogger(CrawlingHighAvailabilityInitializer.class);
 
     @Override
     public void init() {
 
-        logger.debug("CrawlingHighAvailabilityInitializer");
+        log.debug("CrawlingHighAvailabilityInitializer");
 
         Engine engine = Engine.getInstance();
         if(engine == null){
-            logger.debug("engine null");
+            log.debug("engine null");
             return ;
         }
 
 
         if(!Config.getBoolean(CrawlingHighAvailabilityKey.SERVICE_FLAG, false)){
-            logger.debug("crawling service false key: " +  CrawlingHighAvailabilityKey.SERVICE_FLAG);
+            log.debug("crawling service false key: " +  CrawlingHighAvailabilityKey.SERVICE_FLAG);
             return ;
         }
 
@@ -51,7 +50,7 @@ public class CrawlingHighAvailabilityInitializer implements EngineInitializer {
         String crawlingEngineId = CommonConfigs.getConfig(CrawlingHighAvailabilityKey.ACTIVE_ENGINE_ID);
 
         if(crawlingEngineId == null){
-            logger.debug("crawling active engine id null key: " + CrawlingHighAvailabilityKey.ACTIVE_ENGINE_ID);
+            log.debug("crawling active engine id null key: " + CrawlingHighAvailabilityKey.ACTIVE_ENGINE_ID);
             return;
         }
 

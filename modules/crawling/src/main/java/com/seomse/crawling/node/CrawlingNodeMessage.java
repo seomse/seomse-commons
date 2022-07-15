@@ -16,26 +16,22 @@
 package com.seomse.crawling.node;
 
 import com.google.gson.JsonObject;
+import com.seomse.crawling.core.http.HttpMessage;
 
 /**
  * CrawlingNode, script
  * @author macle
  */
-public class CrawlingNodeScript {
+public class CrawlingNodeMessage {
 
     private final CrawlingNode crawlingNode;
-    private final String script;
-    private final JsonObject scriptObj;
+    private final HttpMessage httpMessage;
 
-    /**
-     * 생성자
-     * @param crawlingNode CrawlingNode
-     * @param script String script
-     */
-    public CrawlingNodeScript(CrawlingNode crawlingNode, String script, JsonObject scriptObj){
+
+    public CrawlingNodeMessage(CrawlingNode crawlingNode, HttpMessage message){
         this.crawlingNode = crawlingNode;
-        this.script = script;
-        this.scriptObj = scriptObj;
+        this.httpMessage = message;
+
     }
 
     /**
@@ -49,13 +45,12 @@ public class CrawlingNodeScript {
      * @return script String
      */
     public String getScript() {
-        return script;
+        return httpMessage.getMessage();
     }
 
-    /**
-     * @return scriptObject jsonObject
-     */
-    public JsonObject getScriptObj() {
-        return scriptObj;
+    public HttpMessage getMessage() {
+        return httpMessage;
     }
+
+
 }

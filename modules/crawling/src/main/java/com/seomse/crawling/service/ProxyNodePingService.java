@@ -23,16 +23,14 @@ import com.seomse.commons.utils.time.Times;
 import com.seomse.crawling.CrawlingServer;
 import com.seomse.crawling.node.CrawlingNode;
 import com.seomse.crawling.node.CrawlingProxyNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 프록시 노드 핑체크
  * @author macle
  */
+@Slf4j
 public class ProxyNodePingService extends Service {
-
-    private static final Logger logger = LoggerFactory.getLogger(ProxyNodePingService.class);
 
     private final CrawlingServer crawlingServer;
 
@@ -61,7 +59,7 @@ public class ProxyNodePingService extends Service {
             if(node instanceof CrawlingProxyNode){
                 CrawlingProxyNode proxyNode = (CrawlingProxyNode)node;
                 if(!proxyNode.ping()){
-                    logger.debug("ping fail disconnect node: " + proxyNode.getNodeKey());
+                    log.debug("ping fail disconnect node: " + proxyNode.getNodeKey());
                     crawlingServer.endNode(proxyNode);
                 }
             }
@@ -71,13 +69,13 @@ public class ProxyNodePingService extends Service {
         if(time < cycleTime){
             try {
                 long sleepTime = cycleTime - time;
-                logger.debug("ping check sleep: " + sleepTime);
+                log.debug("ping check sleep: " + sleepTime);
                 Thread.sleep(sleepTime);
             } catch (InterruptedException e) {
-                logger.error(ExceptionUtil.getStackTrace(e));
+                log.error(ExceptionUtil.getStackTrace(e));
             }
         }else{
-            logger.debug("ping check not sleep");
+            log.debug("ping check not sleep");
         }
     }
 }

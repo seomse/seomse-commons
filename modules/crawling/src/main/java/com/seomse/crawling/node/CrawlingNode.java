@@ -15,9 +15,9 @@
  */
 package com.seomse.crawling.node;
 
-import com.google.gson.JsonObject;
 import com.seomse.commons.callback.ObjCallback;
 import com.seomse.commons.handler.ExceptionHandler;
+import com.seomse.crawling.core.http.HttpMessage;
 import com.seomse.crawling.exception.NodeEndException;
 import org.json.JSONObject;
 
@@ -28,12 +28,9 @@ import java.util.Map;
  * @author macle
  */
 public abstract class CrawlingNode {
-	
-	
+
 	private boolean isEnd = false;
-	
-	
-	
+
 	protected int seq;
 	
 	protected ObjCallback endCallback = null;
@@ -109,26 +106,24 @@ public abstract class CrawlingNode {
 	public void updateLastConnectTime(String checkUrl) {
 		lastConnectTimeMap.put(checkUrl, System.currentTimeMillis());
 	}
-	
+
+	public String getHttpScript(String url, String jsonOptionValue){
+		return getHttpScript(url , new JSONObject(jsonOptionValue));
+	}
+
+	public HttpMessage getHttpMessage(String url, String jsonOptionValue){
+		return getHttpMessage(url , new JSONObject(jsonOptionValue));
+	}
+
 	/**
 	 * HttpUrlConnection 을 이용한 script 결과 얻기
 	 * @param url String
 	 * @param optionData JSONObject
 	 * @return script String
 	 */
-	public abstract String getHttpUrlScript(String url, JSONObject optionData) throws NodeEndException ;
+	public abstract String getHttpScript(String url, JSONObject optionData) throws NodeEndException ;
 
-	/**
-	 * HttpUrlConnection 을 이용한 script 수집결과 얻기
-	 * scriptObject result JsonObject
-	 * - script : 수집결과 String
-	 * - error : 수집실패결과 String
-	 * - cookie : 쿠키결과 jsonArray
-	 *
-	 * @param url String
-	 * @param optionData JSONObject
-	 * @return scriptObject JsonObject
-	 */
-	public abstract JsonObject getHttpUrlObject(String url, JSONObject optionData);
+	public abstract HttpMessage getHttpMessage(String url, JSONObject optionData) throws NodeEndException ;
+
 
 }

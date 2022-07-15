@@ -15,26 +15,28 @@
  */
 package com.seomse.crawling.node;
 
+import com.google.gson.Gson;
 import com.seomse.api.ApiRequest;
 import com.seomse.api.Messages;
 import com.seomse.commons.config.Config;
+import com.seomse.crawling.core.http.HttpMessage;
 import com.seomse.crawling.exception.NodeEndException;
+import com.seomse.crawling.exception.ProxyMessageFailException;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 /**
  * proxy node request
  * @author macle
  */
+@Slf4j
 public class ProxyNodeRequest {
-	
-	private static final Logger logger = LoggerFactory.getLogger(ProxyNodeRequest.class);
+
 	
 	private int waitCount = 0;
 	
 	private final Object lock = new Object();
-	private final Object waitLock = new Object();
-	
+
 	private final ApiRequest request;
 	
 	private final CrawlingProxyNode crawlingProxyNode;
@@ -63,9 +65,9 @@ public class ProxyNodeRequest {
 	 * @param optionData JSONObject
 	 * @return String script
 	 */
-	public String getHttpUrlScript(String url, JSONObject optionData) {
+	public String getHttpScript(String url, JSONObject optionData) {
 
-		logger.debug("request http url: " + url);
+		log.debug("request http url: " + url);
 
 		String result ;
 		
@@ -74,26 +76,18 @@ public class ProxyNodeRequest {
 			JSONObject messageObj = new JSONObject();
 			messageObj.put("url", url);
 			messageObj.put("option_data", optionData);
-			synchronized (waitLock) {
-				waitCount++ ;
-			}
+			addWait();
 			synchronized (lock) {
 				result = request.sendToReceiveMessage("HttpScript", messageObj.toString());
 			}
-			synchronized (waitLock) {
-				waitCount-- ;
-				//코딩 실수할까봐 방어코드
-				if(waitCount < 0) {
-					waitCount = 0;
-				}
-			} 
+			removeWait();
 			if(result.startsWith(Messages.SUCCESS)) {
 				result = result.substring(Messages.SUCCESS.length());
 				return result;
 						
 			}else if(result.startsWith(Messages.FAIL)) {
 				result= result.substring(Messages.FAIL.length());
-				logger.error(result);
+				log.error(result);
 //				throw new NodeEndException();
 
 			}else if(result.equals(ApiRequest.CONNECT_FAIL)) {
@@ -106,6 +100,57 @@ public class ProxyNodeRequest {
 		}
 
 		return result;
+	}
+
+	private final Object waitLock = new Object();
+
+	private void addWait(){
+		synchronized (waitLock){
+			waitCount++;
+		}
+	}
+	private void removeWait(){
+		synchronized (waitLock){
+			waitCount-- ;
+			//코딩 실수할까봐 방어코드
+			if(waitCount < 0) {
+				waitCount = 0;
+			}
+		}
+	}
+
+	public HttpMessage getHttpMessage(String url, JSONObject optionData){
+		log.debug("request http url: " + url);
+		String result ;
+		try {
+			JSONObject messageObj = new JSONObject();
+			messageObj.put("url", url);
+			messageObj.put("option_data", optionData);
+			addWait();
+			synchronized (lock) {
+				result = request.sendToReceiveMessage("HttpMessage", messageObj.toString());
+			}
+			removeWait();
+			if(result.startsWith(Messages.SUCCESS)) {
+				Gson gson = new Gson();
+				result = result.substring(Messages.SUCCESS.length());
+				return gson.fromJson(result, HttpMessage.class);
+
+			}else if(result.startsWith(Messages.FAIL)) {
+				result= result.substring(Messages.FAIL.length());
+				throw new ProxyMessageFailException(result);
+
+			}else if(result.equals(ApiRequest.CONNECT_FAIL)) {
+				crawlingProxyNode.end();
+				throw new NodeEndException();
+			}else{
+				throw new ProxyMessageFailException(result);
+			}
+
+		}catch(Exception e) {
+			throw new NodeEndException();
+		}
+
 	}
 
 	/**

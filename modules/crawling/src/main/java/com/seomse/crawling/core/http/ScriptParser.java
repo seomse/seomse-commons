@@ -17,8 +17,7 @@ package com.seomse.crawling.core.http;
 
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.commons.utils.string.Remove;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +26,9 @@ import java.util.List;
  * ScriptParser
  * @author yh.heo
  */
+@Slf4j
 public class ScriptParser {
 
-    private static final Logger logger = LoggerFactory.getLogger(ScriptParser.class);
 
     /**
      * @param contents String
@@ -78,7 +77,7 @@ public class ScriptParser {
         try {
             value = parseString(contents , prefix , '*');
         } catch (Exception e) {
-            logger.error(ExceptionUtil.getStackTrace(e));
+            log.error(ExceptionUtil.getStackTrace(e));
         }
         return value;
     }
@@ -260,7 +259,7 @@ public class ScriptParser {
         try {
             value = parseInt(contents , prefix , '*' , true, false);
         } catch (Exception e) {
-            logger.error(ExceptionUtil.getStackTrace(e));
+            log.error(ExceptionUtil.getStackTrace(e));
         }
         return value;
     }
@@ -332,7 +331,7 @@ public class ScriptParser {
         try{
             result = Integer.parseInt(parse);
         } catch ( NumberFormatException e ) {
-            logger.error(ExceptionUtil.getStackTrace(e));
+            log.error(ExceptionUtil.getStackTrace(e));
         }
         return result;
     }

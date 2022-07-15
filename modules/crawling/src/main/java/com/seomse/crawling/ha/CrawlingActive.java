@@ -19,14 +19,13 @@ import com.seomse.commons.config.Config;
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.commons.utils.PriorityUtil;
 import com.seomse.crawling.CrawlingManager;
+import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,9 +36,8 @@ import java.util.List;
  * active change
  * @author macle
  */
+@Slf4j
 public class CrawlingActive {
-
-    private static final Logger logger = LoggerFactory.getLogger(CrawlingActive.class);
 
     /**
      * active 모드가 될때 실행 하는 내용
@@ -77,12 +75,12 @@ public class CrawlingActive {
                     CrawlingActiveInitializer initializer = (CrawlingActiveInitializer) cl.newInstance();
                     initializerList.add(initializer);
                 } catch (Exception e) {
-                    logger.error(ExceptionUtil.getStackTrace(e));
+                    log.error(ExceptionUtil.getStackTrace(e));
                 }
             }
         }
         if(initializerList.size() == 0){
-            logger.debug("crawling active start");
+            log.debug("crawling active start");
             return;
         }
 
@@ -95,10 +93,10 @@ public class CrawlingActive {
         for (int i=0 ; i < initializerArray.length ; i++) {
             try{
                 initializerArray[i].init();
-            }catch(Exception e){logger.error(ExceptionUtil.getStackTrace(e));}
+            }catch(Exception e){log.error(ExceptionUtil.getStackTrace(e));}
         }
 
-        logger.debug("crawling active start");
+        log.debug("crawling active start");
     }
 
 }

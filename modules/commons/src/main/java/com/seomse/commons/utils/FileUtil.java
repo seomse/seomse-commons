@@ -18,7 +18,6 @@ package com.seomse.commons.utils;
 import com.seomse.commons.exception.IORuntimeException;
 import com.seomse.commons.utils.string.Check;
 import com.seomse.commons.validation.FileValidation;
-import com.seomse.commons.validation.NumberNameFileValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -95,6 +94,7 @@ public class FileUtil {
 
 	/**
 	 * 경로내에 있는 모들 파일을 파일형태로 불러온다.
+	 * 하위 디렉토레의 파일들을 포함한 경로내 모든파일
 	 * @param path String 폴더경로 또는 파일경로
 	 * @return List 파일리스트
 	 */
@@ -105,31 +105,49 @@ public class FileUtil {
 		addFiles(fileList, file);
 		return fileList;
 	}
-
+	/**
+	 * 하위 디렉토레의 파일들을 포함한 경로내 모든파일
+	 */
 	public static List<File> getFileList(File file){
 		List<File> fileList = new ArrayList<>();
 		addFiles(fileList, file);
 		return fileList;
 	}
 
-
+	/**
+	 * 하위 디렉토레의 파일들을 포함한 경로내 모든파일
+	 */
 	public static File [] getFiles(String path){
 		return getFileList(path).toArray(new File[0]);
 	}
+	/**
+	 * 하위 디렉토레의 파일들을 포함한 경로내 모든파일
+	 */
 	public static File [] getFiles(File f){
 		return getFileList(f).toArray(new File[0]);
 	}
-
+	/**
+	 * 하위 디렉토레의 파일들을 포함한 경로내 모든파일
+	 */
 	public static File [] getFiles(String path, FileValidation validation){
 		return getFiles(new File(path), validation, null);
 	}
+	/**
+	 * 하위 디렉토레의 파일들을 포함한 경로내 모든파일
+	 */
 	public static File [] getFiles(File f, FileValidation validation){
 		return getFiles(f, validation, null);
 	}
+	/**
+	 * 하위 디렉토레의 파일들을 포함한 경로내 모든파일
+	 */
 	public static File [] getFiles(String path, FileValidation validation, Comparator<File> sort){
 		return getFiles(new File(path), validation, sort);
 	}
 
+	/**
+	 * 하위 디렉토레의 파일들을 포함한 경로내 모든파일
+	 */
 	public static File [] getFiles(File f, FileValidation validation, Comparator<File> sort){
 		List<File> fileList = getFileList(f);
 
@@ -157,6 +175,49 @@ public class FileUtil {
 		return files;
 	}
 
+	/**
+	 * 하위 디렉토리 제외한 지정 폴더 내 파일
+	 */
+	public static File [] getInFiles(String path, FileValidation validation, Comparator<File> sort){
+		File dir = new File(path);
+		if(!dir.isDirectory()){
+			return new File[0];
+		}
+
+		return getInFiles(dir, validation, sort);
+	}
+
+	/**
+	 * 하위 디렉토리 제외한 지정 폴더 내 파일
+	 */
+	public static File [] getInFiles(File dir, FileValidation validation, Comparator<File> sort){
+
+		File [] files = dir.listFiles();
+		if(files == null){
+			return new File[0];
+		}
+
+		if(validation != null){
+			List<File> list = new ArrayList<>();
+			for(File file : files){
+				if(validation.isValid(file)){
+					list.add(file);
+				}
+			}
+
+			files = list.toArray(new File[0]);
+		}
+
+		if(files.length == 0){
+			return files;
+		}
+
+		if(sort != null && files.length > 1){
+			Arrays.sort(files, sort);
+		}
+
+		return files;
+	}
 
 	/**
 	 * list에 파일 누적
