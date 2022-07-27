@@ -27,11 +27,15 @@ public class Times {
 
 
     //초정리
-    public static final long SECOND_3 = 1000L*3L;
-    public static final long SECOND_5 = 1000L*5L;
-    public static final long SECOND_10 = 1000L*10L;
-    public static final long SECOND_15 = 1000L*15L;
-    public static final long SECOND_30 = 1000L*30L;
+    public static final long SECOND_1 = 1000L;
+    public static final long SECOND_3 = SECOND_1*3L;
+    public static final long SECOND_5 = SECOND_1*5L;
+    public static final long SECOND_10 = SECOND_1*10L;
+    public static final long SECOND_15 = SECOND_1*15L;
+    public static final long SECOND_20 = SECOND_1*20L;
+    public static final long SECOND_30 = SECOND_1*30L;
+    public static final long SECOND_40 = SECOND_1*40L;
+    public static final long SECOND_50 = SECOND_1*50L;
 
 
     //분정리
@@ -41,11 +45,25 @@ public class Times {
     public static final long MINUTE_4 = MINUTE_1 * 4L;
     public static final long MINUTE_5 = MINUTE_1 * 5L;
     public static final long MINUTE_6 = MINUTE_1 * 6L;
+    public static final long MINUTE_7 = MINUTE_1 * 7L;
+    public static final long MINUTE_8 = MINUTE_1 * 8L;
+    public static final long MINUTE_9 = MINUTE_1 * 9L;
+
     public static final long MINUTE_10 = MINUTE_1 * 10L;
+    public static final long MINUTE_11 = MINUTE_1 * 11L;
+
     public static final long MINUTE_12 = MINUTE_1 * 12L;
+    public static final long MINUTE_13 = MINUTE_1 * 13L;
+    public static final long MINUTE_14 = MINUTE_1 * 14L;
     public static final long MINUTE_15 = MINUTE_1 * 15L;
+
+    public static final long MINUTE_20 = MINUTE_1 * 20L;
+    public static final long MINUTE_25 = MINUTE_1 * 25L;
+
     public static final long MINUTE_30 = MINUTE_1 * 30L;
 
+    public static final long MINUTE_40 = MINUTE_1 * 40L;
+    public static final long MINUTE_50 = MINUTE_1 * 50L;
 
 
     //시간정리
@@ -53,16 +71,78 @@ public class Times {
     public static final long HOUR_2 = HOUR_1 * 2L;
     public static final long HOUR_3 = HOUR_1 * 3L;
     public static final long HOUR_4 = HOUR_1 * 4L;
+    public static final long HOUR_5 = HOUR_1 * 5L;
     public static final long HOUR_6 = HOUR_1 * 6L;
+    public static final long HOUR_7 = HOUR_1 * 7L;
+    public static final long HOUR_8 = HOUR_1 * 8L;
+    public static final long HOUR_9 = HOUR_1 * 9L;
+    public static final long HOUR_10 = HOUR_1 * 10L;
+    public static final long HOUR_11 = HOUR_1 * 11L;
     public static final long HOUR_12 = HOUR_1 * 12L;
+
+    public static final long HOUR_13 = HOUR_1 * 13L;
+    public static final long HOUR_14 = HOUR_1 * 14L;
+    public static final long HOUR_15 = HOUR_1 * 15L;
+    public static final long HOUR_16 = HOUR_1 * 16L;
+    public static final long HOUR_17 = HOUR_1 * 17L;
+    public static final long HOUR_18 = HOUR_1 * 18L;
+    public static final long HOUR_19 = HOUR_1 * 19L;
+    public static final long HOUR_20 = HOUR_1 * 20L;
+    public static final long HOUR_21 = HOUR_1 * 21L;
+    public static final long HOUR_22 = HOUR_1 * 22L;
+    public static final long HOUR_23 = HOUR_1 * 23L;
+
 
     //일정리
     public static final long DAY_1 = HOUR_1 * 24L;
+    public static final long DAY_2= DAY_1 * 2L;
     public static final long DAY_3= DAY_1 * 3L;
+    public static final long DAY_4= DAY_1 * 4L;
     public static final long DAY_5= DAY_1 * 5L;
+    public static final long DAY_6= DAY_1 * 6L;
+    public static final long DAY_7= DAY_1 * 7L;
+    public static final long DAY_8= DAY_1 * 8L;
+    public static final long DAY_9= DAY_1 * 9L;
+    public static final long DAY_10= DAY_1 * 10L;
+    public static final long DAY_11= DAY_1 * 11L;
+    public static final long DAY_12= DAY_1 * 12L;
+    public static final long DAY_13= DAY_1 * 13L;
+    public static final long DAY_14= DAY_1 * 14L;
+    public static final long DAY_15= DAY_1 * 15L;
+    public static final long DAY_16= DAY_1 * 16L;
+    public static final long DAY_17= DAY_1 * 17L;
+    public static final long DAY_18= DAY_1 * 18L;
+    public static final long DAY_19= DAY_1 * 19L;
+    public static final long DAY_20= DAY_1 * 20L;
+    public static final long DAY_21= DAY_1 * 21L;
+
+    public static final long DAY_25= DAY_1 * 25L;
+    public static final long DAY_28= DAY_1 * 28L;
+
+
+    public static final long DAY_30= DAY_1 * 30L;
+    public static final long DAY_31= DAY_1 * 31L;
+    public static final long DAY_35= DAY_1 * 35L;
+    public static final long DAY_50= DAY_1 * 50L;
+    public static final long DAY_100= DAY_1 * 100L;
 
     //주
-    public static final long WEEK_1= DAY_1 * 7L;
+    public static final long WEEK_1= DAY_7;
+    public static final long WEEK_2= WEEK_1 * 2L;
+    public static final long WEEK_3= WEEK_1 * 3L;
+    public static final long WEEK_4= WEEK_1 * 4L;
+    public static final long WEEK_5= WEEK_1 * 5L;
+    public static final long WEEK_6= WEEK_1 * 6L;
+    public static final long WEEK_7= WEEK_1 * 7L;
+    public static final long WEEK_8= WEEK_1 * 8L;
+    public static final long WEEK_9= WEEK_1 * 9L;
+    public static final long WEEK_10= WEEK_1 * 10L;
+    public static final long WEEK_11= WEEK_1 * 11L;
+    public static final long WEEK_12= WEEK_1 * 12L;
+    public static final long WEEK_16= WEEK_1 * 16L;
+    public static final long WEEK_20= WEEK_1 * 20L;
+    public static final long WEEK_21= WEEK_1 * 21L;
+    public static final long WEEK_52= WEEK_1 * 52L;
 
 
     /**
