@@ -16,6 +16,8 @@
 
 package com.seomse.commons.exception;
 
+import java.text.ParseException;
+
 /**
  * ParseException Runtime 처리
  * @author macle
@@ -33,7 +35,7 @@ public class ParseRuntimeException extends RuntimeException{
      * 생성자
      * @param e 예외
      */
-    public ParseRuntimeException(Exception e){
+    public ParseRuntimeException(ParseException e){
         super(e);
     }
 

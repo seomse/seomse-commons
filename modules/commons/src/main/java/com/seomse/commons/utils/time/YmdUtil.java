@@ -19,10 +19,9 @@ import com.seomse.commons.exception.ParseRuntimeException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.time.ZoneId;
+import java.util.*;
+
 /**
  * 년월일 yyyyMMdd 형태를 사용 할때의 유틸성 내용 정리
  * @author macle
@@ -47,6 +46,7 @@ public class YmdUtil {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(startDate);
 
+
 			int endNum = Integer.parseInt(endYmd);
 			while (true) {
 
@@ -66,6 +66,10 @@ public class YmdUtil {
 		return dayList;
 	}
 
+
+	public static String getYmd(String ymd, int day) {
+		return getYmd(ymd, day, null);
+	}
 	/**
 	 * ymd 얻기
 	 *
@@ -73,7 +77,7 @@ public class YmdUtil {
 	 * @param day int day
 	 * @return String yyyyMMdd
 	 */
-	public static String getYmd(String ymd, int day) {
+	public static String getYmd(String ymd, int day, ZoneId zoneId) {
 		try {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 
@@ -81,6 +85,17 @@ public class YmdUtil {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
 			calendar.add(Calendar.DATE, day);
+
+			if(zoneId != null){
+				TimeZone timeZone = TimeZone.getTimeZone(zoneId);
+				calendar.setTimeZone(timeZone);
+
+				SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+				format.setTimeZone(TimeZone.getTimeZone(zoneId));
+
+				return format.format(calendar.getTime());
+			}
+
 
 			return new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
 		} catch (ParseException e) {
@@ -102,6 +117,15 @@ public class YmdUtil {
 		}
 	}
 
+	public static long getTime(String ymd, ZoneId zoneId) {
+		try {
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+			format.setTimeZone(TimeZone.getTimeZone(zoneId));
+			return format.parse(ymd).getTime();
+		} catch (ParseException e) {
+			throw new ParseRuntimeException(e);
+		}
+	}
 
 	/**
 	 * Date 얻기
@@ -116,6 +140,17 @@ public class YmdUtil {
 		}
 	}
 
+
+	public static Date getDate(String ymd, ZoneId zoneId) {
+		try {
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+			format.setTimeZone(TimeZone.getTimeZone(zoneId));
+			return format.parse(ymd);
+		} catch (ParseException e) {
+			throw new ParseRuntimeException(e);
+		}
+	}
+
 	/**
 	 * 오늘날자의 ymd 얻기
 	 * @return String yyyyMMdd
@@ -123,6 +158,11 @@ public class YmdUtil {
 	public static String now(){
 		return getYmd(new Date());
 	}
+
+	public static String now(ZoneId zoneId){
+		return getYmd(new Date(), zoneId);
+	}
+
 
 	/**
 	 * ymd 얻기
@@ -132,6 +172,9 @@ public class YmdUtil {
 	public static String getYmd(long time) {
 		return getYmd(new Date(time));
 	}
+	public static String getYmd(long time, ZoneId zoneId) {
+		return getYmd(new Date(time), zoneId);
+	}
 
 	/**
 	 * ymd 얻기
@@ -140,6 +183,12 @@ public class YmdUtil {
 	 */
 	public static String getYmd(Date date) {
 		return new SimpleDateFormat("yyyyMMdd").format(date);
+	}
+
+	public static String getYmd(Date date, ZoneId zoneId) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		format.setTimeZone(TimeZone.getTimeZone(zoneId));
+		return format.format(date);
 	}
 
 }
