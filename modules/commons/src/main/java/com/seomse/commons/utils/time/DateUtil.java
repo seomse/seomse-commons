@@ -18,9 +18,12 @@ package com.seomse.commons.utils.time;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
+import com.seomse.commons.exception.ParseRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +38,7 @@ public class DateUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(DateUtil.class);
 
-	
-	
+
 	public final static String DEFAULT_DATE_FORMATTER = "yyyyMMddHHmmss";
 	
 	/**
@@ -58,7 +60,13 @@ public class DateUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormatter);
 		return sdf.format(new Date(currTime));
 	}
-	
+
+	public static String getDateYmd(long currTime , String dateFormatter, ZoneId zoneId){
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormatter);
+		sdf.setTimeZone(TimeZone.getTimeZone(zoneId));
+		return sdf.format(new Date(currTime));
+	}
+
 	/**
 	 * 날짜 문자열을 long형 시간으로 바꿔주는 유팉
 	 * @param currTime String 기준시간
@@ -76,15 +84,23 @@ public class DateUtil {
 	 */
 	public static long getDateTime(String currTime , String dateFormatter){
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormatter);
-		long result=-1L;
 		try {
-			result = (sdf.parse(currTime)).getTime();
+			return (sdf.parse(currTime)).getTime();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			logger.error(ExceptionUtil.getStackTrace(e));
+			throw new ParseRuntimeException(e);
 		}
-		return result;
+
 	}
+	public static long getDateTime(String currTime , String dateFormatter, ZoneId zoneId){
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormatter);
+		sdf.setTimeZone(TimeZone.getTimeZone(zoneId));
+		try {
+			return (sdf.parse(currTime)).getTime();
+		} catch (ParseException e) {
+			throw new ParseRuntimeException(e);
+		}
+	}
+
 	/**
 	 * 문자열 데이터에 대한 더하기 연산을 담당한다.
 	 * @param currTime String 기준시간
@@ -101,6 +117,25 @@ public class DateUtil {
 		return DateUtil.getDateYmd(calendar.getTime().getTime() , dateFormatter);
 		
 	}
+
+	public static String addDateYmd(String currTime , int calendarType , int addTime , String dateFormatter, ZoneId zoneId ){
+		TimeZone zone = TimeZone.getTimeZone(zoneId);
+
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormatter);
+		sdf.setTimeZone(zone);
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeZone(zone);
+		try {
+			calendar.setTime(sdf.parse(currTime));
+		}catch(ParseException e){
+			throw new ParseRuntimeException(e);
+		}
+		calendar.add(calendarType, addTime);
+		return DateUtil.getDateYmd(calendar.getTime().getTime() , dateFormatter);
+
+	}
+
 	/**
 	 * 문자열 데이터에 대한 더하기 연산을 담당한다.
 	 * @param currTime String 기준시간 기본 : yyyyMMddHHmmss
