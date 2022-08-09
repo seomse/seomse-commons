@@ -38,8 +38,7 @@ public class DateUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(DateUtil.class);
 
-	
-	
+
 	public final static String DEFAULT_DATE_FORMATTER = "yyyyMMddHHmmss";
 	
 	/**
@@ -85,25 +84,21 @@ public class DateUtil {
 	 */
 	public static long getDateTime(String currTime , String dateFormatter){
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormatter);
-		long result=-1L;
 		try {
-			result = (sdf.parse(currTime)).getTime();
+			return (sdf.parse(currTime)).getTime();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			logger.error(ExceptionUtil.getStackTrace(e));
+			throw new ParseRuntimeException(e);
 		}
-		return result;
+
 	}
 	public static long getDateTime(String currTime , String dateFormatter, ZoneId zoneId){
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormatter);
 		sdf.setTimeZone(TimeZone.getTimeZone(zoneId));
-		long result=-1L;
 		try {
-			result = (sdf.parse(currTime)).getTime();
+			return (sdf.parse(currTime)).getTime();
 		} catch (ParseException e) {
-			logger.error(ExceptionUtil.getStackTrace(e));
+			throw new ParseRuntimeException(e);
 		}
-		return result;
 	}
 
 	/**
