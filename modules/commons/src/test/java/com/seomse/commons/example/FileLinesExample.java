@@ -11,7 +11,9 @@ import java.nio.charset.StandardCharsets;
  */
 public class FileLinesExample {
     public static void main(String[] args) {
-        String [] lines = FileUtil.getLines(new File("D:\\data\\candle"), StandardCharsets.UTF_8,new NumberNameFileValidation(), FileUtil.SORT_NAME_LONG,500);
+        File file = new File("D:\\data\\cryptocurrency\\futures\\candle\\BTCUSDT\\5m");
+
+        String [] lines = FileUtil.getLines(file, StandardCharsets.UTF_8,new NumberNameFileValidation(), FileUtil.SORT_NAME_LONG,150000);
         for(String line : lines){
             System.out.println(line);
         }
