@@ -307,7 +307,7 @@ public class FileUtil {
 
 		File [] files = FileUtil.getFiles(file.getAbsolutePath(), validation, sort);
 
-		if(file.length() == 0){
+		if(files.length == 0){
 			return new String[0];
 		}
 
