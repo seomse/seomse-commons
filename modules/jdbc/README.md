@@ -8,6 +8,7 @@ oracle, tibero, mysql, mariadb, postgresql, msssql 계열의 DB를 지원 하기
 
 개발할 당시 oracle 용을 먼저 개발 하고 mysql, maria, postgresql, msssql 을 지원하는 형태로 진행 하였기 때문에 oracle 이 아닌 db 에서의 문제점이 발생 하면 아래 communication 경로에 제보해주시면 수정 하겠습니다.
 
+2023년 메인 데이터베이스 지원은 postgresql 로 결정 합니다.
  
 한번 작성한 코드로 oracle, tibero, mysql, mariadb, postgresql, msssql 계열 에서 동작 하고 두 DB간의 데이터 이관 등의 작업을 지원 합니다 
  - 모든 DB를 지원 하고자 시작 하였지만 현시점에서의 목적 DB는 oracle, tibero, mysql, mariadb, postgresql, msssql 등의 관련 계열 입니다.
@@ -94,9 +95,9 @@ public class StockItem {
 - 위와 같은 유틸성 method 지원
 
 # gradle
-implementation 'com.seomse.commons:jdbc:1.0.6'
+implementation 'com.seomse.commons:jdbc:1.0.7'
 - etc
-    - https://mvnrepository.com/artifact/com.seomse.commons/jdbc/1.0.6
+    - https://mvnrepository.com/artifact/com.seomse.commons/jdbc/1.0.7
 
 
 # communication
@@ -109,11 +110,9 @@ implementation 'com.seomse.commons:jdbc:1.0.6'
 ### 카카오톡 오픈톡
  - https://open.kakao.com/o/g6vzOKqb
    - 참여코드 : runon
-### 슬랙 slack
-- https://seomse.slack.com/
 
 ### email
- - comseomse@gmail.com
+ - ysys86a@gmail.com
  
  
 # main developer
