@@ -15,16 +15,14 @@
  */
 package com.seomse.jdbc.sequence;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 시퀀스 생성기 factory
  * @author macle
  */
+@Slf4j
 public class SequenceMakerFactory {
-
-	private static final Logger logger = LoggerFactory.getLogger(SequenceMakerFactory.class);
 
 	/**
 	 * SequenceMaker 생성
@@ -42,7 +40,7 @@ public class SequenceMakerFactory {
 		}else if(dbType.startsWith("mssql") || dbType.startsWith("ms_sql")){
 			return new MssqlSequenceMaker();
 		} else{
-			logger.error("Not supported SequenceMaker DB type.");
+			log.error("Not supported SequenceMaker DB type.");
 			return new EmptySequenceMaker();
 		}
 

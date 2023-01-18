@@ -32,11 +32,9 @@ import com.seomse.jdbc.exception.SQLRuntimeException;
 import com.seomse.jdbc.exception.TableNameEmptyException;
 import com.seomse.jdbc.naming.JdbcDataType;
 import com.seomse.jdbc.naming.JdbcNamingDataType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
 
@@ -46,11 +44,8 @@ import java.util.*;
  * DB용 객체와 사용 클래스를 일치화 할때 사용
  * @author macle
  */
+@Slf4j
 public class JdbcObjects {
-
-    private static final Logger logger = LoggerFactory.getLogger(JdbcObjects.class);
-
-
 
     /**
      * List 얻기
@@ -1077,7 +1072,7 @@ public class JdbcObjects {
                         continue;
                     }
                 }catch(Exception e){
-                    logger.error(ExceptionUtil.getStackTrace(e));
+                    log.error(ExceptionUtil.getStackTrace(e));
                 }
             }
 

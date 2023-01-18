@@ -28,8 +28,7 @@ import com.seomse.jdbc.connection.ApplicationConnectionPool;
 import com.seomse.jdbc.exception.SQLRuntimeException;
 import com.seomse.jdbc.naming.JdbcMapDataHandler;
 import com.seomse.jdbc.naming.JdbcNamingMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.sql.Connection;
@@ -44,9 +43,8 @@ import java.util.Map;
  *
  * @author macle
  */
+@Slf4j
 public class RowDataInOut {
-
-	private final static Logger logger = LoggerFactory.getLogger(RowDataInOut.class);
 
 	private int maxDataCount = 10000;
 
@@ -131,7 +129,7 @@ public class RowDataInOut {
 
 		for (String tableName : tableArray) {
 			dataCount = 0;
-			logger.info("out table: " + tableName);
+			log.info("out table: " + tableName);
             final String fileName = fileHome + tableName;
             //파일생성
             FileUtil.fileOutput("", charSet, fileName, false);
@@ -161,7 +159,7 @@ public class RowDataInOut {
 
 
 
-		logger.info("table out complete");
+		log.info("table out complete");
 	}
 
 	/**
@@ -203,12 +201,13 @@ public class RowDataInOut {
 		List<Map<String,Object>> insertList = new ArrayList<>();
 		for(String tableName : tableArray){
 
-			logger.info("data in: " + tableName+"\n");
+			log.info("data in: " + tableName+"\n");
 			String fileName =fileHome+tableName;
 
 			BufferedReader br ;
 			String line;
 			try {
+				//noinspection IOStreamConstructor
 				br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), charSet));
 
 				while ((line = br.readLine()) != null) {
@@ -285,12 +284,12 @@ public class RowDataInOut {
 
 		for(String table : tables){
 			try{
-				logger.info(table);
+				log.info(table);
 				JdbcQuery.execute(insertConn, "TRUNCATE TABLE " + table);
 				tableCopy(selectConn, insertConn, table);
 
 			}catch(Exception e){
-				logger.error(ExceptionUtil.getStackTrace(e));
+				log.error(ExceptionUtil.getStackTrace(e));
 			}
 		}
 	}
@@ -305,12 +304,12 @@ public class RowDataInOut {
 
 		for(String table : tables){
 			try{
-				logger.info(table);
+				log.info(table);
 				JdbcQuery.execute(insertConn, "DELETE FROM " + table);
 				tableCopy(selectConn, insertConn, table);
 
 			}catch(Exception e){
-				logger.error(ExceptionUtil.getStackTrace(e));
+				log.error(ExceptionUtil.getStackTrace(e));
 			}
 		}
 
@@ -326,10 +325,10 @@ public class RowDataInOut {
 
 		for(String table : tables){
 			try{
-				logger.info(table);
+				log.info(table);
 				tableCopy(selectConn, insertConn, table);
 			}catch(Exception e){
-				logger.error(ExceptionUtil.getStackTrace(e));
+				log.error(ExceptionUtil.getStackTrace(e));
 			}
 		}
 	}

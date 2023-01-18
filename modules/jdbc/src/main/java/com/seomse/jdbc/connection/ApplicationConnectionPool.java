@@ -24,8 +24,7 @@ import com.seomse.jdbc.Database;
 import com.seomse.jdbc.exception.SQLRuntimeException;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -34,9 +33,8 @@ import java.sql.SQLException;
  * default application connection pool
  * @author macle
  */
+@Slf4j
 public class ApplicationConnectionPool {
-
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationConnectionPool.class);
 
     private static class Singleton {
         private static final ApplicationConnectionPool instance = new ApplicationConnectionPool().configBuild();
@@ -67,7 +65,7 @@ public class ApplicationConnectionPool {
         try{
             setConfigConnectionInfo();
         }catch(Exception e){
-            logger.error(ExceptionUtil.getStackTrace(e));
+            log.error(ExceptionUtil.getStackTrace(e));
         }
         return this;
     }
@@ -144,7 +142,7 @@ public class ApplicationConnectionPool {
 
         if(!isNumber){
 
-            logger.error("application.jdbc.connection.pool.count is not number");
+            log.error("application.jdbc.connection.pool.count is not number");
 
 
             return ;
@@ -207,7 +205,7 @@ public class ApplicationConnectionPool {
         }catch(Exception e ){
             //섬세 설정을 사용하지않을경우 에러를 처리하지않기위한 초기 변수
 
-            logger.error(ExceptionUtil.getStackTrace(e));
+            log.error(ExceptionUtil.getStackTrace(e));
 
         }
     }
@@ -239,7 +237,7 @@ public class ApplicationConnectionPool {
     private boolean isConfig(String value, String keyMessage){
         if(value == null || "".equals(value.trim())){
 
-            logger.error("config key: [" + keyMessage +"] set");
+            log.error("config key: [" + keyMessage +"] set");
 
             return false;
         }
@@ -262,14 +260,14 @@ public class ApplicationConnectionPool {
                         return conn;
                     }
                 }catch(SQLException e){
-                    logger.trace(ExceptionUtil.getStackTrace(e));
+                    log.trace(ExceptionUtil.getStackTrace(e));
                 }
 
                 try {
                     //noinspection BusyWait
                     Thread.sleep(connectionWaitTryTime);
                 } catch (InterruptedException e) {
-                    logger.error(ExceptionUtil.getStackTrace(e));
+                    log.error(ExceptionUtil.getStackTrace(e));
                 }
             }
         }else{
@@ -424,7 +422,7 @@ public class ApplicationConnectionPool {
      */
     public void setDataSource(DataSource dataSource) {
         if(this.dataSource != null){
-            logger.warn("Create data source duplicates");
+            log.warn("Create data source duplicates");
         }
 
         this.dataSource = dataSource;

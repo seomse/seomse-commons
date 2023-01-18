@@ -22,8 +22,7 @@ import com.seomse.jdbc.exception.JdbcServerTimeException;
 import com.seomse.jdbc.exception.NotDbTypeException;
 import com.seomse.jdbc.exception.SQLRuntimeException;
 import com.seomse.jdbc.sequence.SequenceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.util.*;
@@ -32,9 +31,9 @@ import java.util.*;
  * Database system use
  * @author macle
  */
+@Slf4j
 public class Database {
 
-	private static final Logger logger = LoggerFactory.getLogger(Database.class);
 	private static final SequenceManager sequenceManager = new SequenceManager();
 
 
@@ -169,7 +168,7 @@ public class Database {
 		try(Connection conn =  ApplicationConnectionPool.getInstance().getCommitConnection()){
 			return getDateTime(conn, sql);
 		}catch(Exception e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			return System.currentTimeMillis();
 		}
 
@@ -265,7 +264,7 @@ public class Database {
 		try(Connection conn =  ApplicationConnectionPool.getInstance().getCommitConnection()) {
 			return getPrimaryKeyColumnsForTable(conn, tableName);
 		}catch(SQLException e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			throw new SQLRuntimeException(e);
 		}
 	}

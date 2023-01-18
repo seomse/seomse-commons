@@ -28,12 +28,14 @@ import com.seomse.jdbc.exception.FieldNullException;
 import com.seomse.jdbc.exception.PrimaryKeyNotSetException;
 import com.seomse.jdbc.exception.SQLRuntimeException;
 import com.seomse.jdbc.exception.TableNameEmptyException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * naming domain header 를 이용한 class 사용
@@ -41,9 +43,8 @@ import java.util.*;
  * 생성 되는 객체의 변수는 컬럼명으로 생성 됨
  * @author macle
  */
+@Slf4j
 public class JdbcNaming {
-
-	private static final Logger logger = LoggerFactory.getLogger(JdbcNaming.class);
 
 	/**
 	 * List 얻기
@@ -963,7 +964,7 @@ public class JdbcNaming {
 						continue;
 					}
 				}catch(Exception e){
-					logger.error(ExceptionUtil.getStackTrace(e));
+					log.error(ExceptionUtil.getStackTrace(e));
 				}
 			}
 	

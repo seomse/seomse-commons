@@ -22,9 +22,7 @@ dependencies {
     testImplementation 'com.oracle.ojdbc:ojdbc8:21.8.0.0'
     //postgresql db
     testImplementation group: 'org.postgresql', name: 'postgresql', version: '42.5.1'
-    implementation 'ch.qos.logback:logback-core:1.4.5'
-    implementation 'ch.qos.logback:logback-classic:1.4.5'
-    implementation 'ch.qos.logback:logback-access:1.4.5'
+
 
     //connection pool
     implementation 'com.zaxxer:HikariCP:4.0.3'
@@ -33,7 +31,7 @@ dependencies {
     implementation 'com.seomse.commons:commons:1.4.0'
     implementation 'com.seomse.commons:crypto:0.1.0'
 
-
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
     //dev commons
 //    implementation project(path: ':commons')
 
