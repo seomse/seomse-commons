@@ -15,24 +15,21 @@
  */
 package com.seomse.jdbc.naming;
 
+import com.seomse.commons.config.Config;
+import com.seomse.commons.config.ConfigInfo;
+import com.seomse.commons.config.ConfigObserver;
+import com.seomse.commons.data.NullData;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import com.seomse.commons.config.ConfigInfo;
-import com.seomse.commons.data.NullData;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.seomse.commons.config.Config;
-import com.seomse.commons.config.ConfigObserver;
 /**
  * naming data type 관리
  * 설정 정보 활용
  * @author macle
  */
+@Slf4j
 public class JdbcNamingDataType {
-	private static final Logger logger = LoggerFactory.getLogger(JdbcNamingDataType.class);	
-	
 	private static class Singleton {
 		private static final JdbcNamingDataType instance = new JdbcNamingDataType();
 	}
@@ -174,7 +171,7 @@ public class JdbcNamingDataType {
 		if(type != null){
 			defaultDataType = type;
 		}else{
-			logger.error("Config check 'application.jdbc.naming.default' value in (string, double, integer, long, datetime, boolean, bigdecimal) ");
+			log.error("Config check 'application.jdbc.naming.default' value in (string, double, integer, long, datetime, boolean, bigdecimal) ");
 			defaultDataType = JdbcDataType.STRING;
 		}
 		
@@ -218,7 +215,7 @@ public class JdbcNamingDataType {
 				continue;
 			}
 			
-			logger.error("Config check 'application.jdbc.naming.seq' value in (string, double, integer, long, datetime, boolean, bigdecimal) error -> "  + keyCheck);
+			log.error("Config check 'application.jdbc.naming.seq' value in (string, double, integer, long, datetime, boolean, bigdecimal) error -> "  + keyCheck);
 		}
 		
 		

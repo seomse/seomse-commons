@@ -20,8 +20,7 @@ import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.jdbc.common.JdbcClose;
 import com.seomse.jdbc.connection.ApplicationConnectionPool;
 import com.seomse.jdbc.exception.SQLRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -32,9 +31,8 @@ import java.util.Map;
  * JdbcQuery sql 유틸성 메소드
  * @author macle
  */
+@Slf4j
 public class JdbcQuery {
-
-	private static final Logger logger = LoggerFactory.getLogger(JdbcQuery.class);
 
 	/**
 	 * sql을 활용하여 time 얻기
@@ -54,7 +52,7 @@ public class JdbcQuery {
 
 			return result;
 		}catch(Exception e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			return defaultValue;
 		}
 	}
@@ -180,7 +178,7 @@ public class JdbcQuery {
 
 			return result;
 		}catch(SQLException e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			return defaultValue;
 		}
 	}
@@ -251,7 +249,7 @@ public class JdbcQuery {
 
 			return result;
 		}catch(SQLException e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			return defaultValue;
 		}
 	}
@@ -320,7 +318,7 @@ public class JdbcQuery {
 
 			return result;
 		}catch (SQLException e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			return defaultValue;
 		}
 	}
@@ -556,7 +554,7 @@ public class JdbcQuery {
 			}
 			return result;
 		}catch(SQLException e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			return -1;
 		}
 	}
@@ -610,7 +608,7 @@ public class JdbcQuery {
 			return result;
 
 		}catch(SQLException e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			return -1;
 
 		}
@@ -675,7 +673,7 @@ public class JdbcQuery {
 		 try(Connection conn = ApplicationConnectionPool.getInstance().getCommitConnection()){
 			isRowWait(conn, sql, 3, 350);
 		}catch(SQLException e){
-	 		logger.error(ExceptionUtil.getStackTrace(e));
+	 		log.error(ExceptionUtil.getStackTrace(e));
 		}
 	 }
 
@@ -698,7 +696,7 @@ public class JdbcQuery {
 			 try {
 				 Thread.sleep(waitTime);
 			 }catch(Exception e) {
-				 logger.error(ExceptionUtil.getStackTrace(e));
+				 log.error(ExceptionUtil.getStackTrace(e));
 			 }
 			 
 		 }	 
