@@ -41,27 +41,6 @@ public class FileUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
-	/**
-	 * 파일 내용을 줄바꿈 단위로 가져 온다
-	 * @param file File target text file
-	 * @param charSet String 파일 케릭터셋
-	 * @return List 파일 라인 리스트
-	 */
-	@SuppressWarnings("unused")
-	public static  List<String> getFileContentsList(File file, String charSet){
-		List<String> dataList = new ArrayList<>();
-		
-		try(BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), charSet))){
-			 String line;
-	          while ((line = br.readLine()) != null) {
-	        	  dataList.add(line);
-	          }
-		}catch(IOException e){
-			throw new IORuntimeException(e);
-		}
-
-		return dataList;
-	}
 
 	/**
 	 * 파일 내용을 줄바꿈 단위로 가져온다
@@ -320,6 +299,23 @@ public class FileUtil {
 		return array;
 	}
 
+	public static List<String> getLineTrimNotEmptyList(File file, Charset charset){
+		List<String> list = new ArrayList<>();
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), charset))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				line = line.trim();
+				if("".equals(line)){
+					continue;
+				}
+				list.add(line);
+			}
+		} catch (IOException e) {
+			throw new IORuntimeException(e);
+		}
+		return list;
+	}
+
 	public static List<String> getLineList(File file, Charset charset){
 		List<String> list = new ArrayList<>();
 		addLine(list, file, charset);
@@ -392,12 +388,12 @@ public class FileUtil {
 	 * 파일에 내용을 기입한다.
 	 * 기본케릭터셋 utf-8
 	 * @param outValue String 내용
-	 * @param fileName String 파일명
+	 * @param filePath String 파일명
 	 * @param isAppend boolean 기존내용에 추가할지 새로만들지에 대한 여부
 	 */
 	@SuppressWarnings({"unused"})
-	public static void fileOutput(String outValue, String fileName, boolean isAppend){
-		fileOutput(outValue ,"UTF-8", fileName,  isAppend);
+	public static void fileOutput(String outValue, String filePath, boolean isAppend){
+		fileOutput(outValue ,"UTF-8", filePath,  isAppend);
 		
 	}
 	
@@ -405,13 +401,13 @@ public class FileUtil {
 	 * 파일에 내용을 기입한다.
 	 * @param outValue String 내용
 	 * @param charSet String 케릭터셋
-	 * @param fileName String 파일명
+	 * @param filePath String 파일명
 	 * @param isAppend boolean 기존내용에 추가할지 새로만들지에 대한 여부
 	 */
 	@SuppressWarnings("WeakerAccess")
-	public static void fileOutput(String outValue, String charSet, String fileName, boolean isAppend){
-		
-		try(FileOutputStream out =  new FileOutputStream(fileName, isAppend)){
+	public static void fileOutput(String outValue, String charSet, String filePath, boolean isAppend){
+		mkdirsParent(filePath);
+		try(FileOutputStream out =  new FileOutputStream(filePath, isAppend)){
 			out.write(outValue.getBytes(charSet));
 			out.flush();
 			out.getFD().sync();
@@ -1145,6 +1141,8 @@ public class FileUtil {
 		return getLine(file, StandardCharsets.UTF_8, lastIndex);
 	}
 
+
+
 	/**
 	 * 파일 라인 수 얻기 java.nio 활용
 	 * @param path String filePath
@@ -1157,5 +1155,33 @@ public class FileUtil {
 		}catch(IOException e){
 			throw new IORuntimeException(e);
 		}
+	}
+
+	public static void mkdirsParent(String filePath){
+		mkdirsParent(new File(filePath));
+	}
+	public static void mkdirsParent(File file){
+		File parent = file.getParentFile();
+		if(!parent.isDirectory()){
+			//noinspection ResultOfMethodCallIgnored
+			parent.mkdirs();
+		}
+	}
+
+	public static void mkdirs(String dirPath){
+		File dirFile = new File(dirPath);
+		if(!dirFile.isDirectory()){
+			//noinspection ResultOfMethodCallIgnored
+			dirFile.mkdirs();
+		}
+	}
+
+
+	public static void main(String[] args) {
+		File file = new File("temp/text.txt");
+
+		System.out.println(file.getParentFile().getAbsolutePath());
+		System.out.println(file.getParentFile().isDirectory());
+
 	}
 }

@@ -19,7 +19,7 @@ dependencies {
     //maria db
     testImplementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.1.1'
     //oracle
-    testImplementation 'com.oracle.ojdbc:ojdbc8:21.8.0.0'
+//    testImplementation 'com.oracle.ojdbc:ojdbc8:21.8.0.0'
     //postgresql db
     testImplementation group: 'org.postgresql', name: 'postgresql', version: '42.5.1'
 
@@ -28,10 +28,11 @@ dependencies {
     implementation 'com.zaxxer:HikariCP:4.0.3'
 
     //seomse
-    implementation 'com.seomse.commons:commons:1.4.0'
+    implementation 'com.seomse.commons:commons:1.4.1'
     implementation 'com.seomse.commons:crypto:0.1.0'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
     //dev commons
 //    implementation project(path: ':commons')
 

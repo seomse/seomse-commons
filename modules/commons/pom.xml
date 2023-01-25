@@ -6,7 +6,7 @@
 
     <groupId>com.seomse.commons</groupId>
     <artifactId>commons</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
     <packaging>jar</packaging>
 
     <name>commons</name>
@@ -130,22 +130,9 @@
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>1.2.11</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.2.11</version>
         </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-access</artifactId>
-            <version>1.2.11</version>
-        </dependency>
-
 
         <dependency>
             <groupId>org.json</groupId>
