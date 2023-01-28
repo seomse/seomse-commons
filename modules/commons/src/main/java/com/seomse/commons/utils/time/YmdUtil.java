@@ -81,6 +81,10 @@ public class YmdUtil {
 		try {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 
+			if(zoneId != null){
+				simpleDateFormat.setTimeZone(TimeZone.getTimeZone(zoneId));
+			}
+
 			Date date = simpleDateFormat.parse(ymd);
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(date);
@@ -190,5 +194,48 @@ public class YmdUtil {
 		format.setTimeZone(TimeZone.getTimeZone(zoneId));
 		return format.format(date);
 	}
+
+
+	public static int compare(String sourceYmd, String targetYmd){
+		int source = Integer.parseInt(sourceYmd);
+		int target = Integer.parseInt(targetYmd);
+
+		return Integer.compare(source, target);
+
+	}
+
+	public static List<StartEndYmd> getYmdRangeList(String startYmd, String endYmd, int rangeDay){
+
+		if(rangeDay < 0){
+			throw new IllegalArgumentException("range day error (range day >= 0): " + rangeDay );
+		}
+
+		List<StartEndYmd> list = new ArrayList<>();
+
+		String nextStartYmd = startYmd;
+
+		for(;;){
+			String nextEndYmd = getYmd(nextStartYmd, rangeDay);
+			if(compare(nextEndYmd, endYmd) >= 0){
+				list.add(new StartEndYmd(nextStartYmd, endYmd));
+				break;
+			}
+
+			list.add(new StartEndYmd(nextStartYmd, nextEndYmd));
+			nextStartYmd = getYmd(nextEndYmd,1);
+		}
+
+
+		return list;
+	}
+
+
+	public static void main(String[] args) {
+		List<StartEndYmd> list = getYmdRangeList("20000101", "20230130" , 29);
+		for(StartEndYmd rangeYmd : list){
+			System.out.println(rangeYmd);
+		}
+	}
+
 
 }
