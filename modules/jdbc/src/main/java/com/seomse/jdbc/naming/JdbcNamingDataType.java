@@ -246,6 +246,13 @@ public class JdbcNamingDataType {
 	 * @return JdbcDataType
 	 */
 	public JdbcDataType getType(String columnName){
+		JdbcDataType type = type(columnName);
+		if(type == JdbcDataType.UNDEFINED){
+			return defaultDataType;
+		}
+		return type;
+	}
+	public JdbcDataType type(String columnName){
 		if(isFront && isBack){
 			JdbcDataType type;
 			if(isFrontPriority){
@@ -278,12 +285,10 @@ public class JdbcNamingDataType {
 				return type;
 			}
 
-
-
 		}
-		return defaultDataType;
-	}
 
+		return JdbcDataType.UNDEFINED;
+	}
 
 	/**
 	 * front first 를 활용 하여 JdbcDataType 얻기

@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.seomse.commons'
-version '1.0.8'
+version '1.0.9'
 
 
 repositories {
@@ -19,9 +19,10 @@ dependencies {
     //maria db
     testImplementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.1.1'
     //oracle
-//    testImplementation 'com.oracle.ojdbc:ojdbc8:21.8.0.0'
+    testImplementation group: 'com.oracle.database.jdbc', name: 'ojdbc8', version: '21.9.0.0'
+
     //postgresql db
-    testImplementation group: 'org.postgresql', name: 'postgresql', version: '42.5.1'
+    testImplementation group: 'org.postgresql', name: 'postgresql', version: '42.5.4'
 
 
     //connection pool

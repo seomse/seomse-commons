@@ -31,6 +31,7 @@ import com.seomse.jdbc.exception.PrimaryKeyNotSetException;
 import com.seomse.jdbc.exception.SQLRuntimeException;
 import com.seomse.jdbc.exception.TableNameEmptyException;
 import com.seomse.jdbc.naming.JdbcDataType;
+import com.seomse.jdbc.naming.JdbcNameDataType;
 import com.seomse.jdbc.naming.JdbcNamingDataType;
 import lombok.extern.slf4j.Slf4j;
 
@@ -1187,12 +1188,20 @@ public class JdbcObjects {
     public static String makeObjectValue( String tableName) {
 
         try(Connection conn = ApplicationConnectionPool.getInstance().getCommitConnection()){
-            return makeObjectValue(conn, tableName);
+            return makeObjectValue(conn, tableName, true);
         }catch(SQLException e){
             throw new SQLRuntimeException(e);
         }
     }
 
+    public static String makeObjectValue( String tableName, boolean isPrivate) {
+
+        try(Connection conn = ApplicationConnectionPool.getInstance().getCommitConnection()){
+            return makeObjectValue(conn, tableName, isPrivate);
+        }catch(SQLException e){
+            throw new SQLRuntimeException(e);
+        }
+    }
 
     /**
      * class 생성 도움 내용 생성
@@ -1200,89 +1209,104 @@ public class JdbcObjects {
      * @param tableName String
      * @return String Table Column annotation String value
      */
-    public static String makeObjectValue(Connection conn, String tableName){
+    public static String makeObjectValue(Connection conn, String tableName, boolean isPrivate){
         StringBuilder sb = new StringBuilder();
-        sb.append("@Table(name=\"").append(tableName).append("\")");
+        sb.append("\n\n@Table(name=\"").append(tableName).append("\")");
+
+        boolean isAnnotationPrimaryKey = false;
+        boolean isAnnotationDateTime = false;
+        boolean isAnnotationFlogBoolean = false;
+
+
 
         JdbcNamingDataType jdbcNamingDataType = JdbcNamingDataType.getInstance();
         try{
             Map<String, Integer> pkMap = Database.getPrimaryKeyColumnsForTable(conn, tableName);
 
-            String [] columnNames = Database.getColumnNames(conn, tableName);
+            JdbcNameDataType [] nameTypes = Database.getColumns(conn, tableName);
 
-            for (String columnName : columnNames){
+            for (JdbcNameDataType nameType : nameTypes){
 
                 sb.append("\n\n");
 
-                Integer pkSeq = pkMap.get(columnName);
+                String name = nameType.getName();
+
+                Integer pkSeq = pkMap.get(name);
                 if(pkSeq != null){
                     sb.append("@PrimaryKey(seq = ").append(pkSeq).append(")\n");
+                    isAnnotationPrimaryKey = true;
                 }
 
+                JdbcDataType dataType = nameType.getDataType();
 
-                JdbcDataType dataType = jdbcNamingDataType.getType(columnName);
 
                 boolean isFlagBoolean = false;
 
                 if(dataType == JdbcDataType.DATE_TIME ){
                     sb.append("@DateTime\n");
+                    isAnnotationDateTime = true;
                 }else {
                     if(jdbcNamingDataType.isFrontPriority()){
                         //앞먼저 검사
-                        if(jdbcNamingDataType.isFront() && columnName.startsWith("FG_")){
+                        if(jdbcNamingDataType.isFront() && name.toUpperCase().startsWith("FG_")){
                             sb.append("@FlagBoolean\n");
                             isFlagBoolean = true;
-                        }else if(jdbcNamingDataType.isBack() && columnName.endsWith("_FG")){
+                        }else if(jdbcNamingDataType.isBack() && name.toUpperCase().endsWith("_FG")){
                             sb.append("@FlagBoolean\n");
                             isFlagBoolean = true;
                         }
 
                     }else{
-                        if(jdbcNamingDataType.isBack() && columnName.endsWith("_FG")){
+                        if(jdbcNamingDataType.isBack() && name.toUpperCase().endsWith("_FG")){
                             sb.append("@FlagBoolean\n");
                             isFlagBoolean = true;
-                        }else if(jdbcNamingDataType.isFront() && columnName.startsWith("FG_")){
+                            isAnnotationFlogBoolean = true;
+                        }else if(jdbcNamingDataType.isFront() && name.toUpperCase().startsWith("FG_")){
                             sb.append("@FlagBoolean\n");
                             isFlagBoolean = true;
+                            isAnnotationFlogBoolean = true;
                         }
                     }
                 }
 
-                sb.append("@Column(name = \"").append(columnName).append("\")");
+                sb.append("@Column(name = \"").append(name).append("\")");
 
                 StringBuilder field = new StringBuilder();
-                field.append("\nprivate");
-
+                if(isPrivate) {
+                    field.append("\nprivate ");
+                }else{
+                    field.append("\n");
+                }
 
 
                 if(isFlagBoolean){
-                    field.append(" Boolean ");
+                    field.append("Boolean ");
                 }else {
-                    JdbcDataType jdbcDataType = jdbcNamingDataType.getType(columnName);
+                    JdbcDataType jdbcDataType =  nameType.getDataType();
                     switch (jdbcDataType) {
                         case DATE_TIME:
                         case LONG:
-                            field.append(" Long ");
+                            field.append("Long ");
                             break;
 
                         case DOUBLE:
-                            field.append(" Double ");
+                            field.append("Double ");
                             break;
                         case INTEGER:
-                            field.append(" Integer ");
+                            field.append("Integer ");
                             break;
                         case BOOLEAN:
-                            field.append(" Boolean ");
+                            field.append("Boolean ");
                             break;
                         case BIG_DECIMAL:
-                            field.append(" BigDecimal ");
+                            field.append("BigDecimal ");
                             break;
                         default:
-                            field.append(" String ");
+                            field.append("String ");
                             break;
                     }
                 }
-                String [] names = columnName.split("_");
+                String [] names = name.split("_");
                 field.append(names[0]);
                 for (int i = 1; i <names.length ; i++) {
                     if(names[i] == null || names[i].length()<1)
@@ -1299,7 +1323,24 @@ public class JdbcObjects {
         }catch(SQLException e){
             throw new SQLRuntimeException(e);
         }
-        return sb.toString();
+
+
+
+        StringBuilder importBuilder = new StringBuilder();
+        importBuilder.append("\nimport com.seomse.jdbc.annotation.Column;");
+        importBuilder.append("\nimport com.seomse.jdbc.annotation.Table;");
+        if(isAnnotationPrimaryKey){
+            importBuilder.append("\nimport com.seomse.jdbc.annotation.PrimaryKey;");
+        }
+        if(isAnnotationDateTime){
+            importBuilder.append("\nimport com.seomse.jdbc.annotation.DateTime;");
+        }
+        if(isAnnotationFlogBoolean){
+            importBuilder.append("\nimport com.seomse.jdbc.annotation.FlagBoolean;");
+        }
+
+
+        return importBuilder.toString() + sb;
     }
 
 

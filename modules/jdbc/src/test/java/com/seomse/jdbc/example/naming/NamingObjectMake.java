@@ -29,9 +29,8 @@ public class NamingObjectMake {
 		//noinspection ResultOfMethodCallIgnored
 		ApplicationConnectionPool.getInstance();
 
-		String tableName = "etherscan_transaction";
-
-		System.out.println("@Table(name=\"" +  tableName+ "\")\n");
+		String tableName = "stock";
+		System.out.println("\nclass make info");
 		System.out.println(JdbcNaming.makeObjectValue(tableName));
 
 	}

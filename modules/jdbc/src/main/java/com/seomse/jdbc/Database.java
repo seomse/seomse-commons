@@ -21,6 +21,9 @@ import com.seomse.jdbc.connection.ApplicationConnectionPool;
 import com.seomse.jdbc.exception.JdbcServerTimeException;
 import com.seomse.jdbc.exception.NotDbTypeException;
 import com.seomse.jdbc.exception.SQLRuntimeException;
+import com.seomse.jdbc.naming.JdbcDataType;
+import com.seomse.jdbc.naming.JdbcNameDataType;
+import com.seomse.jdbc.naming.JdbcNamingDataType;
 import com.seomse.jdbc.sequence.SequenceManager;
 import lombok.extern.slf4j.Slf4j;
 
@@ -289,8 +292,10 @@ public class Database {
 
 		 }
 		return pkMap;
-
 	 }
+
+
+
 
 	/**
 	 * 기본값 얻기 
@@ -402,10 +407,90 @@ public class Database {
 				columns.add( columnResultSet.getString("COLUMN_NAME"));
 			}
 
-			return columns.toArray(new String [0]);
+			String [] array = columns.toArray(new String [0]);
+			columns.clear();
+
+			return array;
 		}
 
 	}
+
+	public static JdbcNameDataType [] getColumns(Connection conn, String tableName) throws SQLException {
+
+		JdbcNamingDataType jdbcNamingDataType = JdbcNamingDataType.getInstance();
+
+		try( ResultSet columnResultSet =  conn.getMetaData().getColumns(null,null,tableName, null)) {
+			List<JdbcNameDataType> list = new ArrayList<>();
+
+			while(columnResultSet.next()) {
+
+				JdbcNameDataType jdbcNameDataType = new JdbcNameDataType();
+				jdbcNameDataType.setName(columnResultSet.getString("COLUMN_NAME"));
+
+				JdbcDataType dataType;
+
+				String typeName = columnResultSet.getString("TYPE_NAME");
+
+				if(typeName == null){
+					dataType = jdbcNamingDataType.getType(jdbcNameDataType.getName());
+					jdbcNameDataType.setDataType(dataType);
+					list.add(jdbcNameDataType);
+					continue;
+				}
+
+				typeName = typeName.toLowerCase();
+
+//				int size = columnResultSet.getInt("COLUMN_SIZE");
+
+				//char 형태는
+
+				if(typeName.startsWith("varchar") || typeName.startsWith("text")|| typeName.startsWith("clob")){
+					dataType = JdbcDataType.STRING;
+				}else if( (typeName.startsWith("char") || typeName.startsWith("bpchar") )){
+					JdbcDataType nameType =jdbcNamingDataType.getType(jdbcNameDataType.getName());
+					if(nameType == JdbcDataType.UNDEFINED){
+						dataType = JdbcDataType.STRING;
+					}else{
+						dataType = nameType;
+					}
+
+
+				}else if( typeName.startsWith("num") || typeName.contains("float") || typeName.contains("decimal")  ){
+					JdbcDataType nameType =jdbcNamingDataType.getType(jdbcNameDataType.getName());
+
+					if(nameType == JdbcDataType.UNDEFINED || nameType == JdbcDataType.STRING || nameType == JdbcDataType.BOOLEAN ){
+						dataType = JdbcDataType.BIG_DECIMAL;
+					}else{
+						dataType = nameType;
+					}
+				}else if( typeName.startsWith("bool") ){
+					dataType = JdbcDataType.BOOLEAN;
+				}else if( typeName.startsWith("int") ){
+					if(typeName.equals("int") || typeName.equals("int2") || typeName.equals("int4") ){
+						dataType = JdbcDataType.INTEGER;
+					}else{
+						dataType = JdbcDataType.LONG;
+					}
+				} else{
+					dataType = jdbcNamingDataType.getType(jdbcNameDataType.getName());
+				}
+
+
+				jdbcNameDataType.setDataType(dataType);
+				list.add(jdbcNameDataType);
+
+			}
+
+			JdbcNameDataType [] array = list.toArray(new JdbcNameDataType[0]);
+			list.clear();
+
+			return array;
+
+
+		}
+
+	}
+
 
 
 }

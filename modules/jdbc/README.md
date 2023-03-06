@@ -3,6 +3,12 @@
 # 개발환경
 - open jdk 1.8
 
+
+# gradle
+implementation 'com.seomse.commons:jdbc:1.0.9'
+- etc
+    - https://mvnrepository.com/artifact/com.seomse.commons/jdbc/1.0.9
+
 # 개요
 oracle, tibero, mysql, mariadb, postgresql, msssql 계열의 DB를 지원 하기 위해 개발 되었습니다.
 
@@ -94,16 +100,13 @@ public class StockItem {
 - public static String getResultOne(String sql)
 - 위와 같은 유틸성 method 지원
 
-# gradle
-implementation 'com.seomse.commons:jdbc:1.0.8'
-- etc
-    - https://mvnrepository.com/artifact/com.seomse.commons/jdbc/1.0.8
+
 
 
 # communication
 ### blog, homepage
-- [www.seomse.com](https://www.seomse.com/)
 - [runon.io](https://runon.io)
+- [www.seomse.com](https://www.seomse.com/)
 - [github.com/seomse](https://github.com/seomse)
 - [github.com/runonio](https://github.com/runonio)
 
@@ -113,8 +116,9 @@ implementation 'com.seomse.commons:jdbc:1.0.8'
 
 ### email
  - ysys86a@gmail.com
- 
- 
+
+
 # main developer
- - macle
+- macle
     -  [github.com/macle86](https://github.com/macle86)
+    -  [macle.dev](https://macle.dev)
