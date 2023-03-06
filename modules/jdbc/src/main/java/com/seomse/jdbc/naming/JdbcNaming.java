@@ -1031,37 +1031,46 @@ public class JdbcNaming {
 	public static String makeObjectValue(Connection conn, String tableName){
 		Statement stmt = null;
 		ResultSet result = null;
-		StringBuilder fieldBuilder = new StringBuilder();
 
+
+		boolean isAnnotationPrimaryKey = false;
+		boolean isAnnotationDateTime = false;
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("\n\n@Table(name=\"").append(tableName).append("\")\n\n");
 		JdbcNamingDataType jdbcNamingDataType = JdbcNamingDataType.getInstance();
 
 		try{
 			Map<String, Integer> pkMap = Database.getPrimaryKeyColumnsForTable(conn, tableName);
 			Map<String,String> defaultValueMap = Database.getDefaultValue(tableName);
 			String [] columnNames = Database.getColumnNames(conn, tableName);
-			for (String columnName : columnNames){
+			JdbcNameDataType [] nameTypes = Database.getColumns(conn, tableName);
+
+			for (JdbcNameDataType nameType : nameTypes){
+				String columnName = nameType.getName();
+
 				Integer pkSeq = pkMap.get(columnName);
 				if(pkSeq != null){
-					fieldBuilder.append("@PrimaryKey(seq = ").append(pkSeq).append(")\n");
+					sb.append("@PrimaryKey(seq = ").append(pkSeq).append(")\n");
+					isAnnotationPrimaryKey = true;
 				}
 
-
-				JdbcDataType dataType = jdbcNamingDataType.getType(columnName);
+				JdbcDataType dataType = nameType.getDataType();
 
 				if(dataType == JdbcDataType.STRING){
 
-
-					fieldBuilder.append("private String ").append(columnName);
+					sb.append("private String ").append(columnName);
 
 					String defaultValue = defaultValueMap.get(columnName);
 					if(defaultValue != null){
-						fieldBuilder.append(" = ").append(defaultValue.replace("'", "\""));
+						sb.append(" = ").append(defaultValue.replace("'", "\""));
 					}
-					fieldBuilder.append(";\n");
+					sb.append(";\n");
 
 
 				}else if(dataType == JdbcDataType.DATE_TIME ){
-					fieldBuilder.append("@DateTime\nprivate Long ").append(columnName);
+					isAnnotationDateTime =true;
+					sb.append("@DateTime\nprivate Long ").append(columnName);
 
 
 					String defaultValue = defaultValueMap.get(columnName);
@@ -1070,70 +1079,70 @@ public class JdbcNaming {
 						defaultValue = defaultValue.replace("'", "").toUpperCase().trim();
 
 						if(defaultValue.equals("SYSDATE") || defaultValue.equals("NOW()") || defaultValue.equals("CURRENT_TIMESTAMP()")){
-							fieldBuilder.append( " = System.currentTimeMillis()" );
+							sb.append( " = System.currentTimeMillis()" );
 						}
 					}
-					fieldBuilder.append(";\n");
+					sb.append(";\n");
 
 				}else if(dataType == JdbcDataType.LONG ){
-					fieldBuilder.append("private Long ").append(columnName);
+					sb.append("private Long ").append(columnName);
 
 					String defaultValue = defaultValueMap.get(columnName);
 					if(defaultValue != null){
 						defaultValue = defaultValue.replace("'", "").trim();
-						fieldBuilder.append(" = ").append(defaultValue).append("L");
+						sb.append(" = ").append(defaultValue).append("L");
 
 					}
-					fieldBuilder.append(";\n");
+					sb.append(";\n");
 
 				}else if(dataType == JdbcDataType.DOUBLE ){
-					fieldBuilder.append("private Double ").append(columnName);
+					sb.append("private Double ").append(columnName);
 
 					String defaultValue = defaultValueMap.get(columnName);
 					if(defaultValue != null){
 						defaultValue = defaultValue.replace("'", "").trim();
-						fieldBuilder.append(" = ").append(defaultValue);
+						sb.append(" = ").append(defaultValue);
 						if(!defaultValue.contains(".")){
-							fieldBuilder.append(".0");
+							sb.append(".0");
 						}
 
 
 					}
-					fieldBuilder.append(";\n");
+					sb.append(";\n");
 
 				}else if(dataType == JdbcDataType.INTEGER
 						){
-					fieldBuilder.append("private Integer ").append(columnName);
+					sb.append("private Integer ").append(columnName);
 
 					String defaultValue = defaultValueMap.get(columnName);
 					if(defaultValue != null){
 						defaultValue = defaultValue.replace("'", "").trim();
-						fieldBuilder.append(" = ").append(defaultValue);
+						sb.append(" = ").append(defaultValue);
 
 					}
-					fieldBuilder.append(";\n");
+					sb.append(";\n");
 
 				}else if(dataType == JdbcDataType.BOOLEAN){
-					fieldBuilder.append("private Boolean ").append(columnName);
+					sb.append("private Boolean ").append(columnName);
 
 					String defaultValue = defaultValueMap.get(columnName);
 					if(defaultValue != null){
 						defaultValue = defaultValue.replace("'", "").trim();
-						fieldBuilder.append(" = ").append(defaultValue);
+						sb.append(" = ").append(defaultValue);
 
 					}
-					fieldBuilder.append(";\n");
+					sb.append(";\n");
 
 				}else if(dataType == JdbcDataType.BIG_DECIMAL){
-					fieldBuilder.append("private BigDecimal ").append(columnName);
+					sb.append("private BigDecimal ").append(columnName);
 
 					String defaultValue = defaultValueMap.get(columnName);
 					if(defaultValue != null){
 						defaultValue = defaultValue.replace("'", "").trim();
-						fieldBuilder.append(" = ").append(defaultValue);
+						sb.append(" = ").append(defaultValue);
 
 					}
-					fieldBuilder.append(";\n");
+					sb.append(";\n");
 
 				}
 
@@ -1144,7 +1153,18 @@ public class JdbcNaming {
 		}finally{
 			JdbcClose.statementResultSet(stmt, result);
 		}
-		return fieldBuilder.toString();
+
+		StringBuilder importBuilder = new StringBuilder();
+		importBuilder.append("\nimport com.seomse.jdbc.annotation.Column;");
+		importBuilder.append("\nimport com.seomse.jdbc.annotation.Table;");
+		if(isAnnotationPrimaryKey){
+			importBuilder.append("\nimport com.seomse.jdbc.annotation.PrimaryKey;");
+		}
+		if(isAnnotationDateTime){
+			importBuilder.append("\nimport com.seomse.jdbc.annotation.DateTime;");
+		}
+
+		return importBuilder.toString() + sb;
 	}
 
 

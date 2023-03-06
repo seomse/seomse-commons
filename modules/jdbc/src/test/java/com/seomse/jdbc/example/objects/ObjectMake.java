@@ -27,9 +27,9 @@ public class ObjectMake {
         //noinspection ResultOfMethodCallIgnored
         ApplicationConnectionPool.getInstance();
 
-        String tableName = "sec_gev";
-        System.out.println("class make info");
-        System.out.println(JdbcObjects.makeObjectValue(tableName));
+        String tableName = "stock";
+        System.out.println("\nclass make info");
+        System.out.println(JdbcObjects.makeObjectValue(tableName, false));
 
 
     }
