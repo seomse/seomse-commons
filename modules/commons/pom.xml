@@ -6,7 +6,7 @@
 
     <groupId>com.seomse.commons</groupId>
     <artifactId>commons</artifactId>
-    <version>1.4.2</version>
+    <version>1.4.3</version>
     <packaging>jar</packaging>
 
     <name>commons</name>
@@ -137,7 +137,7 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20220924</version>
+            <version>20230227</version>
             <scope>test</scope>
         </dependency>
 
