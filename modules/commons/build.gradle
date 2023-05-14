@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.seomse.commons'
-version '1.4.2'
+version '1.4.3'
 
 repositories {
     mavenCentral()
@@ -14,7 +14,7 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.2.11'
 
 
-    testImplementation  group: 'org.json', name: 'json', version: '20220924'
+    testImplementation  group: 'org.json', name: 'json', version: '20230227'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
