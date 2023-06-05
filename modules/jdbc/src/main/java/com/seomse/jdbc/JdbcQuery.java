@@ -1060,6 +1060,21 @@ public class JdbcQuery {
 		return result != null;
 	 }
 
+	public static boolean isRowData(Connection conn, String sql, Map<Integer, PrepareStatementData> prepareStatementDataMap) throws SQLException {
+		String result =  getResultOne(conn, sql, prepareStatementDataMap);
+		return result != null;
+	}
+
+	/**
+	 * row data가 있는지 확인
+	 * @param sql String sql row data check
+	 * @return boolean
+	 */
+	public static boolean isRowData(String sql, Map<Integer, PrepareStatementData> prepareStatementDataMap){
+		String result =  getResultOne(sql, prepareStatementDataMap);
+		return result != null;
+	}
+
 
 	/**
 	 * row data가 있는지 확인
@@ -1082,6 +1097,8 @@ public class JdbcQuery {
 	 		log.error(ExceptionUtil.getStackTrace(e));
 		}
 	 }
+
+
 
 	/**
 	 * row data insert wait
@@ -1107,4 +1124,38 @@ public class JdbcQuery {
 			 
 		 }	 
 	 }
+
+	public static void isRowWait(String sql, Map<Integer, PrepareStatementData> prepareStatementDataMap) {
+		try(Connection conn = ApplicationConnectionPool.getInstance().getCommitConnection()){
+			isRowWait(conn, sql, prepareStatementDataMap, 3, 350);
+		}catch(SQLException e){
+			log.error(ExceptionUtil.getStackTrace(e));
+		}
+	}
+
+
+	/**
+	 * row data insert wait
+	 * @param conn Connection
+	 * @param sql String sql row data check
+	 * @param checkCount int max check count
+	 * @param waitTime long check 당 wait time
+	 * @throws SQLException SQLException
+	 */
+	public static void isRowWait(Connection conn, String sql, Map<Integer, PrepareStatementData> prepareStatementDataMap, int checkCount, long waitTime) throws SQLException {
+
+		for(int i=0 ; i<checkCount ; i++){
+
+			if(isRowData(conn, sql, prepareStatementDataMap)) {
+				break;
+			}
+
+			try {
+				Thread.sleep(waitTime);
+			}catch(Exception e) {
+				log.error(ExceptionUtil.getStackTrace(e));
+			}
+
+		}
+	}
 }
