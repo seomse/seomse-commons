@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.seomse.commons'
-version '1.4.3'
+version '1.4.4'
 
 repositories {
     mavenCentral()
@@ -12,10 +12,11 @@ repositories {
 dependencies {
     //log 1.4.X 버전은 java 11이라 java 8을 지원하는 버전까지는 사용하지 않음
     implementation 'ch.qos.logback:logback-classic:1.2.11'
+    implementation 'com.google.code.gson:gson:2.10.1'
 
 
     testImplementation  group: 'org.json', name: 'json', version: '20230227'
 
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }

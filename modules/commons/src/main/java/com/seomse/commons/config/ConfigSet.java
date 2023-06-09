@@ -22,14 +22,16 @@ package com.seomse.commons.config;
  *  기본 설정을 변경할 경우
  *  초기 구동시 Config 호출 보다 먼저 호출되게 구현
  *
- *
  * @author macle
  */
 public class ConfigSet {
 
-    public static String CONFIG_PATH = "config/seomse_config.xml";
+    public static String CONFIG_DIR_PATH = "config";
 
-    public static String LOG_BACK_PATH = "config/logback.xml";
+
+    public static String CONFIG_PATH = CONFIG_DIR_PATH + "/config.xml";
+
+    public static String LOG_BACK_PATH = CONFIG_DIR_PATH +"/logback.xml";
 
     public static int XML_FILE_PRIORITY = 1000;
 

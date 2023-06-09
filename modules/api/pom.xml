@@ -120,17 +120,12 @@
         </plugins>
     </build>
 
-
-
     <dependencies>
-
-
-
 
         <dependency>
             <groupId>com.seomse.commons</groupId>
             <artifactId>commons</artifactId>
-            <version>1.4.2</version>
+            <version>1.4.4</version>
         </dependency>
 
 
