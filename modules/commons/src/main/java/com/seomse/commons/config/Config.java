@@ -184,6 +184,7 @@ public class Config {
 	 * @param defaultValue Boolean 기본값
 	 * @return Boolean config value(boolean)
 	 */
+	@SuppressWarnings("StringOperationCanBeSimplified")
 	public static Boolean getBoolean(String key, Boolean defaultValue){
 		String resultValue = instance.getConfigValue(key);
 		if(resultValue == null){
@@ -239,6 +240,7 @@ public class Config {
 	 * @param configPath String logback xml path
 	 * @param isErrorLog boolean isErrorLog
 	 */
+	@SuppressWarnings("SameParameterValue")
 	private static void setLogbackConfigPath(String configPath, boolean isErrorLog){
 		File file = new File(configPath);
 		if(!file.isFile()){
@@ -246,19 +248,18 @@ public class Config {
 		}
 		LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
 
-	    try {
-	      JoranConfigurator configurator = new JoranConfigurator();
-	      configurator.setContext(context);
-	      context.reset();
-	      configurator.doConfigure(configPath);
+		try {
+			JoranConfigurator configurator = new JoranConfigurator();
+			configurator.setContext(context);
+			context.reset();
+			configurator.doConfigure(configPath);
 
-	    } catch (JoranException je) {
-	    	if(isErrorLog){
-	    		ExceptionUtil.exception(je, logger, instance.exceptionHandler);
-	    	}
-	    }
+		} catch (JoranException je) {
+			if(isErrorLog){
+				ExceptionUtil.exception(je, logger, instance.exceptionHandler);
+			}
+		}
 	}
-
 
 
 	private final List<ConfigObserver> observerList = new ArrayList<>();
@@ -290,6 +291,11 @@ public class Config {
 		}
 
 		File file = new File( ConfigSet.CONFIG_PATH);
+		if(!file.isFile()){
+			file = new File( ConfigSet.CONFIG_DIR_PATH + "/seomse_config.xml");
+		}
+
+
 		List<ConfigData> configDataList = new ArrayList<>();
         XmlFileConfigData fileConfigData ;
 
@@ -319,7 +325,7 @@ public class Config {
 
     private void addConfig(ConfigData configData){
 
-    	synchronized (addLock) {
+		synchronized (addLock) {
 			ConfigData[] newDataArray = new ConfigData[configDataArray.length + 1];
 			System.arraycopy(configDataArray, 0, newDataArray, 0, configDataArray.length);
 			newDataArray[newDataArray.length - 1] = configData;
@@ -335,7 +341,7 @@ public class Config {
 	 * @return String config value
 	 */
 	private String getConfigValue(String key){
-	    return getConfigValue(key , null);
+		return getConfigValue(key , null);
 	}
 
 
@@ -357,11 +363,12 @@ public class Config {
                 break;
             }
         }
-	    if(value == null){
-	        return defaultValue;
-	    }
-	    return value;
+		if(value == null){
+			return defaultValue;
+		}
+		return value;
 	}
+
 	/**
 	 * 설정값 세팅
      * 최우선순위 설정값을 변경함
@@ -388,11 +395,11 @@ public class Config {
         }
         ConfigData firstData = instance.configDataArray[0];
 		ConfigData [] configDataArray = instance.configDataArray;
-	    if(firstData == configData) {
+		if(firstData == configData) {
 			ConfigInfo [] changeInfos = new ConfigInfo[configInfos.length];
 
 
-	        //최우선순위 설정이 변경된 경우
+			//최우선순위 설정이 변경된 경우
 			for (int i = 0; i <configInfos.length ; i++) {
 				ConfigInfo configInfo = configInfos[i];
 				if(configInfo.isDelete){
@@ -418,7 +425,7 @@ public class Config {
             instance.notifyConfig(changeInfos);
         }else{
 
-	    	int dataIndex = configDataArray.length;
+			int dataIndex = configDataArray.length;
 			for (int i = 0; i <configDataArray.length ; i++) {
 				if(configData == configDataArray[i]){
 					dataIndex = i;
@@ -427,7 +434,7 @@ public class Config {
 			}
 			//등록된 데이터가 아니면
 			if(dataIndex ==  configDataArray.length){
-			    return;
+				return;
             }
 
 			List<ConfigInfo> changeList = null ;
@@ -492,4 +499,5 @@ public class Config {
 			}
 		}
 	}
+
 }
