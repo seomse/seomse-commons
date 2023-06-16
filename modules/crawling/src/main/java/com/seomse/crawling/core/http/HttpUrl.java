@@ -81,7 +81,7 @@ public class HttpUrl {
 	 * @return chrome user agent
 	 */
 	public static String getChromeUserAgent(){
-		return Config.getConfig("chrome.user.agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36");
+		return Config.getConfig("chrome.user.agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
 	}
 
 	public static String getScript(String url, String jsonValue) {

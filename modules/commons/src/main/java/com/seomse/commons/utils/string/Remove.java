@@ -73,8 +73,10 @@ public class Remove {
         str =str.replace("&#38;", "&");
         str =str.replace("&#39;", "'");
         str =str.replace("&#xD;", "'");
+        str =str.replace("\u200B", "\n");
 
         str =str.replaceAll(entry, ""); //기타엔트리제거
+
         //&amp = &, &#39 = '.   //&#숫자 = 아스키 코드넘버
 //		http://www.w3schools.com/html/html_entities.asp   엔트리표
         str =str.trim();
