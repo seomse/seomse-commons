@@ -29,7 +29,7 @@ dependencies {
     implementation 'com.zaxxer:HikariCP:4.0.3'
 
     //seomse
-    implementation 'com.seomse.commons:commons:1.4.4'
+    implementation 'com.seomse.commons:commons:1.4.7'
     implementation 'com.seomse.commons:crypto:0.1.0'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'

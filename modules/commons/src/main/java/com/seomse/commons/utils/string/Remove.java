@@ -40,6 +40,10 @@ public class Remove {
      */
     @SuppressWarnings({"RegExpSingleCharAlternation", "RegExpRedundantEscape"})
     public static String htmlTag(String str){
+
+        str = str.replace("<p>","\n");
+        str = str.replace(" ","");
+
         str = Change.enterContinue(str);
         str = Change.spaceContinueTab(str);
 //		"<(.|\n)*?>";
@@ -62,7 +66,7 @@ public class Remove {
         str = str.replaceAll("<\\/B>", "");
         str = str.replaceAll(tag, "");
         //주석제거
-
+        str =str.replace(" ", " ");
         str =str.replace("&nbsp;", " ");
         str =str.replace("&#160;", " ");
         str =str.replace("&lt;", "<");
@@ -76,6 +80,24 @@ public class Remove {
         str =str.replace("\u200B", "\n");
 
         str =str.replaceAll(entry, ""); //기타엔트리제거
+
+        for(;;){
+            int spaceEnterSearch = str.indexOf(" \n");
+            if(spaceEnterSearch < 0){
+                break;
+            }
+            str = str.replace(" \n","\n");
+        }
+
+        for(;;){
+            int spaceEnterSearch = str.indexOf("\n ");
+            if(spaceEnterSearch < 0){
+                break;
+            }
+            str = str.replace("\n ","\n");
+        }
+
+        str = Change.enterContinue(str);
 
         //&amp = &, &#39 = '.   //&#숫자 = 아스키 코드넘버
 //		http://www.w3schools.com/html/html_entities.asp   엔트리표
