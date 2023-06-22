@@ -16,7 +16,7 @@ dependencies {
     //reflections
     implementation group: 'org.reflections', name: 'reflections', version: '0.9.10'
 
-    implementation 'com.seomse.commons:commons:1.4.4'
+    implementation 'com.seomse.commons:commons:1.4.8'
     implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
     //seomse
     implementation 'com.seomse.commons:api:1.0.7'

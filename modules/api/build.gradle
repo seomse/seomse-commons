@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
 
-    implementation 'com.seomse.commons:commons:1.4.4'
+    implementation 'com.seomse.commons:commons:1.4.8'
 }
 
 test {
