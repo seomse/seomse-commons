@@ -18,6 +18,7 @@ package com.seomse.crawling.core.http;
 
 import com.seomse.commons.utils.string.Change;
 import com.seomse.commons.utils.string.Remove;
+import com.seomse.commons.utils.string.TextParsing;
 
 /**
  * script parsing util
@@ -30,6 +31,23 @@ public class CrawlingScript {
 
 	private boolean isHtmlRemove = true;
 
+	private boolean isNumberCharEntry = true;
+
+	private boolean isXmlRemove = true;
+
+	private boolean isHtmlVarRemove = true;
+
+	/**
+	 * 전체옵션변경
+	 * @param isRemove 삭제여부
+	 */
+	public void setRemove(boolean isRemove){
+		isHtmlRemove = isRemove;
+		isNumberCharEntry = isRemove;
+		isXmlRemove = isRemove;
+		isHtmlVarRemove = isRemove;
+	}
+
 	/**
 	 * 생성자
 	 * @param script String html script
@@ -40,6 +58,26 @@ public class CrawlingScript {
 		scripts[0] = script;
 		scripts[1] = script;
 
+	}
+
+	public void setScript(String script){
+		scripts[1] = script;
+	}
+	public void setScript(String script, int index){
+		scripts[index] = script;
+	}
+
+
+	public void setNumberCharEntry(boolean numberCharEntry) {
+		isNumberCharEntry = numberCharEntry;
+	}
+
+	public void setXmlRemove(boolean xmlRemove) {
+		isXmlRemove = xmlRemove;
+	}
+
+	public void setHtmlVarRemove(boolean htmlVarRemove) {
+		isHtmlVarRemove = htmlVarRemove;
 	}
 
 	/**
@@ -96,8 +134,21 @@ public class CrawlingScript {
 		}
 
 		String result = script.substring(startIndex, endIndex);
+
+		if(isXmlRemove){
+			result = TextParsing.replaceInLine(result,"<!DOCTYPE", "loose.dtd\">","");
+		}
+
+		if(isNumberCharEntry){
+			result = TextParsing.replaceNumberChar(result,numberCharBegin,numberCharEnd);
+		}
+
 		if(isHtmlRemove) {
 			result = Change.spaceContinue(Remove.htmlTag(result)).trim();
+		}
+
+		if(isHtmlVarRemove){
+			result = TextParsing.replaceInLine(result, "var ",";","");
 		}
 
 		if(index == 1){
@@ -105,6 +156,17 @@ public class CrawlingScript {
 		}
 
 		return result;
+	}
+
+	private String numberCharBegin= "&#";
+	private String numberCharEnd = ";";
+
+	public void setNumberCharBegin(String numberCharBegin) {
+		this.numberCharBegin = numberCharBegin;
+	}
+
+	public void setNumberCharEnd(String numberCharEnd) {
+		this.numberCharEnd = numberCharEnd;
 	}
 
 	/**
