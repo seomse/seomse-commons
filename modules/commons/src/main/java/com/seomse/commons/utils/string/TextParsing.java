@@ -107,4 +107,27 @@ public class TextParsing {
 
         return sb.substring(1);
     }
+
+
+    public static String removeText(String text, String beginStr, String endStr){
+        String str = text;
+
+        for(;;){
+            int index = str.indexOf(beginStr);
+            if(index == -1){
+                break;
+            }
+
+            int end = str.indexOf(endStr, index + beginStr.length());
+            if(end == -1){
+                break;
+            }
+            str = str.substring(0, index) +
+                    str.substring(end + endStr.length());
+
+        }
+
+        return str;
+    }
+
 }
