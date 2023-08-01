@@ -15,6 +15,11 @@
  */
 package com.seomse.commons.utils.string;
 
+import com.seomse.commons.config.Config;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 문자열 제거
  * @author macle
@@ -31,6 +36,27 @@ public class Remove {
         str = str.replace("\n", "");
         str = str.replace("\t", "");
         return str;
+    }
+
+
+    public static final String [] HTML_ENTER_ENTRY = getHtmlEnterEntry();
+
+    public static String [] getHtmlEnterEntry(){
+        String configValue = Config.getConfig("html.tag.enter.entry.array");
+        if(configValue == null){
+            return new String[0];
+        }
+
+        String [] values =  configValue.split(",");
+
+        List<String> list = new ArrayList<>();
+        for(String v : values){
+            if(v.equals("")){
+                continue;
+            }
+            list.add(v);
+        }
+        return list.toArray(new String[0]);
     }
 
     /**
@@ -78,6 +104,11 @@ public class Remove {
         str =str.replace("&#39;", "'");
         str =str.replace("&#xD;", "'");
         str =str.replace("\u200B", "\n");
+        str =str.replace("\uFEFF", "\n");
+
+        for (String enterEntry : HTML_ENTER_ENTRY) {
+            str = str.replace(enterEntry, "\n");
+        }
 
         str =str.replaceAll(entry, ""); //기타엔트리제거
 
@@ -103,5 +134,9 @@ public class Remove {
 //		http://www.w3schools.com/html/html_entities.asp   엔트리표
         str =str.trim();
         return str;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(HTML_ENTER_ENTRY.length);
     }
 }

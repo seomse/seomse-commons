@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.seomse.commons'
-version '1.1.0'
+version '1.1.1'
 
 
 repositories {
@@ -19,7 +19,7 @@ dependencies {
     //maria db
     testImplementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.1.4'
     //oracle
-    testImplementation group: 'com.oracle.database.jdbc', name: 'ojdbc8', version: '21.9.0.0'
+    testImplementation group: 'com.oracle.database.jdbc', name: 'ojdbc8', version: '23.2.0.0'
 
     //postgresql db
     testImplementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
@@ -29,7 +29,7 @@ dependencies {
     implementation 'com.zaxxer:HikariCP:4.0.3'
 
     //seomse
-    implementation 'com.seomse.commons:commons:1.4.8'
+    implementation 'com.seomse.commons:commons:1.4.9'
     implementation 'com.seomse.commons:crypto:0.1.0'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'

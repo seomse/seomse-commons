@@ -18,6 +18,7 @@ package com.seomse.jdbc.common;
 import com.seomse.jdbc.annotation.DateTime;
 import com.seomse.jdbc.annotation.FlagBoolean;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -72,9 +73,17 @@ public class JdbcField {
 
         DateTime dateTime =  field.getAnnotation(DateTime.class);
 
-       if(dateTime == null){
-           Object obj = result.getObject(columnName);
-           Class<?> classType  = field.getType();
+        if(dateTime == null){
+
+            Class<?> classType  = field.getType();
+
+            if(classType.getName().equals("[B")){
+                field.set(resultObj, result.getBytes(columnName));
+                return;
+            }
+
+            Object obj = result.getObject(columnName);
+
             if(classType == String.class){
                 field.set(resultObj, obj);
             }else if(classType == Long.class || classType == Long.TYPE){
