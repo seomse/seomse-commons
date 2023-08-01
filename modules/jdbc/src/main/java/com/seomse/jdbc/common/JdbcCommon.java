@@ -15,6 +15,7 @@
  */
 package com.seomse.jdbc.common;
 
+import com.seomse.commons.exception.IORuntimeException;
 import com.seomse.commons.exception.ReflectiveOperationRuntimeException;
 import com.seomse.jdbc.Database;
 import com.seomse.jdbc.PrepareStatementData;
@@ -25,8 +26,11 @@ import com.seomse.jdbc.annotation.Sequence;
 import com.seomse.jdbc.exception.SQLRuntimeException;
 import com.seomse.jdbc.naming.JdbcDataType;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -233,7 +237,19 @@ public class JdbcCommon {
                 pstmt.setBoolean(i+1, (boolean)object);
             }else if(field.getType() == BigDecimal.class){
                 pstmt.setBigDecimal(i+1, (BigDecimal)object);
-            }else{
+            }else if(field.getType() == File.class){
+                try{
+                    File file = (File)object;
+
+                    byte [] bytes = Files.readAllBytes(file.toPath());
+                    pstmt.setBytes(i+1, bytes);
+                }catch(IOException e){
+                    throw new IORuntimeException(e);
+                }
+            }else if(field.getType().getName().equals("[B")){
+                pstmt.setBytes(i+1, (byte[]) object);
+            }
+            else{
                 pstmt.setObject(i+1, object);
             }
         }else{
