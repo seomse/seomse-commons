@@ -445,7 +445,10 @@ public class FileUtil {
 	 */
 	@SuppressWarnings("WeakerAccess")
 	public static void fileOutput(String outValue, String charSet, String filePath, boolean isAppend){
-		mkdirsParent(filePath);
+		try {
+			mkdirsParent(filePath);
+		}catch(Exception ignore){}
+
 		try(FileOutputStream out =  new FileOutputStream(filePath, isAppend)){
 			out.write(outValue.getBytes(charSet));
 			out.flush();
