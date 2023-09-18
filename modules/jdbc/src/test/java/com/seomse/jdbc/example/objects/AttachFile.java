@@ -2,12 +2,11 @@ package com.seomse.jdbc.example.objects;
 
 import com.seomse.jdbc.annotation.*;
 
-import java.io.File;
 
 /**
  * @author macle
  */
-@Table(name="attach_file")
+@Table(name="file")
 public class AttachFile {
 
     @PrimaryKey(seq = 1)
@@ -18,6 +17,6 @@ public class AttachFile {
     String fileName;
 
     @Column(name = "attach_file")
-    byte[] attachFile;
+    byte[] bytes;
 
 }

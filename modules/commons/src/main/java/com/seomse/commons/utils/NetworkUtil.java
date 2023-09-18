@@ -15,10 +15,13 @@
  */
 package com.seomse.commons.utils;
 
+import com.seomse.commons.exception.SocketRuntimeException;
+
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+import java.util.LinkedHashSet;
 
 /**
  * ip, mac 관련 유틸
@@ -85,7 +88,43 @@ public class NetworkUtil {
 		        
 		return macAddressBuilder.toString().substring(1);
 	}
-	
-	
+
+	public static String [] getMacAddressArray() {
+		LinkedHashSet<String> set = new LinkedHashSet<>();
+
+		try {
+			Enumeration<NetworkInterface> networkInterfaceEum = NetworkInterface.getNetworkInterfaces();
+			while(networkInterfaceEum.hasMoreElements()){
+
+				NetworkInterface networkInterface = networkInterfaceEum.nextElement();
+
+				byte [] macBytes = networkInterface.getHardwareAddress();
+
+				Enumeration<InetAddress> inetAddressEum = networkInterface.getInetAddresses();
+
+				while(inetAddressEum.hasMoreElements()){
+					long t = System.currentTimeMillis();
+					InetAddress inetAddress = inetAddressEum.nextElement();
+
+					if (!inetAddress.isLoopbackAddress() && !inetAddress.isLinkLocalAddress() && inetAddress.isSiteLocalAddress()) {
+						if(macBytes != null){
+							set.add(NetworkUtil.getMacAddress(networkInterface.getHardwareAddress()));
+						}
+					}
+				}
+			}
+		}catch (SocketException e){
+			throw new SocketRuntimeException(e);
+		}
+
+		if(set.size() > 0){
+			String [] array = set.toArray(new String[0]);
+			set.clear();
+			return array;
+
+		}
+
+		return new String[0];
+	}
 	
 }
