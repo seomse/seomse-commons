@@ -21,9 +21,9 @@
  - 메시지 암호화만 필요한 간단한 환경에서만 사용 권장
  
 # gradle
-implementation 'com.seomse.commons:crypto:0.1.0'
+implementation 'com.seomse.commons:crypto:0.1.1'
 - etc
-  - https://mvnrepository.com/artifact/com.seomse.commons/crypto/0.1.0
+  - https://mvnrepository.com/artifact/com.seomse.commons/crypto/0.1.1
 
 # communication
 ### blog, homepage

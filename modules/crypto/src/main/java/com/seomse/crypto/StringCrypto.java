@@ -150,7 +150,7 @@ public class StringCrypto {
             result.append(enc(key, str));
             return result.toString();
         }catch(Exception e){
-            throw new RuntimeException(e);
+            throw new CryptoException(e);
         }
     }
 
@@ -172,9 +172,11 @@ public class StringCrypto {
             String encData = str.substring(next);
             return dec(key, encData);
         }catch(Exception e){
-            throw new RuntimeException(e);
+            throw new CryptoException(e);
         }
     }
+
+
 
     /**
      * 암호화
@@ -184,7 +186,7 @@ public class StringCrypto {
      */
     public static String enc(String key, String value){
         try {
-            byte[] keyBytes = makeKeyByte(key);
+            byte[] keyBytes = CryptoUtils.makeKeyByte(key, 16);
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
             IvParameterSpec ivSpec = new IvParameterSpec(keyBytes);
@@ -194,7 +196,7 @@ public class StringCrypto {
 
             return new String(encoder.encode(results));
         }catch(Exception e){
-            throw new RuntimeException(e);
+            throw new CryptoException(e);
         }
     }
 
@@ -207,7 +209,7 @@ public class StringCrypto {
      */
     public static String dec(String key, String enc){
         try {
-            byte[] keyBytes= makeKeyByte(key);
+            byte[] keyBytes= CryptoUtils.makeKeyByte(key, 16);
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
             IvParameterSpec ivSpec = new IvParameterSpec(keyBytes);
@@ -220,23 +222,8 @@ public class StringCrypto {
 
             return new String(results, StandardCharsets.UTF_8);
         }catch(Exception e){
-            throw new RuntimeException(e);
+            throw new CryptoException(e);
         }
-    }
-
-    /**
-     *
-     * @param key String
-     * @return byte []
-     */
-    private static byte [] makeKeyByte(String key){
-        byte[] keyBytes= new byte[16];
-        byte[] b= key.getBytes(StandardCharsets.UTF_8);
-        int len= b.length;
-        if (len > keyBytes.length) len = keyBytes.length;
-        System.arraycopy(b, 0, keyBytes, 0, len);
-
-        return keyBytes;
     }
 
 
