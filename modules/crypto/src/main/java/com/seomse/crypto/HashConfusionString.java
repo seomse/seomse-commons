@@ -19,9 +19,25 @@ public class HashConfusionString {
 	public static String get(String hash, String value) throws NoSuchAlgorithmException{
 		return  get(java.security.MessageDigest.getInstance(hash), value);
 	}
-	
-	
-	
+
+	public static String get(String hash, String value, int size) throws NoSuchAlgorithmException{
+
+		java.security.MessageDigest messageDigest = java.security.MessageDigest.getInstance(hash);
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(get(messageDigest, value));
+		if(sb.length() >= size){
+			return sb.substring(0, size);
+		}
+		for(;;){
+			String hashStr = get(messageDigest, sb.toString());
+			sb.append(hashStr);
+			if(sb.length() >= size){
+				return sb.substring(0, size);
+			}
+		}
+	}
+
 	/**
 	 * hash값을 문자열로 변환한 결과얻기  ( 관련패키지 고유결과)
 	 * @param messageDigest 해쉬알고리즘 종류 
@@ -62,7 +78,7 @@ public class HashConfusionString {
         		   resultchar= resultchar- 86;
         	   }
            }
-           if(resultchar == 92){
+           if(resultchar == 92 && i < 32){
         	   resultchar -= i ;
            }
            	
