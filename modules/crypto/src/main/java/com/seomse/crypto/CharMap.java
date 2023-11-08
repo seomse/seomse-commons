@@ -73,6 +73,16 @@ public class CharMap {
 
     }
 
+    public String change(String value){
+        char [] chars = value.toCharArray();
+        char [] newChars = new char[chars.length];
+        for (int i = 0; i <chars.length ; i++) {
+            newChars[i] = getChar(chars[i]);
+        }
+
+        return new String(newChars);
+    }
+
     public static void main(String[] args) {
         Random random = new Random();
         System.out.println(random.nextInt(3));

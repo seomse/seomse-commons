@@ -1,3 +1,4 @@
+import com.seomse.crypto.CharMap;
 import com.seomse.crypto.HashConfusionCrypto;
 
 import java.io.File;
@@ -13,12 +14,13 @@ public class HashConfusionCryptoExample {
 //
         String text = "enc dec test";
 
+        CharMap charMap = new CharMap(CharMap.makeRandomMap());
 
-        String encText = HashConfusionCrypto.encStr(key, text, 32);
+        String encText = HashConfusionCrypto.encStr(key, text, 32, charMap);
         System.out.println(encText);
 
 
-        String dec = HashConfusionCrypto.decStr(key, encText, 32);
+        String dec = HashConfusionCrypto.decStr(key, encText, 32, charMap);
         System.out.println(dec);
 
         //파일암호화
