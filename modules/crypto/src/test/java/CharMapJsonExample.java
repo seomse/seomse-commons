@@ -1,10 +1,13 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.seomse.crypto.CharMap;
 import com.seomse.crypto.HashConfusionString;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author macle
@@ -28,6 +31,21 @@ public class CharMapJsonExample {
         System.out.println(changeKey);
         System.out.println(changeKey.length());
 
+        JsonObject jsonObject = gson.fromJson(s, JsonObject.class);
+
+        Set<String> keys =  jsonObject.keySet();
+
+        Map<Character, Character> characterMap = new HashMap<>();
+
+        for(String key: keys){
+//            characterMap.
+            characterMap.put(key.charAt(0), jsonObject.get(key).getAsString().charAt(0));
+
+        }
+        System.out.println(charMap.toString());
+        System.out.println(CharMap.viewMap(characterMap));
+
+        System.out.println(charMap.toString().equals(CharMap.viewMap(characterMap)));
 
 
     }

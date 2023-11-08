@@ -59,19 +59,9 @@ public class CharMap {
 
     @Override
     public String toString(){
-
-        if(map.size() == 0){
-            return "";
-        }
-        Set<Character> keys = map.keySet();
-        StringBuilder sb = new StringBuilder();
-        for(Character key : keys){
-            sb.append(", ").append(key).append("=").append(map.get(key));
-        }
-
-        return sb.substring(2);
-
+        return viewMap(map);
     }
+
 
     public String change(String value){
         char [] chars = value.toCharArray();
@@ -83,12 +73,20 @@ public class CharMap {
         return new String(newChars);
     }
 
-    public static void main(String[] args) {
-        Random random = new Random();
-        System.out.println(random.nextInt(3));
-        CharMap charMap = new CharMap(makeRandomMap());
-        System.out.println(charMap.toString());
 
+    public static String viewMap(Map<Character, Character> map){
+
+        if(map.size() == 0){
+            return "";
+        }
+        Set<Character> keys = map.keySet();
+        StringBuilder sb = new StringBuilder();
+        for(Character key : keys){
+            sb.append(", ").append(key).append("=").append(map.get(key));
+        }
+
+        return sb.substring(2);
     }
+
 
 }
