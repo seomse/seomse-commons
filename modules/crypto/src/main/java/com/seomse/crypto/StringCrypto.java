@@ -30,12 +30,12 @@ public class StringCrypto {
 
 
     //순서정보를 유추하지 못하게 순서위치가 일관되지 않음
-    private static final char [] KEY_CHAR_ARRAY = {
+    private static final char [] DEFAULT_KEY_CHAR_ARRAY = {
             'x','y','2','Z','a','C','D','I','J','K','L','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','6','5','v','Q','R','S','T','U','V','W','X','Y','9','8','7','4','0','1','b','c','d','e','f','w','z','H','B','M','N','O','P','A','E','F','G'
     };
 
 
-    private static final StringCrypto DEFAULT_INSTANCE = new StringCrypto(KEY_CHAR_ARRAY);
+    private static final StringCrypto DEFAULT_INSTANCE = new StringCrypto(DEFAULT_KEY_CHAR_ARRAY);
 
     /**
      * 암호화
@@ -57,15 +57,33 @@ public class StringCrypto {
 
     private final char [] keyCharArray;
     private  Map<Character, Integer> lengthMap;
-    private  Map<Integer, char []> charMap;
+    private  Map<Integer, char []> charsMap;
+
 
     private final int minLength;
     private final int maxLength;
 
-
     private int keyRandomLength;
 
+    private CharMap charMap = null;
 
+    public void setCharMap(CharMap charMap) {
+        this.charMap = charMap;
+    }
+
+    private int keySize = 16;
+
+    public void setKeySize(int keySize) {
+        this.keySize = keySize;
+    }
+
+
+    public StringCrypto(){
+        this.keyCharArray = DEFAULT_KEY_CHAR_ARRAY;
+        minLength = Math.min(keyCharArray.length, 3);
+        maxLength = Math.min(keyCharArray.length, 16);
+        init();
+    }
 
     /**
      * 생성자
@@ -88,7 +106,7 @@ public class StringCrypto {
 
     private void init(){
         lengthMap = new HashMap<>();
-        charMap = new HashMap<>();
+        charsMap = new HashMap<>();
 
         Map<Integer, List<Character>> tempMap = new HashMap<>();
 
@@ -115,7 +133,7 @@ public class StringCrypto {
             for (int j = 0; j < array.length ; j++) {
                 array[j] = list.get(j);
             }
-            charMap.put(i, array);
+            charsMap.put(i, array);
             list.clear();
         }
         tempMap.clear();
@@ -142,19 +160,21 @@ public class StringCrypto {
             }
 
             StringBuilder result = new StringBuilder();
-            char [] lengthCharArray = charMap.get(keyLength);
+            char [] lengthCharArray = charsMap.get(keyLength);
             result.append(lengthCharArray[random.nextInt(lengthCharArray.length)]);
             result.append(keyBuilder);
             String key = HashConfusionString.get("MD5", keyBuilder.toString());
 
-            result.append(enc(key, str));
+            if(charMap != null){
+                key = charMap.change(key);
+            }
+
+            result.append(enc(key, str, keySize));
             return result.toString();
         }catch(Exception e){
             throw new CryptoException(e);
         }
     }
-
-
 
 
     /**
@@ -169,8 +189,13 @@ public class StringCrypto {
             int next = length +1;
             String keyData = str.substring(1, next);
             String key = HashConfusionString.get("MD5", keyData);
+
+            if(charMap != null){
+                key = charMap.change(key);
+            }
+
             String encData = str.substring(next);
-            return dec(key, encData);
+            return dec(key, encData, keySize);
         }catch(Exception e){
             throw new CryptoException(e);
         }
@@ -184,12 +209,17 @@ public class StringCrypto {
      * @param value String
      * @return String encValue
      */
-    public static String enc(String key, String value){
+    public static String enc(String key, String value, int keySize){
         try {
-            byte[] keyBytes = CryptoUtils.makeKeyByte(key, 16);
+            byte[] keyBytes = CryptoUtils.makeKeyByte(key, keySize);
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
-            IvParameterSpec ivSpec = new IvParameterSpec(keyBytes);
+            IvParameterSpec ivSpec;
+            if(keySize == 16){
+                ivSpec = new IvParameterSpec(keyBytes);
+            }else{
+                ivSpec = new IvParameterSpec(CryptoUtils.makeKeyByte(key, 16));
+            }
             cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
             byte[] results = cipher.doFinal(value.getBytes(StandardCharsets.UTF_8));
             Base64.Encoder encoder = Base64.getEncoder();
@@ -207,12 +237,17 @@ public class StringCrypto {
      * @param enc 암호화된 값
      * @return String dec value
      */
-    public static String dec(String key, String enc){
+    public static String dec(String key, String enc , int keySize){
         try {
-            byte[] keyBytes= CryptoUtils.makeKeyByte(key, 16);
+            byte[] keyBytes= CryptoUtils.makeKeyByte(key, keySize);
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
-            IvParameterSpec ivSpec = new IvParameterSpec(keyBytes);
+            IvParameterSpec ivSpec;
+            if(keySize == 16){
+                ivSpec = new IvParameterSpec(keyBytes);
+            }else{
+                ivSpec = new IvParameterSpec(CryptoUtils.makeKeyByte(key, 16));
+            }
             cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
 
             Base64.Decoder decoder = Base64.getDecoder();
@@ -233,7 +268,7 @@ public class StringCrypto {
      */
     public static char [] makeRandomCharArray(){
 
-        char [] sortChars = Arrays.copyOf(KEY_CHAR_ARRAY,KEY_CHAR_ARRAY.length);
+        char [] sortChars = Arrays.copyOf(DEFAULT_KEY_CHAR_ARRAY, DEFAULT_KEY_CHAR_ARRAY.length);
 
         Arrays.sort(sortChars);
 

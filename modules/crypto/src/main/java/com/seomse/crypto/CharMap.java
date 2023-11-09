@@ -38,6 +38,16 @@ public class CharMap {
 
     private final Map<Character, Character> map ;
 
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public CharMap(Map<Character, Character> map){
         this.map = map;
 
