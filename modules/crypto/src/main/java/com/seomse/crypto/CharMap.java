@@ -53,6 +53,11 @@ public class CharMap {
 
     }
 
+    public CharMap(String mapData){
+        this.map = makeMap(mapData);
+    }
+
+
     public char getChar(char ch){
         Character character = map.get(ch);
 
@@ -69,7 +74,7 @@ public class CharMap {
 
     @Override
     public String toString(){
-        return viewMap(map);
+        return outMap(map);
     }
 
 
@@ -84,7 +89,7 @@ public class CharMap {
     }
 
 
-    public static String viewMap(Map<Character, Character> map){
+    public static String outMap(Map<Character, Character> map){
 
         if(map.size() == 0){
             return "";
@@ -92,11 +97,22 @@ public class CharMap {
         Set<Character> keys = map.keySet();
         StringBuilder sb = new StringBuilder();
         for(Character key : keys){
-            sb.append(", ").append(key).append("=").append(map.get(key));
+            sb.append(", ").append(key).append(map.get(key));
         }
 
         return sb.substring(2);
     }
 
+    public static Map<Character, Character> makeMap(String str){
+        Map<Character, Character> map = new HashMap<>();
+
+        String [] values = str.split(", ");
+
+        for(String value : values){
+            map.put(value.charAt(0), value.charAt(1));
+        }
+
+        return map;
+    }
 
 }

@@ -1,5 +1,4 @@
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.seomse.crypto.CharMap;
 import com.seomse.crypto.HashConfusionString;
@@ -15,7 +14,9 @@ import java.util.Set;
 public class CharMapJsonExample {
 
     public static void main(String[] args) throws NoSuchAlgorithmException {
-        Gson gson =  new GsonBuilder().setPrettyPrinting().create();
+//        Gson gson =  new GsonBuilder().setPrettyPrinting().create();
+
+        Gson gson = new Gson();
 
         CharMap charMap = new CharMap(CharMap.makeRandomMap());
 
@@ -43,9 +44,9 @@ public class CharMapJsonExample {
 
         }
         System.out.println(charMap.toString());
-        System.out.println(CharMap.viewMap(characterMap));
+        System.out.println(CharMap.outMap(characterMap));
 
-        System.out.println(charMap.toString().equals(CharMap.viewMap(characterMap)));
+        System.out.println(charMap.toString().equals(CharMap.outMap(characterMap)));
 
 
     }

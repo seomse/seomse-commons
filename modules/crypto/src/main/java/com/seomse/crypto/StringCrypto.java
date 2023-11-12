@@ -35,7 +35,11 @@ public class StringCrypto {
     };
 
 
-    private static final StringCrypto DEFAULT_INSTANCE = new StringCrypto(DEFAULT_KEY_CHAR_ARRAY);
+    public static final StringCrypto DEFAULT_INSTANCE = new StringCrypto(DEFAULT_KEY_CHAR_ARRAY);
+
+
+    public static final StringCrypto DEFAULT_256 = new StringCrypto(DEFAULT_KEY_CHAR_ARRAY, 32);
+
 
     /**
      * 암호화
@@ -91,6 +95,14 @@ public class StringCrypto {
      */
     public StringCrypto(char [] keyCharArray){
         this.keyCharArray = keyCharArray;
+        minLength = Math.min(keyCharArray.length, 3);
+        maxLength = Math.min(keyCharArray.length, 16);
+        init();
+    }
+
+    public StringCrypto(char [] keyCharArray, int keySize){
+        this.keyCharArray = keyCharArray;
+        this.keySize = keySize;
         minLength = Math.min(keyCharArray.length, 3);
         maxLength = Math.min(keyCharArray.length, 16);
         init();
