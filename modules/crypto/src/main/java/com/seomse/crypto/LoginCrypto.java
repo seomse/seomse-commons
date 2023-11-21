@@ -23,9 +23,9 @@ public class LoginCrypto {
 	 * @return string []  string[0] = id enc , string[1] = password enc
 	 */
 	public static String [] encryption(String id, String password, int keySize ,CharMap charMap){
-		
+
 		try{
-			//아이디를 이용하여 패스워드 키생성 
+			//아이디를 이용하여 패스워드 키생성
 			String encPasswordKey = HashConfusionString.get("MD5",id, keySize);
 
 			if(charMap != null){
@@ -36,10 +36,15 @@ public class LoginCrypto {
 			String encPassword = StringCrypto.enc(encPasswordKey, password, keySize);
 
 			//암호화된 패스워드를 이용하여 아이디 키생성
-			String idKey = HashConfusionString.get("MD5",encPassword);
+			String idKey = HashConfusionString.get("MD5", encPassword, keySize);
+
+			if(charMap != null){
+				idKey = charMap.change(idKey);
+			}
+
 			//아이디 암호화
 			String encId = StringCrypto.enc(idKey, id, keySize);
-			
+
 			return new String[] {encId, encPassword};
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -57,7 +62,7 @@ public class LoginCrypto {
 	 * @return  string []  string[0] = id  , string[1] = password
 	 */
 	public static  String [] decryption(String encryptionId, String encryptionPassword, int keySize, CharMap charMap){
-	
+
 		try{
 			//암호화된 패스워드를 이용해서 아이디 복호화키생성
 			String decIdKey = HashConfusionString.get("MD5",encryptionPassword, keySize);
@@ -69,7 +74,12 @@ public class LoginCrypto {
 			String id = StringCrypto.dec(decIdKey, encryptionId, keySize);
 
 			//패스워드 복호화 키생성
-			String decPasswordKey = HashConfusionString.get("MD5", id);
+			String decPasswordKey = HashConfusionString.get("MD5", id, keySize);
+
+			if(charMap != null){
+				decPasswordKey = charMap.change(decPasswordKey);
+			}
+
 			//패스워드 복호화
 			String password = StringCrypto.dec(decPasswordKey, encryptionPassword, keySize);
 
@@ -78,10 +88,9 @@ public class LoginCrypto {
 
 			throw new RuntimeException(e);
 		}
-		
-		
-	}
-	
 
-	
+
+	}
+
+
 }
