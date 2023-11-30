@@ -110,7 +110,7 @@ public class Database {
 			return "SELECT SYSTIMESTAMP FROM DUAL";
 		}else if(dbType.startsWith("mysql") || dbType.startsWith("maria") || dbType.startsWith("postgre")){
 			return "SELECT now()";
-		}else if(dbType.startsWith("mssql") || dbType.startsWith("ms-sql")){
+		}else if(dbType.startsWith("mssql") || dbType.startsWith("ms-sql") || dbType.startsWith("sqlserver") ){
 			return "SELECT GETDATE()";
 		}
 		throw new NotDbTypeException(dbType);
@@ -128,7 +128,7 @@ public class Database {
 			return "SYSDATE";
 		}else if(dbType.startsWith("mysql") || dbType.startsWith("maria") || dbType.startsWith("postgre")){
 			return "now()";
-		} else if(dbType.startsWith("mssql")  || dbType.startsWith("ms-sql")){
+		} else if(dbType.startsWith("mssql")  || dbType.startsWith("ms-sql") || dbType.startsWith("sqlserver") ){
 			return "GETDATE()";
 		}
 		
@@ -154,7 +154,7 @@ public class Database {
 					" WHERE table_schema='public'\n" +
 					"   AND table_type='BASE TABLE'";
 
-		}else if(dbType.startsWith("mssql") || dbType.startsWith("ms-sql")){
+		}else if(dbType.startsWith("mssql") || dbType.startsWith("ms-sql") || dbType.startsWith("sqlserver")){
 			return "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'";
 		}
 
@@ -366,7 +366,7 @@ public class Database {
 	 * @return connection keep sql
 	 */
 	public static String getConnectionKeepQuery(String dbType){
-		if(dbType.startsWith("maria") || dbType.startsWith("mysql") ||  dbType.startsWith("mssql") ){
+		if(dbType.startsWith("maria") || dbType.startsWith("mysql") ||  dbType.startsWith("mssql") || dbType.startsWith("ms-sql") || dbType.startsWith("sqlserver")){
 			return "SELECT 1";
 		}else{
 			return "SELECT 1 FROM DUAL";

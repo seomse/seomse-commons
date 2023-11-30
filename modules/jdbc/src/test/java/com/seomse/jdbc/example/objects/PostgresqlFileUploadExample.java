@@ -14,7 +14,7 @@ public class PostgresqlFileUploadExample {
         File file = new File("D:\\test.xlsx");
         AttachFile attachFile = new AttachFile();
         attachFile.fileName = file.getName();
-        attachFile.attachFile = Files.readAllBytes(file.toPath());
+        attachFile.bytes = Files.readAllBytes(file.toPath());
 
         JdbcObjects.insert(attachFile);
     }

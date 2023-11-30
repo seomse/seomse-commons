@@ -121,7 +121,7 @@ public class ConnectionFactory {
 			driver = (Driver)Class.forName("com.mysql.jdbc.Driver").newInstance();
 		}else if(databaseType.startsWith("MARIA")){
 			driver = (Driver)Class.forName("org.mariadb.jdbc.Driver").newInstance();
-		} else if(databaseType.startsWith("MSSQL") || databaseType.startsWith("MS-SQL")){
+		} else if(databaseType.startsWith("MSSQL") || databaseType.startsWith("MS-SQL") || databaseType.startsWith("SQLSERVER") ){
 			driver = (Driver)Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
 		}else if(databaseType.startsWith("POSTGRESQL")){
 			driver = (Driver)Class.forName("org.postgresql.Driver").newInstance();
