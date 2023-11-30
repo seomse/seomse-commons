@@ -772,7 +772,9 @@ public class JdbcNaming {
 	}
 
 
-
+	public static <T> int insertOrUpdate(T obj){
+		return insertOrUpdate(obj ,false);
+	}
 	/**
 	 * insert or update
 	 * @param obj T
@@ -902,6 +904,11 @@ public class JdbcNaming {
 		String insertSql = getInsertSql(objClass, fields, insertQueryValue);
 
 		return JdbcCommon.insert(conn, obj, fields, insertSql);
+	}
+
+
+	public static <T> int update(T obj ) {
+		return update(obj, false);
 	}
 
 	/**

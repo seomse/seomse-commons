@@ -768,6 +768,10 @@ public class JdbcObjects {
     }
 
 
+    public static <T> int insertOrUpdate(T obj){
+        return insertOrUpdate(obj, false);
+    }
+
     /**
      * 있으면 update, 없으면 insert
      * @param obj T
@@ -1004,7 +1008,9 @@ public class JdbcObjects {
 
         return sqlBuilder.toString();
     }
-
+    public static <T> int update(T obj ) {
+        return update(obj, false);
+    }
     /**
      * update
      * @param obj T
@@ -1342,7 +1348,6 @@ public class JdbcObjects {
 
         return importBuilder.toString() + sb;
     }
-
 
 
 
