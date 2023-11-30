@@ -623,6 +623,14 @@ public class JdbcQuery {
 		return resultValue;
 	}
 
+	public static byte [] getResultBytes(String sql){
+		try(Connection conn = ApplicationConnectionPool.getInstance().getCommitConnection()){
+			return getResultBytes(conn, sql);
+		}catch(SQLException e){
+			throw new SQLRuntimeException(e);
+		}
+	}
+
 	public static byte[] getResultBytes(Connection conn, String sql) throws SQLException {
 		byte[] resultValue = null;
 
@@ -649,7 +657,7 @@ public class JdbcQuery {
 		return resultValue;
 	}
 
-	public static byte[] getResulBytes(String sql, Map<Integer, PrepareStatementData> prepareStatementDataMap){
+	public static byte[] getResultBytes(String sql, Map<Integer, PrepareStatementData> prepareStatementDataMap){
 		try(Connection conn = ApplicationConnectionPool.getInstance().getCommitConnection()){
 			return getResultBytes(conn, sql, prepareStatementDataMap);
 		}catch(SQLException e){
