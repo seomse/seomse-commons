@@ -37,7 +37,7 @@ public class SequenceMakerFactory {
 			return new MariaSequenceMaker();
 		}else if(dbType.startsWith("postgre")){
 			return new PostgresqlSequenceMaker();
-		}else if(dbType.startsWith("mssql") || dbType.startsWith("ms_sql")){
+		}else if(dbType.startsWith("mssql") || dbType.startsWith("ms_sql") || dbType.startsWith("sqlserver")){
 			return new MssqlSequenceMaker();
 		} else{
 			log.error("Not supported SequenceMaker DB type.");

@@ -623,7 +623,69 @@ public class JdbcQuery {
 		return resultValue;
 	}
 
-	
+	public static byte[] getResultBytes(Connection conn, String sql) throws SQLException {
+		byte[] resultValue = null;
+
+		Statement stmt = null;
+		ResultSet result = null;
+		//noinspection CaughtExceptionImmediatelyRethrown
+		try{
+			stmt = conn.createStatement();
+			result = stmt.executeQuery(sql);
+			ResultSetMetaData metaData = result.getMetaData();
+			int count = metaData.getColumnCount(); //number of column
+			if(count > 0 ){
+				String columnName = metaData.getColumnLabel(1);
+				if(result.next()){
+					resultValue = result.getBytes(columnName);
+				}
+			}
+		}catch(SQLException e){
+			throw e;
+		}finally{
+			JdbcClose.statementResultSet(stmt, result);
+		}
+
+		return resultValue;
+	}
+
+	public static byte[] getResulBytes(String sql, Map<Integer, PrepareStatementData> prepareStatementDataMap){
+		try(Connection conn = ApplicationConnectionPool.getInstance().getCommitConnection()){
+			return getResultBytes(conn, sql, prepareStatementDataMap);
+		}catch(SQLException e){
+			throw new SQLRuntimeException(e);
+		}
+	}
+
+	public static byte[] getResultBytes(Connection conn, String sql, Map<Integer, PrepareStatementData> prepareStatementDataMap) throws SQLException {
+		byte[] resultValue = null;
+
+		Statement stmt = null;
+		ResultSet result = null;
+		//noinspection CaughtExceptionImmediatelyRethrown
+		try{
+			StmtResultSet stmtResultSet = JdbcCommon.makeStmtResultSet(conn, sql, prepareStatementDataMap, 0);
+			stmt = stmtResultSet.getStmt();
+			result = stmtResultSet.getResultSet();
+			ResultSetMetaData metaData = result.getMetaData();
+			int count = metaData.getColumnCount(); //number of column
+			if(count > 0 ){
+				String columnName = metaData.getColumnLabel(1);
+				if(result.next()){
+
+					resultValue = result.getBytes(columnName);
+				}
+			}
+		}catch(SQLException e){
+			throw e;
+		}finally{
+			JdbcClose.statementResultSet(stmt, result);
+		}
+
+		return resultValue;
+	}
+
+
 	/**
 	 * 단일 컬럼의 결과를 list로 얻기
  	 * @param sql String sql
