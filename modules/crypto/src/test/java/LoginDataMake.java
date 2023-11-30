@@ -1,3 +1,4 @@
+import com.seomse.crypto.CharMap;
 import com.seomse.crypto.LoginCrypto;
 
 /**
@@ -6,11 +7,13 @@ import com.seomse.crypto.LoginCrypto;
 public class LoginDataMake {
     public static void main(String[] args) {
 
-        String [] infos = LoginCrypto.encryption("id", "password");
+        CharMap charMap = new CharMap(CharMap.makeRandomMap());
+
+        String [] infos = LoginCrypto.encryption("id", "password", 32, charMap);
         System.out.println(infos[0]);
         System.out.println(infos[1]);
 
-        infos = LoginCrypto.decryption(infos[0], infos[1]);
+        infos = LoginCrypto.decryption(infos[0], infos[1], 32 , charMap);
 
         System.out.println(infos[0]);
         System.out.println(infos[1]);

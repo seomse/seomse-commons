@@ -19,6 +19,8 @@ package com.seomse.jdbc.connection;
 import com.seomse.commons.config.Config;
 import com.seomse.commons.exception.ReflectiveOperationRuntimeException;
 import com.seomse.commons.utils.ExceptionUtil;
+import com.seomse.crypto.CharMap;
+import com.seomse.crypto.CharMapManager;
 import com.seomse.crypto.LoginCrypto;
 import com.seomse.jdbc.Database;
 import com.seomse.jdbc.exception.SQLRuntimeException;
@@ -186,6 +188,13 @@ public class ApplicationConnectionPool {
         encryptFlag = encryptFlag.toUpperCase();
         if("Y".equals(encryptFlag)){
             String [] loginInfos = LoginCrypto.decryption(userId,password);
+            userId = loginInfos[0];
+            password = loginInfos[1];
+        } else if (encryptFlag.startsWith("SCM,")) {
+            String mapKey = encryptFlag.substring(4);
+            CharMapManager charMapManager = CharMapManager.getInstance();
+            CharMap charMap = charMapManager.getCharMap(mapKey);
+            String [] loginInfos = LoginCrypto.decryption(userId,password, 32, charMap);
             userId = loginInfos[0];
             password = loginInfos[1];
         }
