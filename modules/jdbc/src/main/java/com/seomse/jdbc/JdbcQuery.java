@@ -100,6 +100,10 @@ public class JdbcQuery {
 				String columnName = metaData.getColumnLabel(1); 		
 				if(result.next()){
 					Timestamp timeStamp = result.getTimestamp(columnName);
+					if(timeStamp == null){
+						return null;
+					}
+
 					resultTime = timeStamp.getTime();			
 				}
 			}
@@ -160,6 +164,10 @@ public class JdbcQuery {
 				String columnName = metaData.getColumnLabel(1);
 				if(result.next()){
 					Timestamp timeStamp = result.getTimestamp(columnName);
+					if(timeStamp == null){
+						return null;
+					}
+
 					resultTime = timeStamp.getTime();
 				}
 			}
