@@ -10,11 +10,11 @@ public class MssqlSequenceMaker implements SequenceMaker{
 
     @Override
     public String nextVal(String sequenceName) {
-        return JdbcQuery.getResultOne("NEXT VALUE FOR " + sequenceName);
+        return JdbcQuery.getResultOne("SELECT NEXT VALUE FOR " + sequenceName);
     }
 
     @Override
     public long nextLong(String sequenceName) {
-        return JdbcQuery.getResultLong("NEXT VALUE FOR " + sequenceName);
+        return JdbcQuery.getResultLong("SELECT NEXT VALUE FOR " + sequenceName);
     }
 }
