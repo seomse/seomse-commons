@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.seomse.commons'
-version '1.1.5'
+version '1.1.6'
 
 
 repositories {
@@ -20,10 +20,10 @@ dependencies {
     testImplementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.1.4'
     //oracle
     testImplementation group: 'com.oracle.database.jdbc', name: 'ojdbc8', version: '23.2.0.0'
-
     //postgresql db
     testImplementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
-
+    //tibero는 jar를 구해서 사용해야함.
+    testImplementation fileTree (dir: 'dependencies', include: ['/**/*.jar'])
 
     //connection pool
     implementation 'com.zaxxer:HikariCP:4.0.3'
