@@ -29,9 +29,10 @@ public class DataDeleteUseTime {
         this.timeColumn = timeColumn;
     }
 
-    public void delete(int day){
+    public long delete(int day){
         long time = System.currentTimeMillis() - ((long)day * Times.DAY_1);
         delete(time);
+        return time;
     }
 
     private final Set<String> errorTableSet = new HashSet<>();
