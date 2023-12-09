@@ -5,9 +5,9 @@
 
 
 # gradle
-implementation 'com.seomse.commons:jdbc:1.1.5'
+implementation 'com.seomse.commons:jdbc:1.1.6'
 - etc
-    - https://mvnrepository.com/artifact/com.seomse.commons/jdbc/1.1.5
+    - https://mvnrepository.com/artifact/com.seomse.commons/jdbc/1.1.6
 
 # 개요
 oracle, tibero, mysql, mariadb, postgresql, msssql 계열의 DB를 지원 하기 위해 개발 되었습니다.
