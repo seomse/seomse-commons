@@ -19,6 +19,7 @@ import com.seomse.commons.exception.ReflectiveOperationRuntimeException;
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.commons.utils.packages.classes.field.FieldUtil;
 import com.seomse.jdbc.Database;
+import com.seomse.jdbc.JdbcQuery;
 import com.seomse.jdbc.PrepareStatementData;
 import com.seomse.jdbc.annotation.Column;
 import com.seomse.jdbc.annotation.FlagBoolean;
@@ -806,16 +807,14 @@ public class JdbcObjects {
         int successCount ;
         try{
 
-            Object checkObj = getObj(conn, obj.getClass(), null, getCheckWhere(obj), null, null);
-            if(checkObj == null){
-                successCount =insert(conn, obj);
-            }else{
+            if(JdbcQuery.isRowData(conn, getRowCheckQuery(obj))){
                 successCount = update(conn, obj, isNullUpdate);
+            }else{
+                successCount =insert(conn, obj);
             }
+
         }catch(SQLException e){
             throw new SQLRuntimeException(e);
-        }catch(ReflectiveOperationException e){
-            throw new ReflectiveOperationRuntimeException(e);
         }
 
         return successCount;
@@ -885,6 +884,40 @@ public class JdbcObjects {
 
         return whereBuilder.substring(4);
     }
+
+    public static <T> String getRowCheckQuery(T obj){
+        Class<?> objClass = obj.getClass();
+        String tableName = TableSql.getTableName(objClass.getAnnotation(Table.class), objClass.getName());
+
+        Field[] fields = FieldUtil.getFieldArrayToParents(objClass);
+        int firstSeq = Integer.MAX_VALUE;
+        String firstPk = null;
+        for (Field field : fields) {
+            field.setAccessible(true);
+            PrimaryKey pk = field.getAnnotation(PrimaryKey.class);
+            Column column = field.getAnnotation(Column.class);
+
+            if (column != null) {
+
+                if (pk != null) {
+                    int seq = pk.seq();
+                    if (seq < firstSeq) {
+                        firstSeq = seq;
+                        firstPk = column.name();
+                    }
+                }
+            }
+        }
+        if(firstPk == null){
+            throw new PrimaryKeyNotSetException(obj.getClass().getName());
+        }
+        try {
+            return "select " + firstPk + "  from " + tableName + " where " + getCheckWhere(obj);
+        }catch (ReflectiveOperationException e){
+            throw new ReflectiveOperationRuntimeException(e);
+        }
+    }
+
 
     /**
      * upsert

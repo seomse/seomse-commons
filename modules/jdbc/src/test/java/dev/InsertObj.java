@@ -1,6 +1,7 @@
 package dev;
 
 import com.seomse.jdbc.annotation.Column;
+import com.seomse.jdbc.annotation.FlagBoolean;
 import com.seomse.jdbc.annotation.PrimaryKey;
 import com.seomse.jdbc.annotation.Table;
 /**
@@ -26,6 +27,7 @@ public class InsertObj {
     @Column(name = "link")
     String link;
 
+    @FlagBoolean
     @Column(name = "is_translated")
     Boolean isTranslated = true;
 
