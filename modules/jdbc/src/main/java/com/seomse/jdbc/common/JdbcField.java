@@ -15,12 +15,15 @@
  */
 package com.seomse.jdbc.common;
 
+import com.seomse.commons.exception.IORuntimeException;
 import com.seomse.jdbc.annotation.DateTime;
 import com.seomse.jdbc.annotation.FlagBoolean;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.sql.Clob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -43,6 +46,7 @@ public class JdbcField {
      * @throws IllegalAccessException IllegalAccessException
      * @throws SQLException SQLException
      */
+    @SuppressWarnings({"SizeReplaceableByIsEmpty", "RedundantCast"})
     public static void setFieldObject(ResultSet result, Field field, String columnName, Object resultObj ) throws IllegalArgumentException, IllegalAccessException, SQLException{
         field.setAccessible(true);
 
@@ -85,7 +89,28 @@ public class JdbcField {
             Object obj = result.getObject(columnName);
 
             if(classType == String.class){
-                field.set(resultObj, obj);
+                if(obj instanceof Clob){
+                    try {
+
+                        StringBuilder sb = new StringBuilder();
+                        BufferedReader reader = new BufferedReader(((Clob) obj).getCharacterStream());
+                        String dummy ;
+                        while ((dummy = reader.readLine()) != null) {
+                            sb.append("\n").append(dummy);
+                        }
+                        if(sb.length() > 0){
+                            field.set(resultObj, sb.substring(1));
+                        }
+                    }catch (IOException e){
+                        throw new IORuntimeException(e);
+                    }
+
+
+                }else{
+                    field.set(resultObj, obj);
+                }
+
+
             }else if(classType == Long.class || classType == Long.TYPE){
                 try{
                     if(result.wasNull()){
@@ -202,6 +227,7 @@ public class JdbcField {
                 if( value == null){
                     field.set(resultObj, null);
                 }else{
+                    //noinspection ConstantValue
                     if(value.getClass() == Long.class || value.getClass() == Long.TYPE){
                         field.set(resultObj, value);
                     }else{
