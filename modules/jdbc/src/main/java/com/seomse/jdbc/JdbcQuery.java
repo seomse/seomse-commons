@@ -553,13 +553,86 @@ public class JdbcQuery {
 	 * @param sql String sql
 	 * @return String
 	 */
-	public static String getResultOne(String sql){
-		try(Connection conn = ApplicationConnectionPool.getInstance().getCommitConnection()){
+	public static String getResultOne(String sql) {
+		try (Connection conn = ApplicationConnectionPool.getInstance().getCommitConnection()) {
 			return getResultOne(conn, sql);
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		}
+	}
+
+
+	public static boolean isRowData(String sql) {
+		try (Connection conn = ApplicationConnectionPool.getInstance().getCommitConnection()) {
+			return isRowData(conn, sql);
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		}
+	}
+
+
+	public static boolean isRowData(Connection conn, String sql) throws SQLException {
+		String resultValue = null;
+
+		Statement stmt = null;
+		ResultSet result = null;
+		//noinspection CaughtExceptionImmediatelyRethrown
+		try{
+			stmt = conn.createStatement();
+			result = stmt.executeQuery(sql);
+			ResultSetMetaData metaData = result.getMetaData();
+			int count = metaData.getColumnCount(); //number of column
+			if(count > 0 ){
+				if(result.next()){
+					return true;
+				}
+			}
+		}catch(SQLException e){
+			throw e;
+		}finally{
+			JdbcClose.statementResultSet(stmt, result);
+		}
+
+		return false;
+	}
+
+
+	public static boolean isRowData(String sql, Map<Integer, PrepareStatementData> prepareStatementDataMap){
+		try(Connection conn = ApplicationConnectionPool.getInstance().getCommitConnection()){
+			return isRowData(conn, sql, prepareStatementDataMap);
 		}catch(SQLException e){
 			throw new SQLRuntimeException(e);
 		}
 	}
+
+	public static boolean isRowData(Connection conn, String sql, Map<Integer, PrepareStatementData> prepareStatementDataMap) throws SQLException {
+		String resultValue = null;
+
+		Statement stmt = null;
+		ResultSet result = null;
+		//noinspection CaughtExceptionImmediatelyRethrown
+		try{
+			StmtResultSet stmtResultSet = JdbcCommon.makeStmtResultSet(conn, sql, prepareStatementDataMap, 0);
+			stmt = stmtResultSet.getStmt();
+			result = stmtResultSet.getResultSet();
+			ResultSetMetaData metaData = result.getMetaData();
+			int count = metaData.getColumnCount(); //number of column
+			if(count > 0 ){
+				String columnName = metaData.getColumnLabel(1);
+				if(result.next()){
+
+					return true;
+				}
+			}
+		}catch(SQLException e){
+			throw e;
+		}finally{
+			JdbcClose.statementResultSet(stmt, result);
+		}
+
+		return false;
+	}
+
 
 	/**
 	 * 단일 결과 얻기 String
@@ -602,6 +675,7 @@ public class JdbcQuery {
 			throw new SQLRuntimeException(e);
 		}
 	}
+
 
 	public static String getResultOne(Connection conn, String sql, Map<Integer, PrepareStatementData> prepareStatementDataMap) throws SQLException {
 		String resultValue = null;
@@ -1126,43 +1200,7 @@ public class JdbcQuery {
 		return count;
 	}
 
-	/**
-	 * row data가 있는지 확인
-	 * @param conn Connection
-	 * @param sql String sql row data check
-	 * @return boolean
-	 * @throws SQLException SQLException
-	 */
-	 public static boolean isRowData(Connection conn, String sql) throws SQLException {
-		String result =  getResultOne(conn, sql);
-		return result != null;
-	 }
 
-	public static boolean isRowData(Connection conn, String sql, Map<Integer, PrepareStatementData> prepareStatementDataMap) throws SQLException {
-		String result =  getResultOne(conn, sql, prepareStatementDataMap);
-		return result != null;
-	}
-
-	/**
-	 * row data가 있는지 확인
-	 * @param sql String sql row data check
-	 * @return boolean
-	 */
-	public static boolean isRowData(String sql, Map<Integer, PrepareStatementData> prepareStatementDataMap){
-		String result =  getResultOne(sql, prepareStatementDataMap);
-		return result != null;
-	}
-
-
-	/**
-	 * row data가 있는지 확인
-	 * @param sql String sql row data check
-	 * @return boolean
-	 */
-	public static boolean isRowData(String sql){
-		String result =  getResultOne(sql);
-		return result != null;
-	 }
 
 	/**
 	 * row data insert wait
