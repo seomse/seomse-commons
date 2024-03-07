@@ -21,6 +21,7 @@ import com.seomse.jdbc.JdbcQuery;
 import com.seomse.jdbc.naming.JdbcNaming;
 import com.seomse.system.server.Server;
 import com.seomse.system.server.dno.EngineRunDno;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,10 +33,9 @@ import java.util.List;
  * windows 계열용 엔진실행
  * @author macle
  */
+@Slf4j
 public class EngineRunWindows implements EngineRun{
 
-	private final static Logger logger = LoggerFactory.getLogger(EngineRunWindows.class);
-	
 	@Override
 	public String start(String engineId) {
 		
@@ -76,7 +76,7 @@ public class EngineRunWindows implements EngineRun{
 
 			return Messages.SUCCESS;
 		}catch(Exception e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			return  Messages.FAIL + "\n" + ExceptionUtil.getStackTrace(e);
 		}
 	}

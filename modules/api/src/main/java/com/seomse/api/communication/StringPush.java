@@ -17,8 +17,7 @@ package com.seomse.api.communication;
 
 import com.seomse.commons.handler.ExceptionHandler;
 import com.seomse.commons.utils.ExceptionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -29,8 +28,8 @@ import java.net.Socket;
  * 대용량 메시지 전송을 위해 개발함
  * @author macle
  */
+@Slf4j
 public class StringPush {
-	private static final Logger logger = LoggerFactory.getLogger(StringPush.class);
 
 	private final String hostAddress;
 	private final int port;
@@ -83,7 +82,7 @@ public class StringPush {
 				socket = new Socket(hostAddress, port);
 				send =  new OutputStreamWriter(socket.getOutputStream(), CommunicationDefault.CHAR_SET);
 			}catch(Exception e){
-				ExceptionUtil.exception(e,logger, exceptionHandler);
+				ExceptionUtil.exception(e, log, exceptionHandler);
 				return false;
 			}		
 		}
@@ -102,7 +101,7 @@ public class StringPush {
 				send.close();	
 			}
 		}catch(Exception e){
-			ExceptionUtil.exception(e,logger, exceptionHandler);
+			ExceptionUtil.exception(e, log, exceptionHandler);
 		}
 		send = null;
 		try{
@@ -111,7 +110,7 @@ public class StringPush {
 			
 			}
 		}catch(Exception e){
-			ExceptionUtil.exception(e,logger, exceptionHandler);
+			ExceptionUtil.exception(e, log, exceptionHandler);
 		}
 		socket = null;
 	}
@@ -128,7 +127,7 @@ public class StringPush {
 		
 			return true;
 		}catch(Exception e){
-			ExceptionUtil.exception(e,logger, exceptionHandler);
+			ExceptionUtil.exception(e, log, exceptionHandler);
 			return false;
 		}
 	}

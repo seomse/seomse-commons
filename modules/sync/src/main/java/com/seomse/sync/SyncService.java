@@ -19,6 +19,7 @@ package com.seomse.sync;
 import com.seomse.commons.config.Config;
 import com.seomse.commons.service.Service;
 import com.seomse.commons.utils.ExceptionUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,10 +27,9 @@ import org.slf4j.LoggerFactory;
  * 동기화 서비스
  * @author macle
  */
+@Slf4j
 public class SyncService extends Service {
 
-
-    private static final Logger logger = LoggerFactory.getLogger(SyncService.class);
 
     /**
      * 생성자
@@ -50,7 +50,7 @@ public class SyncService extends Service {
                 synchronizerManager.sync();
             }
         }catch(Exception e){
-            logger.error(ExceptionUtil.getStackTrace(e));
+            log.error(ExceptionUtil.getStackTrace(e));
         }
     }
 

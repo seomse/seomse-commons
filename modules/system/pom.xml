@@ -6,7 +6,7 @@
 
     <groupId>com.seomse.commons</groupId>
     <artifactId>system</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
 
     <name>seomse-system</name>
@@ -138,7 +138,7 @@
         <dependency>
             <groupId>com.seomse.commons</groupId>
             <artifactId>api</artifactId>
-            <version>1.0.8</version>
+            <version>1.0.9</version>
         </dependency>
 
         <dependency>
@@ -160,12 +160,11 @@
         </dependency>
 
         <dependency>
-            <groupId>org.moara.ftp</groupId>
-            <artifactId>moara-ftp</artifactId>
-            <version>0.1.0</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
         </dependency>
-
-
     </dependencies>
 
 </project>

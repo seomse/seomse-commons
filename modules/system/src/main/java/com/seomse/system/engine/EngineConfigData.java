@@ -21,8 +21,7 @@ import com.seomse.commons.config.ConfigInfo;
 import com.seomse.jdbc.PrepareStatements;
 import com.seomse.jdbc.objects.JdbcObjects;
 import com.seomse.sync.Synchronizer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Properties;
@@ -33,11 +32,11 @@ import java.util.Properties;
  *
  * @author macle
  */
+@Slf4j
 @Priority(seq = 0) //동기화 우선순위용
 public class EngineConfigData extends ConfigData implements Synchronizer {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(EngineConfigData.class);
 
     private final Properties properties = new Properties();
 
@@ -97,11 +96,11 @@ public class EngineConfigData extends ConfigData implements Synchronizer {
         }
 
         if(engineConfigList.size() == 0){
-            logger.debug("engine config update size: 0");
+            log.debug("engine config update size: 0");
             return;
         }
 
-        logger.debug("engine config update size: " + engineConfigList.size());
+        log.debug("engine config update size: " + engineConfigList.size());
 
         ConfigInfo[] infos = new ConfigInfo[engineConfigList.size()];
 

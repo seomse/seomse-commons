@@ -21,8 +21,7 @@ import com.seomse.jdbc.JdbcQuery;
 import com.seomse.jdbc.naming.JdbcNaming;
 import com.seomse.system.server.Server;
 import com.seomse.system.server.dno.EngineRunDno;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -34,9 +33,8 @@ import java.util.List;
  * unix계열용 엔진실행
  * @author macle
  */
+@Slf4j
 public class EngineRunUnix implements EngineRun{
-	
-	private final static Logger logger = LoggerFactory.getLogger(EngineRunUnix.class);
 
 	private boolean isMessageComplete = false;
 	
@@ -84,7 +82,7 @@ public class EngineRunUnix implements EngineRun{
 					}
 
 				}catch(Exception e){
-					logger.error(ExceptionUtil.getStackTrace(e));
+					log.error(ExceptionUtil.getStackTrace(e));
 				}
 
 				isMessageComplete = true;
@@ -110,7 +108,7 @@ public class EngineRunUnix implements EngineRun{
 			}
 			
 		}catch(Exception e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			return Messages.FAIL + "\n" + ExceptionUtil.getStackTrace(e);
 		}
 	}

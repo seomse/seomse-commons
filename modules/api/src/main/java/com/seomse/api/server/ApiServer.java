@@ -19,8 +19,7 @@ import com.seomse.api.ApiCommunication;
 import com.seomse.commons.callback.ObjCallback;
 import com.seomse.commons.handler.ExceptionHandler;
 import com.seomse.commons.utils.ExceptionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -33,9 +32,9 @@ import java.util.List;
  *
  * @author macle
  */
+@Slf4j
 public class ApiServer extends Thread {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ApiServer.class);
 
 	private ServerSocket serverSocket = null;
 	
@@ -85,7 +84,7 @@ public class ApiServer extends Thread {
 	public void run(){
 		//noinspection TryWithIdenticalCatches
 		try{
-			logger.debug("api server start");
+			log.debug("api server start");
 				
 			
 			if(serverSocket == null){
@@ -100,7 +99,7 @@ public class ApiServer extends Thread {
 			}
 			
 			
-			logger.debug("api server start port: " + port);
+			log.debug("api server start port: " + port);
 			
 			while(isRun){								
 				Socket communication_socket = serverSocket.accept();	
@@ -116,12 +115,12 @@ public class ApiServer extends Thread {
 				apiCommunication.start();		
 			}
 		}catch(java.net.BindException e){
-			ExceptionUtil.exception(e, logger, exceptionHandler);
+			ExceptionUtil.exception(e, log, exceptionHandler);
 		}catch(Exception e){
-			ExceptionUtil.exception(e, logger, exceptionHandler);
+			ExceptionUtil.exception(e, log, exceptionHandler);
 		}
 		
-		logger.debug("api server stop port: " + port);
+		log.debug("api server stop port: " + port);
 	}
 	
 	/**

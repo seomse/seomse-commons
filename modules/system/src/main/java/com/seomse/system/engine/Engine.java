@@ -29,14 +29,13 @@ import com.seomse.system.engine.console.EngineConsole;
 import com.seomse.system.engine.dno.EngineStartDno;
 import com.seomse.system.engine.dno.EngineTimeDno;
 import com.seomse.system.server.console.ServerConsole;
+import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.InetAddress;
@@ -48,10 +47,9 @@ import java.util.List;
  * engine
  * @author macle
  */
+@Slf4j
 public class Engine {
 
-	private static final Logger logger = LoggerFactory.getLogger(Engine.class);
-	
 	private static Engine instance = null;
 
 	/**
@@ -61,7 +59,7 @@ public class Engine {
 	 */
 	public static Engine newInstance(final String engineId){
 		if(instance != null){
-			logger.error("already server " + instance.engineId);
+			log.error("already server " + instance.engineId);
 			return instance;
 		}
 		
@@ -97,7 +95,7 @@ public class Engine {
 		EngineStartDno engineStartDno= JdbcNaming.getObj(EngineStartDno.class,"ENGINE_ID='" + engineId +"'");
 		if(engineStartDno == null){
 			
-			logger.error("engine not reg engine id: " + engineId);
+			log.error("engine not reg engine id: " + engineId);
 			System.exit(-1);
 			return ;
 		}
@@ -105,7 +103,7 @@ public class Engine {
 		String hostAddress = EngineConsole.getHostAddress(engineId);
 		if(hostAddress == null){
 			
-			logger.error("engine host address null engine id: " + engineId + ", server id: " + engineStartDno.getSERVER_ID());
+			log.error("engine host address null engine id: " + engineId + ", server id: " + engineStartDno.getSERVER_ID());
 			System.exit(-1);
 			return ;
 		}
@@ -172,7 +170,8 @@ public class Engine {
 								try{
 									EngineInitializer initializer = (EngineInitializer)cl.newInstance();
 									initializerList.add(initializer);
-								}catch(Exception e){logger.error(ExceptionUtil.getStackTrace(e));}
+								}catch(Exception e){
+									log.error(ExceptionUtil.getStackTrace(e));}
 							}
 						}
 
@@ -192,10 +191,11 @@ public class Engine {
 						for (int i=0 ; i < initializerArray.length ; i++) {
 							try{
 								initializerArray[i].init();
-							}catch(Exception e){logger.error(ExceptionUtil.getStackTrace(e));}
+							}catch(Exception e){
+								log.error(ExceptionUtil.getStackTrace(e));}
 						}
 					}catch(Exception e){
-						logger.error(ExceptionUtil.getStackTrace(e));
+						log.error(ExceptionUtil.getStackTrace(e));
 					}
 
 					startComplete();
@@ -204,7 +204,7 @@ public class Engine {
 			}.start();
 
 		}catch(Exception e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			System.exit(-1);
 		}
 		
@@ -222,7 +222,7 @@ public class Engine {
 		timeDno.setSTOP_DT( null);
 		JdbcNaming.update(timeDno, true);
 
-		logger.info("Engine start complete!");
+		log.info("Engine start complete!");
 	}
 
 	/**
@@ -263,12 +263,12 @@ public class Engine {
 	
 	public static void main(String [] args){
 		if(args == null){
-			logger.error("args is null, engine code in");
+			log.error("args is null, engine code in");
 			return ;
 		}
 		
 		if(args.length < 2){
-			logger.error("args is engine code, config path");
+			log.error("args is engine code, config path");
 			return;
 		}
 		if(args.length >= 3){

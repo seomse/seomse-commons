@@ -19,16 +19,14 @@ import com.seomse.api.ApiMessage;
 import com.seomse.api.Messages;
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.system.engine.Engine;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * engine stop
  * @author macle
  */
+@Slf4j
 public class EngineStopApi extends ApiMessage {
-	
-	private static final Logger logger = LoggerFactory.getLogger(EngineStopApi.class);
 	
 	@Override
 	public void receive(String message) {
@@ -39,7 +37,7 @@ public class EngineStopApi extends ApiMessage {
 			sendMessage(Messages.SUCCESS);
 			System.exit(0);
 		}catch(Exception e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			sendMessage(Messages.FAIL + ExceptionUtil.getStackTrace(e));
 		}
 	}

@@ -19,17 +19,15 @@ import com.seomse.api.ApiMessage;
 import com.seomse.api.Messages;
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.system.server.Server;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * server stop api
  * @author macle
  */
+@Slf4j
 public class ServerStopApi extends ApiMessage {
-	
-	private static final Logger logger = LoggerFactory.getLogger(ServerStopApi.class);
-	
+
 	@Override
 	public void receive(String message) {
 		try{
@@ -39,7 +37,7 @@ public class ServerStopApi extends ApiMessage {
 			sendMessage(Messages.SUCCESS);
 			System.exit(-1);
 		}catch(Exception e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			sendMessage(Messages.FAIL + ExceptionUtil.getStackTrace(e));
 		}
 	}

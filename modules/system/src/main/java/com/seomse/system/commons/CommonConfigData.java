@@ -21,8 +21,7 @@ import com.seomse.commons.config.ConfigInfo;
 import com.seomse.jdbc.PrepareStatements;
 import com.seomse.jdbc.objects.JdbcObjects;
 import com.seomse.sync.Synchronizer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Properties;
@@ -31,9 +30,9 @@ import java.util.Properties;
  * 공통 설정 database 와 memory 데이터 싱크용
  * @author macle
  */
+@Slf4j
 @Priority(seq = 10) //동기화 우선순위용
 public class CommonConfigData extends ConfigData implements Synchronizer {
-    private static final Logger logger = LoggerFactory.getLogger(CommonConfigData.class);
 
     private final Properties properties = new Properties();
 
@@ -83,11 +82,11 @@ public class CommonConfigData extends ConfigData implements Synchronizer {
             commonConfigList = JdbcObjects.getObjList(CommonConfig.class, "UPT_DT > ?" , PrepareStatements.newTimeMap(updateTime));
         }
         if(commonConfigList.size() == 0){
-            logger.debug("common config update size: 0") ;
+            log.debug("common config update size: 0") ;
             return;
         }
 
-        logger.debug("common config update size: " + commonConfigList.size());
+        log.debug("common config update size: " + commonConfigList.size());
 
         ConfigInfo[] infos = new ConfigInfo[commonConfigList.size()];
 

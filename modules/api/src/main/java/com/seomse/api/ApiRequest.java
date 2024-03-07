@@ -18,8 +18,7 @@ package com.seomse.api;
 
 import com.seomse.api.communication.SendToReceive;
 import com.seomse.commons.config.Config;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -28,9 +27,8 @@ import java.net.Socket;
  *  synchronized 와 되어있지 않음 동시 호출을 하지 않아야 함
  * @author macle
  */
+@Slf4j
 public class ApiRequest {
-
-	private static final Logger logger = LoggerFactory.getLogger(ApiRequest.class);
 
 	public static final String CONNECT_FAIL = "CONNECT_FAIL";
 
@@ -165,7 +163,7 @@ public class ApiRequest {
 			sendMessage = "";
 		}
 
-		logger.debug(ApiCommunication.getSendMessageLog(sendMessage, maxLogLength));
+		log.debug(ApiCommunication.getSendMessageLog(sendMessage, maxLogLength));
 
 		if(packageName == null){
 			sendToReceive.send(ApiCommunication.DEFAULT_PACKAGE +code +"," + sendMessage);
@@ -197,7 +195,7 @@ public class ApiRequest {
 
 					if (!isSendMessage) {
 						isWaitTimeOver = true;
-						logger.error("waitingTimeOut disconnect");
+						log.error("waitingTimeOut disconnect");
 						disConnect();
 					}
 
@@ -215,9 +213,9 @@ public class ApiRequest {
 
 		if(receiveMessage != null){
 			if(receiveMessage.length() > 100){
-				logger.debug("receiveMessage: " + receiveMessage.substring(0 , 100) + ".. +" + receiveMessage.length() + "characters.");
+				log.debug("receiveMessage: " + receiveMessage.substring(0 , 100) + ".. +" + receiveMessage.length() + "characters.");
 			} else {
-				logger.debug("receiveMessage: " + receiveMessage);
+				log.debug("receiveMessage: " + receiveMessage);
 			}
 
 		}

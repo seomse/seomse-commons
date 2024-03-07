@@ -20,8 +20,7 @@ import com.seomse.api.Messages;
 import com.seomse.api.communication.HostAddrPort;
 import com.seomse.api.communication.StringPush;
 import com.seomse.system.engine.console.EngineConsole;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -30,9 +29,8 @@ import java.net.Socket;
  * engine communication
  * @author macle
  */
+@Slf4j
 public class EngineCommunication {
-	
-	private static final Logger logger = LoggerFactory.getLogger(EngineCommunication.class);
 
 	private final String engineId;
 	private final HostAddrPort apiHostAddrPort;
@@ -91,7 +89,7 @@ public class EngineCommunication {
 		for(String message: messageArray){
 			String result = request.sendToReceiveMessage(packageName, message);
 			if(!result.startsWith(Messages.SUCCESS)){
-				logger.error(result);
+				log.error(result);
 				isResult = false;
 			}
 		}
