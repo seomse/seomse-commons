@@ -17,8 +17,7 @@ package com.seomse.commons.service;
 
 import com.seomse.commons.exception.OverlapException;
 import com.seomse.commons.utils.ExceptionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
@@ -28,9 +27,8 @@ import java.util.*;
  * 싱글턴
  * @author macle
  */
+@Slf4j
 public class ServiceManager {
-
-    private static final Logger logger = LoggerFactory.getLogger(ServiceManager.class);
 
     private static class Singleton {
         private static final ServiceManager instance = new ServiceManager();
@@ -99,7 +97,7 @@ public class ServiceManager {
             try {
                 service.killService();
             }catch(Exception e){
-                logger.error(ExceptionUtil.getStackTrace(e));
+                log.error(ExceptionUtil.getStackTrace(e));
             }
             return service;
         }
@@ -112,7 +110,7 @@ public class ServiceManager {
                 try{
                     service.killService();
                 }catch(Exception e){
-                    logger.error(ExceptionUtil.getStackTrace(e));
+                    log.error(ExceptionUtil.getStackTrace(e));
                 }
             }
         }

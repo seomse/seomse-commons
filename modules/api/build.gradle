@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-version 'unspecified'
+version '1.0.8'
 
 repositories {
     mavenCentral()
@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
 
-    implementation 'com.seomse.commons:commons:1.4.9'
+    implementation 'com.seomse.commons:commons:1.5.1'
 }
 
 test {

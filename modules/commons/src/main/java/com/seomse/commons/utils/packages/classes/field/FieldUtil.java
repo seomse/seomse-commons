@@ -18,8 +18,7 @@
 package com.seomse.commons.utils.packages.classes.field;
 
 import com.seomse.commons.utils.ExceptionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 
@@ -28,12 +27,9 @@ import java.lang.reflect.Field;
  * reflect field 유틸
  * @author macle
  */
+@Slf4j
 public class FieldUtil {
-	
-		
-	private static final Logger logger = LoggerFactory.getLogger(FieldUtil.class);
 
-	
 	/**
 	 * 상속한 모든부모의 필드까지 얻기 (상속에 상속에 상속 구조)
 	 * @param classes class
@@ -132,7 +128,7 @@ public class FieldUtil {
 					try {
 						copyField.set(copyObject, objectField.get(originalObject));
 					} catch (IllegalArgumentException | IllegalAccessException e) {
-						logger.error(ExceptionUtil.getStackTrace(e));
+						log.error(ExceptionUtil.getStackTrace(e));
 					}
 
 				}

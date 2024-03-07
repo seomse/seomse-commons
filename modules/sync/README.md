@@ -10,9 +10,9 @@
 - seomse-commons 를 활용한 자동 동기화 서비스, api 를 활용한 api를 제공 합니다.
  
 # gradle
-implementation 'com.seomse.commons:sync:1.0.4'
+implementation 'com.seomse.commons:sync:1.0.5'
 - etc
-  - https://mvnrepository.com/artifact/com.seomse.commons/sync/1.0.4
+  - https://mvnrepository.com/artifact/com.seomse.commons/sync/1.0.5
 
 # communication
 ### blog, homepage
@@ -27,8 +27,9 @@ implementation 'com.seomse.commons:sync:1.0.4'
 ### 슬랙 slack
 - https://seomse.slack.com/
 
+
 ### email
- - comseomse@gmail.com
+- iorunon@gmail.com
  
  
 # main developer

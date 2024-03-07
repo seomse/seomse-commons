@@ -18,8 +18,7 @@ package com.seomse.commons.utils;
 import com.seomse.commons.exception.IORuntimeException;
 import com.seomse.commons.utils.string.Check;
 import com.seomse.commons.validation.FileValidation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
@@ -37,9 +36,8 @@ import java.util.stream.Stream;
  * 파일처리 관련 유틸성 클래스
  * @author macle
  */
+@Slf4j
 public class FileUtil {
-
-	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
 
 	/**
@@ -455,7 +453,7 @@ public class FileUtil {
 			out.getFD().sync();
 		}catch(IOException e){
 			//io, nio 패키지를 같이쓰면 잘 써지고도 에러나는 경우가 있으므로 예외처리
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 		}
 	}
 
@@ -531,7 +529,7 @@ public class FileUtil {
 			return true;
 		} catch (Exception e) {
 			//io, nio 패키지를 같이쓰면 잘 되도 에러나는 경우가 있으므로 로그처리
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			return false;
 		}
 	}
@@ -591,7 +589,7 @@ public class FileUtil {
 		}catch(Exception e){
 			//io, nio 패키지를 같이쓰면 잘 되도 에러나는 경우가 있으므로 로그처리
 
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			return false;
 		}
 	}
@@ -808,7 +806,7 @@ public class FileUtil {
 			File [] files = file.listFiles();
 
 			if(files == null){
-				logger.error("file delete fail: " + file.getAbsolutePath());
+				log.error("file delete fail: " + file.getAbsolutePath());
 				return false;
 			}
 			boolean isResult = true;
@@ -817,14 +815,14 @@ public class FileUtil {
 				if(cFile.isDirectory()) {
 					boolean chkResult = delete(cFile);
 					if(!chkResult) {
-						logger.error("file delete fail: " + cFile.getAbsolutePath());
+						log.error("file delete fail: " + cFile.getAbsolutePath());
 
 						isResult= false;
 					}
 				}else {
 					boolean chkResult =cFile.delete();
 					if(!chkResult) {
-						logger.error("file delete fail: " + cFile.getAbsolutePath());
+						log.error("file delete fail: " + cFile.getAbsolutePath());
 
 						isResult= false;
 					}
@@ -833,7 +831,7 @@ public class FileUtil {
 
 			boolean chkResult = file.delete();
 			if(!chkResult) {
-				logger.error("file delete fail: " + file.getAbsolutePath());
+				log.error("file delete fail: " + file.getAbsolutePath());
 
 				isResult= false;
 			}
@@ -842,7 +840,7 @@ public class FileUtil {
 		}else {
 			boolean chkResult =  file.delete();
 			if(!chkResult) {
-				logger.error("file delete fail: " + file.getAbsolutePath());
+				log.error("file delete fail: " + file.getAbsolutePath());
 			}
 
 			return chkResult;

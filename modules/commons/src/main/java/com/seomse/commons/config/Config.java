@@ -20,11 +20,14 @@ import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
 import com.seomse.commons.handler.ExceptionHandler;
 import com.seomse.commons.utils.ExceptionUtil;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 /**
  * 설정
  * 여러 설정의 우선순위를 사용하여 설정을 얻을 수 있음
@@ -33,8 +36,8 @@ import java.util.*;
  * database에 저장된 설정정보등 설정정보에 대한 우선순위를 활용할때 유용함
  * @author macle
  */
+@Slf4j
 public class Config {
-	private final static Logger logger = LoggerFactory.getLogger(Config.class);
 
 
 	private static final Config instance = new Config();
@@ -100,7 +103,7 @@ public class Config {
 		try{
 			return Long.parseLong(resultValue);
 		}catch(Exception e){
-			ExceptionUtil.exception(e, logger, instance.exceptionHandler);
+			ExceptionUtil.exception(e, log, instance.exceptionHandler);
 		}
 
 		return defaultValue;
@@ -131,7 +134,7 @@ public class Config {
 		try{
 			return Integer.parseInt(resultValue);
 		}catch(Exception e){
-			ExceptionUtil.exception(e, logger, instance.exceptionHandler);
+			ExceptionUtil.exception(e, log, instance.exceptionHandler);
 		}
 
 		return defaultValue;
@@ -162,7 +165,7 @@ public class Config {
 		try{
 			return Double.parseDouble(resultValue);
 		}catch(Exception e){
-			ExceptionUtil.exception(e, logger, instance.exceptionHandler);
+			ExceptionUtil.exception(e, log, instance.exceptionHandler);
 		}
 
 		return defaultValue;
@@ -198,7 +201,7 @@ public class Config {
 		}else if(resultValue.toUpperCase().equals("N") || resultValue.toLowerCase().equals("false")){
 			return false;
 		}else{
-			logger.error("config value error (N,Y) or (true, false) -> " + resultValue);
+			log.error("config value error (N,Y) or (true, false) -> " + resultValue);
 			return defaultValue;
 		}
 	}
@@ -256,7 +259,7 @@ public class Config {
 
 		} catch (JoranException je) {
 			if(isErrorLog){
-				ExceptionUtil.exception(je, logger, instance.exceptionHandler);
+				ExceptionUtil.exception(je, log, instance.exceptionHandler);
 			}
 		}
 	}
@@ -285,7 +288,7 @@ public class Config {
         String logbackPath = ConfigSet.LOG_BACK_PATH;
         File logbackFile = new File(logbackPath);
 		if(logbackFile.isFile()){
-			logger.debug("logback path: " + logbackFile.getAbsolutePath());
+			log.debug("logback path: " + logbackFile.getAbsolutePath());
 			//기본경로에 로그백 설정파일이존재할경우 호출
 			setLogbackConfigPath(logbackPath, false);
 		}
@@ -301,11 +304,11 @@ public class Config {
 
         if(file.isFile()) {
 			try {
-				logger.debug("config path: " + file.getAbsolutePath());
+				log.debug("config path: " + file.getAbsolutePath());
 				fileConfigData = new XmlFileConfigData(file);
 				configDataList.add(fileConfigData);
 			} catch (Exception e) {
-				logger.error(ExceptionUtil.getStackTrace(e));
+				log.error(ExceptionUtil.getStackTrace(e));
 
 			}
 		}
@@ -486,7 +489,7 @@ public class Config {
 		}
 
 		for(ConfigInfo configInfo : changeInfos){
-			logger.trace("Config update key: " + configInfo.key + " value: " + configInfo.value);
+			log.trace("Config update key: " + configInfo.key + " value: " + configInfo.value);
 		}
 		ConfigObserver [] configObserverArray ;
 		synchronized (observerLock) {

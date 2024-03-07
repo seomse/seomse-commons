@@ -39,8 +39,9 @@ implementation 'com.seomse.commons:crypto:0.1.6'
 - https://seomse.slack.com/
   - 참여코드: runon
 
+
 ### email
- - comseomse@gmail.com
+- iorunon@gmail.com
  
  
 # main developer
