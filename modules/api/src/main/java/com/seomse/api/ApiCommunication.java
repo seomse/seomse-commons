@@ -30,9 +30,10 @@ import java.net.Socket;
  *
  * @author macle
  */
+
 public class ApiCommunication extends Thread{
 
-	private static final Logger logger = LoggerFactory.getLogger(ApiCommunication.class);
+	private static final Logger log = LoggerFactory.getLogger(ApiCommunication.class);
 	public static final char DEFAULT_PACKAGE = 'D';
 	public static final char CUSTOM_PACKAGE = 'C';
 
@@ -116,14 +117,14 @@ public class ApiCommunication extends Thread{
 				
 			}
 		}catch(Exception e) {
-			ExceptionUtil.exception(e, logger, exceptionHandler);
+			ExceptionUtil.exception(e, log, exceptionHandler);
 		}
 		try{
 			if(endCallback != null){
 				endCallback.callback(this);
 			}
 		}catch(Exception e){
-			ExceptionUtil.exception(e, logger, exceptionHandler);
+			ExceptionUtil.exception(e, log, exceptionHandler);
 		}
 		
 	}
@@ -135,9 +136,9 @@ public class ApiCommunication extends Thread{
 	private void readMessage(String message) {
 
 		if(message.length() > maxLogLength){
-			logger.debug("readMessage: " + message.substring(0 , maxLogLength) + ".. +" + message.length() + "characters.");
+			log.debug("readMessage: " + message.substring(0 , maxLogLength) + ".. +" + message.length() + "characters.");
 		} else {
-			logger.debug("readMessage: " + message);
+			log.debug("readMessage: " + message);
 		}
 
 
@@ -173,7 +174,7 @@ public class ApiCommunication extends Thread{
 			apiMessage.receive(message);
 		} catch (Exception e1) {
 			sendMessage(ExceptionUtil.getStackTrace(e1));
-			ExceptionUtil.exception(e1, logger, exceptionHandler);
+			ExceptionUtil.exception(e1, log, exceptionHandler);
 
 		}
 
@@ -191,11 +192,11 @@ public class ApiCommunication extends Thread{
 		}
 
 		if(!sendToReceive.isConnect()){
-			logger.error("message send Fail(Not Connected) : " + message);
+			log.error("message send Fail(Not Connected) : " + message);
 			return false;
 		}
 
-		logger.debug(getSendMessageLog(message, maxLogLength));
+		log.debug(getSendMessageLog(message, maxLogLength));
 		return sendToReceive.send(message);
 	}
 

@@ -18,17 +18,15 @@ package com.seomse.commons.service;
 
 import com.seomse.commons.callback.ObjCallback;
 import com.seomse.commons.utils.ExceptionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 동작 서비스 단위의 추상 쿨래스
  *
  * @author macle
  */
+@Slf4j
 public abstract class Service extends Thread {
-
-    private static final Logger logger = LoggerFactory.getLogger(Service.class);
 
 
     private String serviceId;
@@ -144,7 +142,7 @@ public abstract class Service extends Thread {
             try{
                 Thread.sleep(delayStartTime);
             }catch(Exception e){
-                logger.error(ExceptionUtil.getStackTrace(e));
+                log.error(ExceptionUtil.getStackTrace(e));
                 serviceStop();
                 return;
             }
@@ -159,7 +157,7 @@ public abstract class Service extends Thread {
             try{
                 work();
             }catch(Exception e){
-                logger.error(ExceptionUtil.getStackTrace(e));
+                log.error(ExceptionUtil.getStackTrace(e));
                 serviceStop();
                 return;
             }
@@ -179,7 +177,7 @@ public abstract class Service extends Thread {
                     }
                 }
             }catch(Exception e){
-                logger.error(ExceptionUtil.getStackTrace(e));
+                log.error(ExceptionUtil.getStackTrace(e));
                 serviceStop();
                 return;
             }

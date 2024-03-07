@@ -6,7 +6,7 @@
 
     <groupId>com.seomse.commons</groupId>
     <artifactId>api</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <packaging>jar</packaging>
 
     <name>api</name>
@@ -26,7 +26,13 @@
             <name>macle</name>
             <email>ysys86a@gmail.com</email>
             <id>macle86</id>
-            <organization>seomse</organization>
+            <url>https://github.com/macle86</url>
+            <organization>runon</organization>
+            <organizationUrl>https://runon.io</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
         </developer>
     </developers>
 
@@ -125,7 +131,7 @@
         <dependency>
             <groupId>com.seomse.commons</groupId>
             <artifactId>commons</artifactId>
-            <version>1.4.9</version>
+            <version>1.5.1</version>
         </dependency>
 
 

@@ -31,9 +31,9 @@ DB는 oracle 용으로 초기 개발되었고 maria db 까지 지원합니다
 https://docs.google.com/spreadsheets/d/1pdGiP8jEBiIJJs4pU9r71oRbNLpdad1SdFWu5ULs8N0/edit#gid=300093160
 
 # gradle
-implementation 'com.seomse.commons:system:1.0.1'
+implementation 'com.seomse.commons:system:1.0.2'
 - etc
-    - https://mvnrepository.com/artifact/com.seomse.commons/system/1.0.1
+    - https://mvnrepository.com/artifact/com.seomse.commons/system/1.0.2
 
 # communication
 ### blog, homepage
@@ -51,8 +51,7 @@ implementation 'com.seomse.commons:system:1.0.1'
 - https://seomse.slack.com/
 
 ### email
- - comseomse@gmail.com
- 
+- iorunon@gmail.com
  
 # dev
  - macle

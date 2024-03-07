@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.seomse.commons'
-version '1.0.1'
+version '1.0.2'
 
 repositories {
     mavenCentral()
@@ -12,9 +12,9 @@ repositories {
 dependencies {
 
     //seomse
-    implementation 'com.seomse.commons:api:1.0.7'
-    implementation 'com.seomse.commons:sync:1.0.4'
-    implementation 'com.seomse.commons:jdbc:1.0.6'
+    implementation 'com.seomse.commons:api:1.0.8'
+    implementation 'com.seomse.commons:sync:1.0.5'
+    implementation 'com.seomse.commons:jdbc:1.2.0'
 
     implementation group: 'org.moara.ftp', name: 'moara-ftp', version: '0.1.0'
 }

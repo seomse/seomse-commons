@@ -4,7 +4,7 @@ plugins {
 
 
 group 'com.seomse.commons'
-version '1.0.4'
+version '1.0.5'
 
 repositories {
     mavenCentral()
@@ -16,13 +16,13 @@ dependencies {
     //reflections
     implementation group: 'org.reflections', name: 'reflections', version: '0.9.10'
 
-    implementation 'com.seomse.commons:commons:1.5.0'
-    implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+    implementation 'com.seomse.commons:commons:1.5.1'
+    implementation group: 'com.google.guava', name: 'guava', version: '33.0.0-jre'
     //seomse
-    implementation 'com.seomse.commons:api:1.0.7'
+    implementation 'com.seomse.commons:api:1.0.8'
 
 
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
 }
 
 test {

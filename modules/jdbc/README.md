@@ -5,9 +5,9 @@
 
 
 # gradle
-implementation 'com.seomse.commons:jdbc:1.1.9'
+implementation 'com.seomse.commons:jdbc:1.2.0'
 - etc
-    - https://mvnrepository.com/artifact/com.seomse.commons/jdbc/1.1.9
+    - https://mvnrepository.com/artifact/com.seomse.commons/jdbc/1.2.0
 
 # 개요
 oracle, tibero, mysql, mariadb, postgresql, msssql 계열의 DB를 지원 하기 위해 개발 되었습니다.
@@ -114,8 +114,9 @@ public class StockItem {
  - https://open.kakao.com/o/g6vzOKqb
    - 참여코드 : runon
 
+
 ### email
- - ysys86a@gmail.com
+- iorunon@gmail.com
 
 
 # main developer

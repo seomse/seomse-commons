@@ -16,6 +16,10 @@
 package com.seomse.commons.utils.time;
 
 
+import com.seomse.commons.exception.ParseRuntimeException;
+import com.seomse.commons.utils.ExceptionUtil;
+import lombok.extern.slf4j.Slf4j;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
@@ -23,22 +27,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import com.seomse.commons.exception.ParseRuntimeException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.seomse.commons.utils.ExceptionUtil;
-
 /**
  * Date 관련 유틸성 메소드
  *
  * @author yh.heo
  */
+@Slf4j
 public class DateUtil {
 
-	private static final Logger logger = LoggerFactory.getLogger(DateUtil.class);
-
-
+	
 	public final static String DEFAULT_DATE_FORMATTER = "yyyyMMddHHmmss";
 	
 	/**
@@ -162,7 +159,7 @@ public class DateUtil {
 				date = null;
 			}
 		} catch (ParseException e) {
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 		}
 		return date != null;
 	}

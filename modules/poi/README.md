@@ -27,8 +27,9 @@ implementation 'com.seomse.commons:poi:0.1.2'
 ### 슬랙 slack
 - https://seomse.slack.com/
 
+
 ### email
- - comseomse@gmail.com
+- iorunon@gmail.com
  
 # main developer
  - macle

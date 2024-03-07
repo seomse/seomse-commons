@@ -220,7 +220,7 @@ public class HttpUrl {
 					message.setLength(message.length()-1);
 				}
 			}
-			else if(conn != null && conn.getResponseCode() == HttpsURLConnection.HTTP_FORBIDDEN && conn.getHeaderField("Server").startsWith("cloudflare")) {
+			else if(conn != null && conn.getResponseCode() == HttpsURLConnection.HTTP_FORBIDDEN &&  conn.getHeaderField("Server") != null && conn.getHeaderField("Server").startsWith("cloudflare")) {
 				if(Objects.equals(conn.getContentEncoding(), "gzip")) {
 					try {
 						br = new BufferedReader(new InputStreamReader(new GZIPInputStream(conn.getErrorStream()), charSet));
@@ -434,10 +434,12 @@ public class HttpUrl {
                 sc.init(null, trustAllCerts, new java.security.SecureRandom()); 
                 HttpsURLConnection 
                                 .setDefaultSSLSocketFactory(sc.getSocketFactory()); 
-        } catch (Exception e) { 
-                e.printStackTrace(); 
+        } catch (Exception e) {
+				log.error(ExceptionUtil.getStackTrace(e));
         } 
     }
 	private final static HostnameVerifier DO_NOT_VERIFY = (arg0, arg1) -> true;
+
+
 
 }
