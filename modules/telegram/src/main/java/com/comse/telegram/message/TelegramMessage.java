@@ -3,7 +3,7 @@ package com.comse.telegram.message;
 import com.comse.telegram.config.YmlConfig;
 import com.comse.telegram.type.FutureTradeType;
 import com.seomse.commons.utils.ExceptionUtil;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,15 +16,12 @@ import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import static org.slf4j.LoggerFactory.getLogger;
-
 /**
  * 정규화된 텔레그램 메세지 전송
  * @author ccsweets
  */
+@Slf4j
 public class TelegramMessage {
-
-    private static final Logger logger = getLogger(TelegramMessage.class);
 
     private static String token = "";
     private static String chatId = "";
@@ -69,7 +66,7 @@ public class TelegramMessage {
             }
 
         } catch(Exception e) {
-            logger.error(ExceptionUtil.getStackTrace(e));
+            log.error(ExceptionUtil.getStackTrace(e));
         } finally {
             if(in != null) try { in.close(); } catch(Exception e) { e.printStackTrace(); }
         }

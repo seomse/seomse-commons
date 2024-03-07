@@ -15,16 +15,14 @@
  */
 package com.seomse.api.server;
 
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.seomse.api.ApiRequest;
 import com.seomse.commons.handler.ExceptionHandler;
 import com.seomse.commons.utils.ExceptionUtil;
+import lombok.extern.slf4j.Slf4j;
+
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 /**
  * api 요청용 서버
  * 클라이언트가 서버의 api를 이용하는것이 아닌
@@ -34,8 +32,8 @@ import com.seomse.commons.utils.ExceptionUtil;
  *
  * @author macle
  */
+@Slf4j
 public class ApiRequestServer extends Thread{
-	private static final Logger logger = LoggerFactory.getLogger(ApiRequestServer.class);
 
 	private ServerSocket serverSocket = null;
 	
@@ -75,7 +73,7 @@ public class ApiRequestServer extends Thread{
 	public void run(){
 		//noinspection TryWithIdenticalCatches
 		try{
-			logger.debug("request server start");
+			log.debug("request server start");
 				
 			
 			if(serverSocket == null){
@@ -90,7 +88,7 @@ public class ApiRequestServer extends Thread{
 			}
 			
 			
-			logger.debug("request server start port: " + port);
+			log.debug("request server start port: " + port);
 			
 			while(isRun){								
 				Socket socket = serverSocket.accept();	
@@ -98,12 +96,12 @@ public class ApiRequestServer extends Thread{
 				connectHandler.connect(apiRequest);
 			}
 		}catch(java.net.BindException e){
-			ExceptionUtil.exception(e, logger, exceptionHandler);
+			ExceptionUtil.exception(e, log, exceptionHandler);
 		}catch(Exception e){
-			ExceptionUtil.exception(e, logger, exceptionHandler);
+			ExceptionUtil.exception(e, log, exceptionHandler);
 		}
 		
-		logger.debug("request server stop port: " + port);
+		log.debug("request server stop port: " + port);
 	}
 	
 	

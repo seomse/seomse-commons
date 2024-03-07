@@ -20,8 +20,7 @@ import com.seomse.api.communication.SendToReceive;
 import com.seomse.commons.callback.ObjCallback;
 import com.seomse.commons.handler.ExceptionHandler;
 import com.seomse.commons.utils.ExceptionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -30,10 +29,9 @@ import java.net.Socket;
  *
  * @author macle
  */
-
+@Slf4j
 public class ApiCommunication extends Thread{
 
-	private static final Logger log = LoggerFactory.getLogger(ApiCommunication.class);
 	public static final char DEFAULT_PACKAGE = 'D';
 	public static final char CUSTOM_PACKAGE = 'C';
 

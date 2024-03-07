@@ -15,26 +15,23 @@
  */
 package com.seomse.api.server;
 
+import com.seomse.commons.handler.ExceptionHandler;
+import com.seomse.commons.utils.ExceptionUtil;
+import lombok.extern.slf4j.Slf4j;
+
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.seomse.commons.handler.ExceptionHandler;
-import com.seomse.commons.utils.ExceptionUtil;
 /**
  * 메시지 전달 통신 서버.
  * 메시지를 정해진 크기 만큼 받고
  * 메시지 종료 여부를 전달 받을 떄 활용
- *
  * 대량 메시지를 전달 받기 위해 개발됨
  * @author macle
  */
+@Slf4j
 public class ReceiveServer extends Thread{
-	private static final Logger logger = LoggerFactory.getLogger(ReceiveServer.class);
-	
+
 	private ServerSocket serverSocket = null;
 	private boolean isService = true;
 	
@@ -113,12 +110,12 @@ public class ReceiveServer extends Thread{
 					receiveCommunication.setExceptionHandler(exceptionHandler);
 					receiveCommunication.start();
 				}catch(Exception e){
-					ExceptionUtil.exception(e, logger, exceptionHandler);
+					ExceptionUtil.exception(e, log, exceptionHandler);
 				}
 			}
 			
 		}catch(Exception e){
-			ExceptionUtil.exception(e, logger, exceptionHandler);
+			ExceptionUtil.exception(e, log, exceptionHandler);
 		}
 		
 		isEnd = true;

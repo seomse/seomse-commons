@@ -12,14 +12,13 @@ import com.seomse.jdbc.naming.JdbcNaming;
 import com.seomse.system.server.console.ServerConsole;
 import com.seomse.system.server.dno.ServerDno;
 import com.seomse.system.server.dno.ServerTimeDno;
+import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.InetAddress;
@@ -31,9 +30,8 @@ import java.util.List;
  * server
  * @author macle
  */
+@Slf4j
 public class Server {
-
-	private static final Logger logger = LoggerFactory.getLogger(Server.class);
 
 	private static Server instance = null;
 
@@ -45,7 +43,7 @@ public class Server {
 	 */
 	public static Server newInstance(String serverId){
 		if(instance != null){
-			logger.error("already server " + instance.serverId);
+			log.error("already server " + instance.serverId);
 			return instance;
 		}
 		
@@ -88,7 +86,7 @@ public class Server {
 
 		if(serverDno == null){
 			
-			logger.error("server not reg server id " +  serverId);
+			log.error("server not reg server id " +  serverId);
 			System.exit(-1);
 			return ;
 		}
@@ -115,7 +113,7 @@ public class Server {
 
 			
 		}catch(Exception e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			System.exit(-1);
 			return ;
 		}
@@ -149,7 +147,8 @@ public class Server {
 
 								ServerInitializer initializer = (ServerInitializer)cl.newInstance();
 								initializerList.add(initializer);
-							}catch(Exception e){logger.error(ExceptionUtil.getStackTrace(e));}
+							}catch(Exception e){
+								log.error(ExceptionUtil.getStackTrace(e));}
 						}
 					}
 
@@ -168,12 +167,13 @@ public class Server {
                     for (int i=0 ; i < initializerArray.length ; i++) {
 						try{
 							initializerArray[i].init();
-						}catch(Exception e){logger.error(ExceptionUtil.getStackTrace(e));}
+						}catch(Exception e){
+							log.error(ExceptionUtil.getStackTrace(e));}
 					}
 					
 					
 				}catch(Exception e){
-					logger.error(ExceptionUtil.getStackTrace(e));
+					log.error(ExceptionUtil.getStackTrace(e));
 				}
 				
 				startComplete();
@@ -194,7 +194,7 @@ public class Server {
 		timeDno.setSTART_DT(dataTime);
 		timeDno.setSTOP_DT(null);
 		JdbcNaming.update(timeDno, true);
-		logger.info("Server start complete!");
+		log.info("Server start complete!");
 	}
 
 	/**
@@ -270,12 +270,12 @@ public class Server {
 	
 	public static void main(String [] args){
 		if(args == null){
-			logger.error("args is null, server code in");
+			log.error("args is null, server code in");
 			return ;
 		}
 
 		if(args.length < 2){
-			logger.error("args is server code, config path");
+			log.error("args is server code, config path");
 			return;
 		}
 

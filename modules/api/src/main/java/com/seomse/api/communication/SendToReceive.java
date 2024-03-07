@@ -18,8 +18,7 @@ package com.seomse.api.communication;
 import com.seomse.commons.config.Config;
 import com.seomse.commons.handler.ExceptionHandler;
 import com.seomse.commons.utils.ExceptionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,10 +32,10 @@ import java.nio.charset.StandardCharsets;
  * 메시지를 전송하고 받는 기본형
  * @author macle
  */
+@Slf4j
 public class SendToReceive {
 	
-	private static final Logger logger = LoggerFactory.getLogger(SendToReceive.class);
-	
+
 	private static final char START =(char)0;
 	private static final char END =(char)1;
 
@@ -142,8 +141,8 @@ public class SendToReceive {
 				return true;
 			}catch(Exception e){
 				if(isConnectErrorLog){
-					logger.error(host +", " + port + " : connect fail");
-					ExceptionUtil.exception(e, logger, exceptionHandler);
+					log.error(host +", " + port + " : connect fail");
+					ExceptionUtil.exception(e, log, exceptionHandler);
 				}
 				disConnect();
 				return false;

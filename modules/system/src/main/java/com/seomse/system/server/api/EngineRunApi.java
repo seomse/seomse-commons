@@ -21,17 +21,15 @@ import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.system.server.Server;
 import com.seomse.system.server.run.EngineRun;
 import com.seomse.system.server.run.EngineRunFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * engine run api
  * @author macle
  */
+@Slf4j
 public class EngineRunApi extends ApiMessage {
 
-	private static final Logger logger = LoggerFactory.getLogger(EngineRunApi.class);
-	
 	@Override
 	public void receive(String message) {
 
@@ -40,7 +38,7 @@ public class EngineRunApi extends ApiMessage {
 			EngineRun engineRun = EngineRunFactory.newEngineRun(server.getOsType());
 			sendMessage(engineRun.start(message));
 		}catch(Exception e){
-			logger.error(ExceptionUtil.getStackTrace(e));
+			log.error(ExceptionUtil.getStackTrace(e));
 			sendMessage(Messages.FAIL + ExceptionUtil.getStackTrace(e));
 		}
 

@@ -15,20 +15,19 @@
  */
 package com.seomse.system.server.ftp;
 
+import com.seomse.system.ftp.server.FtpServer;
 import com.seomse.system.server.Server;
 import com.seomse.system.server.ServerInitializer;
-import org.moara.ftp.server.FtpServer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * ftp 기능
  * @author macle
  */
+@Slf4j
 public class FtpServerInitializer implements ServerInitializer {
 
-    private static final Logger logger = LoggerFactory.getLogger(FtpServerInitializer.class);
-
+    
     @Override
     public void init() {
         Server server = Server.getInstance();
@@ -51,7 +50,7 @@ public class FtpServerInitializer implements ServerInitializer {
             ftpServer.setBufferArrSize(bufferSize);
 
             if(!ftpServer.newServerSocket()){
-                logger.error("ftp server start fail: " +  server.getServerId());
+                log.error("ftp server start fail: " +  server.getServerId());
                 System.exit(-1);
                 return ;
             }
