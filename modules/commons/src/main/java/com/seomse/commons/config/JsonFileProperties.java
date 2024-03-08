@@ -25,6 +25,7 @@ public class JsonFileProperties {
 
     private final Object lock = new Object();
 
+
     public JsonFileProperties(String filePath) {
 
         this.filePath = filePath;
@@ -47,7 +48,6 @@ public class JsonFileProperties {
 
     public void set(String key, JsonObject value){
         synchronized (lock) {
-
             jsonObject.add(key, value);
             String jsonValue = gson.toJson(jsonObject);
             FileUtil.fileOutput(jsonValue, filePath, false);
@@ -64,9 +64,7 @@ public class JsonFileProperties {
 
     public void set(String key, String value){
         synchronized (lock) {
-
             jsonObject.addProperty(key, value);
-
             String jsonValue = gson.toJson(jsonObject);
             FileUtil.fileOutput(jsonValue, filePath, false);
         }
@@ -94,7 +92,6 @@ public class JsonFileProperties {
     public void set(String key, long value){
         synchronized (lock) {
             jsonObject.addProperty(key, value);
-
             String jsonValue = gson.toJson(jsonObject);
             FileUtil.fileOutput(jsonValue, filePath, false);
         }
@@ -103,7 +100,6 @@ public class JsonFileProperties {
     public void set(String key, int value){
         synchronized (lock) {
             jsonObject.addProperty(key, value);
-
             String jsonValue = gson.toJson(jsonObject);
             FileUtil.fileOutput(jsonValue, filePath, false);
         }
@@ -112,7 +108,6 @@ public class JsonFileProperties {
     public void set(String key, double value){
         synchronized (lock) {
             jsonObject.addProperty(key, value);
-
             String jsonValue = gson.toJson(jsonObject);
             FileUtil.fileOutput(jsonValue, filePath, false);
         }
@@ -198,6 +193,10 @@ public class JsonFileProperties {
 
     public void remove(String key){
         synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return;
+            }
+
             jsonObject.remove(key);
             String jsonValue = gson.toJson(jsonObject);
             FileUtil.fileOutput(jsonValue, filePath, false);
@@ -207,19 +206,67 @@ public class JsonFileProperties {
 
     public String getString(String key){
         synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return null;
+            }
+
            return jsonObject.get(key).getAsString();
+        }
+    }
+
+    public String getString(String key, String defaultValue){
+        synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return defaultValue;
+            }
+
+            return jsonObject.get(key).getAsString();
         }
     }
 
     public BigDecimal getBigDecimal(String key){
         synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return null;
+            }
+
+            return jsonObject.get(key).getAsBigDecimal();
+        }
+    }
+
+    public BigDecimal getBigDecimal(String key, BigDecimal defaultValue){
+        synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return defaultValue;
+            }
+
             return jsonObject.get(key).getAsBigDecimal();
         }
     }
 
     public Number getNumber(String key){
         synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return null;
+            }
+
             return jsonObject.get(key).getAsNumber();
+        }
+    }
+
+    public Number getNumber(String key, Number defaultValue){
+        synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return defaultValue;
+            }
+
+            return jsonObject.get(key).getAsNumber();
+        }
+    }
+
+    public int getInt(String key){
+        synchronized (lock) {
+            return jsonObject.get(key).getAsInt();
         }
     }
 
@@ -229,6 +276,11 @@ public class JsonFileProperties {
                 return defaultValue;
             }
             return jsonObject.get(key).getAsInt();
+        }
+    }
+    public long getLong(String key){
+        synchronized (lock) {
+            return jsonObject.get(key).getAsLong();
         }
     }
 
@@ -242,6 +294,13 @@ public class JsonFileProperties {
         }
     }
 
+    public double getDouble(String key){
+        synchronized (lock) {
+            return jsonObject.get(key).getAsDouble();
+        }
+    }
+
+
     public double getDouble(String key, double  defaultValue){
         synchronized (lock) {
             if(!jsonObject.has(key)){
@@ -253,12 +312,20 @@ public class JsonFileProperties {
 
     public JsonObject getJsonObject(String key){
         synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return null;
+            }
+
             return jsonObject.get(key).getAsJsonObject();
         }
     }
 
     public JsonArray getJsonArray(String key){
         synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return null;
+            }
+
             return jsonObject.get(key).getAsJsonArray();
         }
     }
@@ -266,6 +333,10 @@ public class JsonFileProperties {
 
     public String [] getStrings(String key){
         synchronized (lock) {
+
+            if(!jsonObject.has(key)){
+                return null;
+            }
 
             JsonArray jsonArray = jsonObject.get(key).getAsJsonArray();
             String [] array = new String[jsonArray.size()];
@@ -281,6 +352,10 @@ public class JsonFileProperties {
 
     public int [] getInts(String key){
         synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return null;
+            }
+
             JsonArray jsonArray = jsonObject.get(key).getAsJsonArray();
 
             int [] array = new int[jsonArray.size()];
@@ -291,9 +366,13 @@ public class JsonFileProperties {
             return array;
         }
     }
-//
+
     public long [] getLongs(String key){
         synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return null;
+            }
+
             JsonArray jsonArray = jsonObject.get(key).getAsJsonArray();
 
             long [] array = new long[jsonArray.size()];
@@ -307,6 +386,10 @@ public class JsonFileProperties {
 
     public double [] getDoubles(String key){
         synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return null;
+            }
+
             JsonArray jsonArray = jsonObject.get(key).getAsJsonArray();
 
             double [] array = new double[jsonArray.size()];
@@ -320,6 +403,10 @@ public class JsonFileProperties {
 
     public Number [] getNumbers(String key){
         synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return null;
+            }
+
             JsonArray jsonArray = jsonObject.get(key).getAsJsonArray();
 
             Number [] array = new Number[jsonArray.size()];
@@ -334,6 +421,10 @@ public class JsonFileProperties {
 
     public BigDecimal [] getBigDecimals(String key){
         synchronized (lock) {
+            if(!jsonObject.has(key)){
+                return null;
+            }
+
             JsonArray jsonArray = jsonObject.get(key).getAsJsonArray();
 
             BigDecimal [] array = new BigDecimal[jsonArray.size()];
@@ -348,6 +439,12 @@ public class JsonFileProperties {
     public String getJsonValue(){
         synchronized (lock) {
             return gson.toJson(jsonObject);
+        }
+    }
+
+    public boolean has(String key){
+        synchronized (lock) {
+            return jsonObject.has(key);
         }
     }
 
