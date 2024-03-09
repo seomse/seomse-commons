@@ -14,7 +14,7 @@ implementation 'com.seomse.commons:sync:1.0.5'
 - etc
   - https://mvnrepository.com/artifact/com.seomse.commons/sync/1.0.5
 
-## communication
+# communication
 ### blog, homepage
 - [github.com/runonio](https://github.com/runonio)
 - [runon.io](https://runon.io)

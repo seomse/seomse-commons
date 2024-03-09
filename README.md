@@ -6,7 +6,7 @@ modules 디렉토리 안에 모듈별로 설명되어 있습니다.(각 모듈�
 ## 개발환경
 - open jdk 1.8
 
-## communication
+# communication
 ### blog, homepage
 - [github.com/runonio](https://github.com/runonio)
 - [runon.io](https://runon.io)

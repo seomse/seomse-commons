@@ -18,7 +18,7 @@ implementation 'com.seomse.commons:api:1.0.9'
 - etc 
     - https://mvnrepository.com/artifact/com.seomse.commons/api/1.0.9
 
-## communication
+# communication
 ### blog, homepage
 - [github.com/runonio](https://github.com/runonio)
 - [runon.io](https://runon.io)

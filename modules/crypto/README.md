@@ -25,7 +25,7 @@ implementation 'com.seomse.commons:crypto:0.1.6'
 - etc
   - https://mvnrepository.com/artifact/com.seomse.commons/crypto/0.1.6
 
-## communication
+# communication
 ### blog, homepage
 - [github.com/runonio](https://github.com/runonio)
 - [runon.io](https://runon.io)
