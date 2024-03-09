@@ -31,22 +31,19 @@ implementation 'com.seomse.commons:commons:1.5.3'
 
 # post
 - [java 파일 라인수 얻기, 특정라인 빨리 읽기 (빠른 라인처리)](https://macle.dev/posts/java_file_fast_read_line/)
-# communication
+
+## communication
 ### blog, homepage
-- [www.seomse.com](https://www.seomse.com/)
+- [github.com/runonio](https://github.com/runonio)
 - [runon.io](https://runon.io)
 - [github.com/seomse](https://github.com/seomse)
-- [github.com/runonio](https://github.com/runonio)
-
-### 카카오톡 오픈톡
- - https://open.kakao.com/o/g6vzOKqb
-    - 참여코드: runon 
+- [www.seomse.com](https://www.seomse.com/)
 
 
 ### email
- - iorunon@gmail.com
- 
- 
-# main developer
- - macle
-    -  [github.com/macle86](https://github.com/macle86)
+- iorunon@gmail.com
+
+## main developer
+- macle
+    - github(source code): [github.com/macle86](https://github.com/macle86)
+    - email: ysys86a@gmail.com

@@ -34,25 +34,19 @@ https://docs.google.com/spreadsheets/d/1pdGiP8jEBiIJJs4pU9r71oRbNLpdad1SdFWu5ULs
 implementation 'com.seomse.commons:system:1.0.3'
 - etc
     - https://mvnrepository.com/artifact/com.seomse.commons/system/1.0.3
-  
-# communication
+
+## communication
 ### blog, homepage
-- [www.seomse.com](https://www.seomse.com/)
+- [github.com/runonio](https://github.com/runonio)
+- [runon.io](https://runon.io)
 - [github.com/seomse](https://github.com/seomse)
-- [seomse.tistory.com](https://seomse.tistory.com/)
-- [seomse.github.io](https://seomse.github.io/)
-- seomse.com
+- [www.seomse.com](https://www.seomse.com/)
 
-### 카카오톡 오픈톡
- - https://open.kakao.com/o/g6vzOKqb
-   - 참여코드 : runon
-
-### 슬랙 slack
-- https://seomse.slack.com/
 
 ### email
 - iorunon@gmail.com
- 
-# dev
- - macle
-    -  [github.com/macle86](https://github.com/macle86)
+
+## main developer
+- macle
+    - github(source code): [github.com/macle86](https://github.com/macle86)
+    - email: ysys86a@gmail.com
