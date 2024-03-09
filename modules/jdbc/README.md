@@ -101,7 +101,7 @@ public class StockItem {
 - 위와 같은 유틸성 method 지원
 
 
-## communication
+# communication
 ### blog, homepage
 - [github.com/runonio](https://github.com/runonio)
 - [runon.io](https://runon.io)
