@@ -6,6 +6,7 @@ import com.seomse.commons.config.ConfigSet;
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.commons.utils.NetworkUtil;
 import com.seomse.commons.utils.PriorityUtil;
+import com.seomse.commons.utils.packages.classes.ClassSearch;
 import com.seomse.jdbc.Database;
 import com.seomse.jdbc.JdbcQuery;
 import com.seomse.jdbc.naming.JdbcNaming;
@@ -13,12 +14,6 @@ import com.seomse.system.server.console.ServerConsole;
 import com.seomse.system.server.dno.ServerDno;
 import com.seomse.system.server.dno.ServerTimeDno;
 import lombok.extern.slf4j.Slf4j;
-import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
 
 import java.io.File;
 import java.net.InetAddress;
@@ -127,32 +122,28 @@ public class Server {
 					String initializerPackage = getConfig("server.initializer.package");
 
 					if(initializerPackage == null){
-						initializerPackage = Config.getConfig("default.package", "com.seomse");
+						initializerPackage = Config.getConfig("default.package", "com.seomse,io.runon");
 					}
 					String [] initPackages = initializerPackage.split(",");
 
+					ClassSearch search = new ClassSearch();
+					search.setInPackages(initPackages);
+					Class<?> [] inClasses = {ServerInitializer.class};
+					search.setInClasses(inClasses);
+
+					List<Class<?>> classes = search.search();
+
 					List<ServerInitializer> initializerList = new ArrayList<>();
 
-					for(String initPackage : initPackages) {
-						//0.9.10
-						Reflections ref = new Reflections(new ConfigurationBuilder()
-								.setScanners(new SubTypesScanner(false), new ResourcesScanner())
-								.setUrls(ClasspathHelper.forPackage(initPackage))
-								.filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix(initPackage))));
+					for (Class<?> cl : classes) {
+						try{
 
-//						Reflections ref = new Reflections(initPackage);
-
-						for (Class<?> cl : ref.getSubTypesOf(ServerInitializer.class)) {
-							try{
-
-								ServerInitializer initializer = (ServerInitializer)cl.newInstance();
-								initializerList.add(initializer);
-							}catch(Exception e){
-								log.error(ExceptionUtil.getStackTrace(e));}
-						}
+							ServerInitializer initializer = (ServerInitializer)cl.newInstance();
+							initializerList.add(initializer);
+						}catch(Exception e){
+							log.error(ExceptionUtil.getStackTrace(e));}
 					}
 
-					
 					if(initializerList.size() == 0){
 						startComplete();
 						return;

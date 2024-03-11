@@ -18,14 +18,9 @@ package com.seomse.crawling.ha;
 import com.seomse.commons.config.Config;
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.commons.utils.PriorityUtil;
+import com.seomse.commons.utils.packages.classes.ClassSearch;
 import com.seomse.crawling.CrawlingManager;
 import lombok.extern.slf4j.Slf4j;
-import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,24 +56,25 @@ public class CrawlingActive {
 
 
         String [] initPackages = packagesValue.split(",");
+
+        ClassSearch search = new ClassSearch();
+        search.setInPackages(initPackages);
+        Class<?> [] inClasses = {CrawlingActiveInitializer.class};
+        search.setInClasses(inClasses);
+
+        List<Class<?>> classes = search.search();
+
         List<CrawlingActiveInitializer> initializerList = new ArrayList<>();
-        for(String initPackage : initPackages) {
-//            Reflections ref = new Reflections(initPackage);
 
-            Reflections ref = new Reflections(new ConfigurationBuilder()
-                    .setScanners(new SubTypesScanner(false), new ResourcesScanner())
-                    .setUrls(ClasspathHelper.forPackage(initPackage))
-                    .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix(initPackage))));
-
-            for (Class<?> cl : ref.getSubTypesOf(CrawlingActiveInitializer.class)) {
-                try {
-                    CrawlingActiveInitializer initializer = (CrawlingActiveInitializer) cl.newInstance();
-                    initializerList.add(initializer);
-                } catch (Exception e) {
-                    log.error(ExceptionUtil.getStackTrace(e));
-                }
+        for (Class<?> cl : classes) {
+            try {
+                CrawlingActiveInitializer initializer = (CrawlingActiveInitializer) cl.newInstance();
+                initializerList.add(initializer);
+            } catch (Exception e) {
+                log.error(ExceptionUtil.getStackTrace(e));
             }
         }
+
         if(initializerList.size() == 0){
             log.debug("crawling active start");
             return;

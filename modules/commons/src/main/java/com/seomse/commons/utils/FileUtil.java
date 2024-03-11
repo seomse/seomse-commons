@@ -347,8 +347,11 @@ public class FileUtil {
 	 */
 	@SuppressWarnings("unused")
 	public static List<File> getFileList(String path, String fileExtension){
+		return getFileList(new File(path), fileExtension);
+	}
+
+	public static List<File> getFileList(File file, String fileExtension){
 		List<File> fileList = new ArrayList<>();
-		File file = new File(path);
 		addFiles(fileList, file);
 
 		List<File> resultFileList = new ArrayList<>();

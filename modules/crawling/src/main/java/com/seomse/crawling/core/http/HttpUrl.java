@@ -26,12 +26,8 @@ import org.json.JSONObject;
 
 import javax.net.ssl.*;
 import java.io.*;
-import java.net.ConnectException;
-import java.net.HttpURLConnection;
-import java.net.SocketTimeoutException;
-import java.net.URL;
-import java.util.Iterator;
-import java.util.Objects;
+import java.net.*;
+import java.util.*;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -124,7 +120,7 @@ public class HttpUrl {
 	 * @return String script
 	 */
 	public static String getScript(String url, JSONObject optionData, boolean isErrorLog) {
-		return getMessage(url, optionData, isErrorLog).message;
+		return getMessage(url, optionData, isErrorLog).getMessage();
 	}
 
 	public static HttpMessage getMessage(String url, JSONObject optionData){
@@ -160,7 +156,7 @@ public class HttpUrl {
 				}
 			}
 			HttpMessage httpMessage = new HttpMessage();
-			httpMessage.headerFields = conn.getHeaderFields();
+			httpMessage.setHeaderFields( conn.getHeaderFields());
 
 			String charSet = "UTF-8";
 
@@ -173,7 +169,11 @@ public class HttpUrl {
 					}
 				}
 			}
-			httpMessage.message = getScript(conn, charSet);
+			httpMessage.setResponseCode(conn.getResponseCode());
+			httpMessage.setMessage(getScript(conn, charSet));
+			try{
+				conn.disconnect();
+			}catch (Exception ignore){}
 
 			return httpMessage;
 		}catch(SocketTimeoutException e){
@@ -219,8 +219,7 @@ public class HttpUrl {
 					//마지막 엔터제거
 					message.setLength(message.length()-1);
 				}
-			}
-			else if(conn != null && conn.getResponseCode() == HttpsURLConnection.HTTP_FORBIDDEN &&  conn.getHeaderField("Server") != null && conn.getHeaderField("Server").startsWith("cloudflare")) {
+			} else if(conn != null && conn.getResponseCode() == HttpsURLConnection.HTTP_FORBIDDEN &&  conn.getHeaderField("Server") != null && conn.getHeaderField("Server").startsWith("cloudflare")) {
 				if(Objects.equals(conn.getContentEncoding(), "gzip")) {
 					try {
 						br = new BufferedReader(new InputStreamReader(new GZIPInputStream(conn.getErrorStream()), charSet));
@@ -242,8 +241,35 @@ public class HttpUrl {
 					//마지막 엔터제거
 					message.setLength(message.length()-1);
 				}
+			}else if( conn != null){
+
+				try {
+					br = new BufferedReader(new InputStreamReader(conn.getInputStream(), charSet));
+					for (;;) {
+						String line = br.readLine();
+						if (line == null) break;
+						message.append(line).append('\n');
+					}
+				}catch (Exception ignore){
+				}
+
+				if(message.length() == 0){
+					br = new BufferedReader(new InputStreamReader(conn.getErrorStream(), charSet));
+					for (;;) {
+						String line = br.readLine();
+						if (line == null) break;
+						message.append(line).append('\n');
+					}
+				}
+
+				if(message.length()>0){
+					//마지막 엔터제거
+					message.setLength(message.length()-1);
+				}
+
 			}
-		} finally{
+		}
+		finally{
 			try{
 				if(br != null) {
 					br.close();
@@ -407,8 +433,13 @@ public class HttpUrl {
 
         return conn;
 	}
-	
+
+
+	private static boolean isTrustAllHosts = false;
     private static void trustAllHosts() {
+		if(isTrustAllHosts){
+			return;
+		}
         // Create a trust manager that does not validate certificate chains 
         TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() { 
                 public java.security.cert.X509Certificate[] getAcceptedIssuers() { 
@@ -436,7 +467,8 @@ public class HttpUrl {
                                 .setDefaultSSLSocketFactory(sc.getSocketFactory()); 
         } catch (Exception e) {
 				log.error(ExceptionUtil.getStackTrace(e));
-        } 
+        }
+		isTrustAllHosts = true;
     }
 	private final static HostnameVerifier DO_NOT_VERIFY = (arg0, arg1) -> true;
 

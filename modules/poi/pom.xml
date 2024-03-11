@@ -23,10 +23,16 @@
 
     <developers>
         <developer>
-            <name>macle86</name>
+            <name>macle</name>
             <email>ysys86a@gmail.com</email>
             <id>macle86</id>
-            <organization>seomse</organization>
+            <url>https://github.com/macle86</url>
+            <organization>runon</organization>
+            <organizationUrl>https://runon.io</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
         </developer>
     </developers>
 

@@ -6,7 +6,7 @@
 
     <groupId>com.seomse.commons</groupId>
     <artifactId>crawling</artifactId>
-    <version>0.9.4</version>
+    <version>0.9.6</version>
     <packaging>jar</packaging>
 
     <name>seomse-crawling</name>
@@ -143,18 +143,16 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <!--suppress MavenPackageUpdate -->
-            <version>0.9.10</version>
+            <groupId>com.seomse.commons</groupId>
+            <artifactId>commons</artifactId>
+            <version>1.5.6</version>
         </dependency>
 
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>33.0.0-jre</version>
+            <groupId>com.seomse.commons</groupId>
+            <artifactId>system</artifactId>
+            <version>1.0.4</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -169,36 +167,11 @@
         </dependency>
 
         <dependency>
-            <groupId>com.seomse.commons</groupId>
-            <artifactId>commons</artifactId>
-            <version>1.5.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.seomse.commons</groupId>
-            <artifactId>system</artifactId>
-            <version>1.0.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.seomse.commons</groupId>
-            <artifactId>api</artifactId>
-            <version>1.0.8</version>
-        </dependency>
-        <dependency>
-            <groupId>com.seomse.commons</groupId>
-            <artifactId>sync</artifactId>
-            <version>1.0.5</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
-
-
 
 
     </dependencies>

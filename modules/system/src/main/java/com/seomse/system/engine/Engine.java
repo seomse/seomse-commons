@@ -21,6 +21,7 @@ import com.seomse.commons.config.ConfigSet;
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.commons.utils.NetworkUtil;
 import com.seomse.commons.utils.PriorityUtil;
+import com.seomse.commons.utils.packages.classes.ClassSearch;
 import com.seomse.jdbc.Database;
 import com.seomse.jdbc.naming.JdbcNaming;
 import com.seomse.sync.SynchronizerManager;
@@ -30,12 +31,6 @@ import com.seomse.system.engine.dno.EngineStartDno;
 import com.seomse.system.engine.dno.EngineTimeDno;
 import com.seomse.system.server.console.ServerConsole;
 import lombok.extern.slf4j.Slf4j;
-import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
 
 import java.io.File;
 import java.net.InetAddress;
@@ -156,25 +151,22 @@ public class Engine {
 
 						String [] initPackages = initializerPackage.split(",");
 
+						ClassSearch search = new ClassSearch();
+						search.setInPackages(initPackages);
+						Class<?> [] inClasses = {EngineInitializer.class};
+						search.setInClasses(inClasses);
+
+						List<Class<?>> classes = search.search();
+
 						List<EngineInitializer> initializerList = new ArrayList<>();
-						for(String initPackage : initPackages) {
-							//0.9.10
-							Reflections ref = new Reflections(new ConfigurationBuilder()
-									.setScanners(new SubTypesScanner(false), new ResourcesScanner())
-									.setUrls(ClasspathHelper.forPackage(initPackage))
-									.filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix(initPackage))));
 
-//							Reflections ref = new Reflections(initPackage);
-
-							for (Class<?> cl : ref.getSubTypesOf(EngineInitializer.class)) {
-								try{
-									EngineInitializer initializer = (EngineInitializer)cl.newInstance();
-									initializerList.add(initializer);
-								}catch(Exception e){
-									log.error(ExceptionUtil.getStackTrace(e));}
-							}
+						for (Class<?> cl : classes) {
+							try{
+								EngineInitializer initializer = (EngineInitializer)cl.newInstance();
+								initializerList.add(initializer);
+							}catch(Exception e){
+								log.error(ExceptionUtil.getStackTrace(e));}
 						}
-
 
 
 						if(initializerList.size() == 0){
