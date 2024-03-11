@@ -6,7 +6,7 @@
 
     <groupId>com.seomse.commons</groupId>
     <artifactId>commons</artifactId>
-    <version>1.5.3</version>
+    <version>1.5.6</version>
     <packaging>jar</packaging>
 
     <name>commons</name>
