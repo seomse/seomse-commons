@@ -85,7 +85,6 @@ public class HttpApi {
 
     public HttpApiResponse getResponse(String urlAddr, String method, Map<String, String> requestProperty, String outStreamParam, Charset charset){
 
-        HttpApiResponse response = new HttpApiResponse();
         try {
             URL url = new URL(defaultAddress+urlAddr);
             HttpURLConnection conn;
@@ -147,9 +146,7 @@ public class HttpApi {
         }catch (IOException e){
             throw new IORuntimeException(e);
         }
-
     }
-
 
     public static String getMessage(HttpURLConnection conn, Charset charset){
         StringBuilder message = new StringBuilder();
