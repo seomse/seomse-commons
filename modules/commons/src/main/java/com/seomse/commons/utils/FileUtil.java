@@ -48,10 +48,15 @@ public class FileUtil {
 	 */
 	@SuppressWarnings({"unused", "WeakerAccess"})
 	public static String getFileContents(File file, String charSet){
+		Charset charset= Charset.forName(charSet);
+		return getFileContents(file, charset);
+	}
+
+	public static String getFileContents(File file, Charset charset){
 
 		StringBuilder sb = new StringBuilder();
 
-		try(BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), charSet))){
+		try(BufferedReader br = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), charset))){
 			String line;
 
 			while ((line = br.readLine()) != null) {

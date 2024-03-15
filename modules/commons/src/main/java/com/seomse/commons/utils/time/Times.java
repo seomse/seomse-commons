@@ -15,9 +15,14 @@
  */
 package com.seomse.commons.utils.time;
 
+import com.seomse.commons.exception.ParseRuntimeException;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.TimeZone;
 
 /**
  * 트레이딩에서의 기준 시간정보
@@ -209,5 +214,18 @@ public class Times {
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(intent, zoneId);
         return Integer.toString(zonedDateTime.getYear());
     }
+
+
+
+    public static long getTime(String format, String timeText, ZoneId zoneId){
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        dateFormat.setTimeZone(TimeZone.getTimeZone(zoneId));
+        try {
+            return dateFormat.parse(timeText).getTime();
+        } catch (ParseException e) {
+            throw new ParseRuntimeException(e);
+        }
+    }
+
 
 }
