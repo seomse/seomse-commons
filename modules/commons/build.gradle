@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.seomse.commons'
-version '1.5.8'
+version '1.5.9'
 
 repositories {
     mavenCentral()
