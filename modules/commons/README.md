@@ -25,12 +25,12 @@
 - 아직은 규모가 크지 않아서 공통에 작업하고 있는 부분들은 내부 규모가 커지면 개별 artifact 로 분리될 수 있습니다.
 - 너무 많은 부분이 공통이 모이는 문제는 많이 경계 하고 있습니다.. 아무래도 데이터 처리 관련 일을 많이 하다 보니 관련 부분에 대한 공통이 많이질 것 같네요.. 
 # gradle
-implementation 'com.seomse.commons:commons:1.5.9'
+implementation 'com.seomse.commons:commons:1.6.0'
 - etc 
-    - https://mvnrepository.com/artifact/com.seomse.commons/commons/1.5.9
+    - https://mvnrepository.com/artifact/com.seomse.commons/commons/1.6.0
   
 # post
-- [java 파일 라인수 얻기, 특정라인 빨리 읽기 (빠른 라인처리)](https://macle.dev/posts/java_file_fast_read_line/)
+- [java 파일 라인수 얻기, 특정라인 빨리 읽기 (빠른 라인처리)](https://www.seomse.com/posts/java_file_fast_read_line/)
 
 # communication
 ### blog, homepage
@@ -42,6 +42,10 @@ implementation 'com.seomse.commons:commons:1.5.9'
 
 ### email
 - iorunon@gmail.com
+- 
+### cafe
+- [cafe.naver.com/radvisor](https://cafe.naver.com/radvisor)
+
 
 ## main developer
 - macle
