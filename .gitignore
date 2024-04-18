@@ -4,7 +4,7 @@
 *.ipr
 *.iws
 build-idea/
-/out/
+out/
 /classes/
 
 # eclipse files
@@ -30,3 +30,7 @@ build/
 # random old stuff that we should look at the necessity of...
 /tmp/
 eclipse-build
+
+# data
+/data/
+chromedriver.exe
