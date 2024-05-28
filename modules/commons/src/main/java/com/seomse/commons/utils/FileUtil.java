@@ -40,6 +40,14 @@ import java.util.stream.Stream;
 public class FileUtil {
 
 
+
+
+	@SuppressWarnings({"unused", "WeakerAccess"})
+	public static String getFileContents(String filePath, String charSet){
+		Charset charset= Charset.forName(charSet);
+		return getFileContents(new File(filePath), charset);
+	}
+
 	/**
 	 * 파일 내용을 줄바꿈 단위로 가져온다
 	 * @param file File target text file
@@ -50,6 +58,10 @@ public class FileUtil {
 	public static String getFileContents(File file, String charSet){
 		Charset charset= Charset.forName(charSet);
 		return getFileContents(file, charset);
+	}
+
+	public static String getFileContents(String filePath,  Charset charset){
+		return getFileContents(new File(filePath), charset);
 	}
 
 	public static String getFileContents(File file, Charset charset){
