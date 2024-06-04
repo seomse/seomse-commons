@@ -216,7 +216,6 @@ public class Times {
     }
 
 
-
     public static long getTime(String format, String timeText, ZoneId zoneId){
         SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         dateFormat.setTimeZone(TimeZone.getTimeZone(zoneId));
@@ -227,5 +226,18 @@ public class Times {
         }
     }
 
+    
+    
+    public static long getTimeHm(String hhmm){
+        hhmm = hhmm.trim();
+
+        String hh = hhmm.substring(0,2);
+        String mm = hhmm.substring(2);
+
+        long time = Long.parseLong(hh) * Times.HOUR_1;
+        time += Long.parseLong(mm)*Times.MINUTE_1;
+
+        return time ;
+    }
 
 }
