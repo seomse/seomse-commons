@@ -21,8 +21,6 @@ public class JsonFilePropertiesManager {
 
     public JsonFileProperties getByName(String name){
         String path = ConfigSet.CONFIG_DIR_PATH + "/" + name;
-
-
         return getByPath(path);
     }
 
