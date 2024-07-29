@@ -14,6 +14,9 @@ public class HttpApis {
 
     public static final HttpApi POST_JSON_APT = makeDefaultPostJson();
 
+    public static final HttpApi POST_APT = makeDefaultPost();
+
+
 
     public static HttpApi makeDefaultGet(){
         HttpApi httpApi = new HttpApi();
@@ -73,4 +76,7 @@ public class HttpApis {
         return POST_JSON_APT.getResponse(url, requestProperty, outStreamJson).getMessage();
     }
 
+    public static HttpApiResponse post(String url, Map<String, String> requestProperty, String outStreamJson) {
+        return POST_APT.getResponse(url, requestProperty, outStreamJson);
+    }
 }
