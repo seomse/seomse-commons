@@ -1,16 +1,14 @@
 package com.seomse.commons.exception;
 
-import java.net.ConnectException;
 /**
- * ConnectException
  * @author macle
  */
-public class ConnectRuntimeException extends SocketRuntimeException{
+public class ConfigException extends RuntimeException{
 
     /**
      * 생성자
      */
-    public ConnectRuntimeException(){
+    public ConfigException(){
         super();
     }
 
@@ -18,7 +16,7 @@ public class ConnectRuntimeException extends SocketRuntimeException{
      * 생성자
      * @param e 예외
      */
-    public ConnectRuntimeException(ConnectException e){
+    public ConfigException(Exception e){
         super(e);
     }
 
@@ -26,7 +24,7 @@ public class ConnectRuntimeException extends SocketRuntimeException{
      * 생성자
      * @param message exception meesage
      */
-    public ConnectRuntimeException(String message){
+    public ConfigException(String message){
         super(message);
     }
 }

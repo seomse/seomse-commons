@@ -75,7 +75,6 @@ public class ApplicationConnectionPool {
     private long connectionTimeOut = 30000L;
     private long validationTimeOut = 5000L;
 
-
     private boolean isConnectionWait = false;
 
     private long connectionWaitTryTime = 10000L;
@@ -91,7 +90,6 @@ public class ApplicationConnectionPool {
     private String userId;
     private String password;
     private String databaseTypeOrFullPackage;
-
 
 
     /**
@@ -122,8 +120,6 @@ public class ApplicationConnectionPool {
             return ;
         }
 
-
-
         final String connectionPoolCountKey = "application.jdbc.connection.pool.count";
         String connectionPoolCountValue =  Config.getConfig(connectionPoolCountKey);
         if(!isConfig(connectionPoolCountValue, connectionPoolCountKey)){
@@ -145,13 +141,10 @@ public class ApplicationConnectionPool {
         if(!isNumber){
 
             log.error("application.jdbc.connection.pool.count is not number");
-
-
             return ;
         }
 
         connectionPoolCount = Integer.parseInt(connectionPoolCountValue, 10);
-
 
         final String urlKey = "application.jdbc.url";
         url =  Config.getConfig(urlKey);
@@ -161,7 +154,7 @@ public class ApplicationConnectionPool {
 
 
         final String encryptFlagKey = "application.jdbc.login.encrypt";
-        String encryptFlag =  Config.getConfig(encryptFlagKey);
+        String encryptFlag =  Config.getConfig(encryptFlagKey, "N");
         if(!isConfig(encryptFlag, encryptFlagKey)){
             return ;
         }
@@ -199,10 +192,8 @@ public class ApplicationConnectionPool {
             password = loginInfos[1];
         }
 
-
         isConnectionWait = Config.getBoolean("application.jdbc.connection.wait.flag", false);
         connectionWaitTryTime = Config.getLong("application.jdbc.connection.wait.try.time", 10000L);
-
 
         isAutoCommit = Config.getBoolean("application.jdbc.connection.auto.commit.flag" , true);
 
@@ -213,9 +204,7 @@ public class ApplicationConnectionPool {
             setDataSource();
         }catch(Exception e ){
             //섬세 설정을 사용하지않을경우 에러를 처리하지않기위한 초기 변수
-
             log.error(ExceptionUtil.getStackTrace(e));
-
         }
     }
 
