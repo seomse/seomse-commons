@@ -15,6 +15,7 @@
  */
 package com.seomse.jdbc.objects;
 
+import com.seomse.commons.callback.GenericCallBack;
 import com.seomse.commons.exception.ReflectiveOperationRuntimeException;
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.commons.utils.packages.classes.field.FieldUtil;
@@ -290,8 +291,13 @@ public class JdbcObjects {
      */
     public static <T> List<T> getObjList(Connection conn, Class<T> objClass , String sql, String whereValue, String orderByValue, int size, Map<Integer, PrepareStatementData> prepareStatementDataMap) throws IllegalAccessException, SQLException, InstantiationException {
 
-        List<T> resultList = new ArrayList<>();
+        final List<T> resultList = new ArrayList<>();
+        GenericCallBack<T> callBack = resultList::add;
+        callbackObj(conn, objClass, sql, whereValue, orderByValue, size, prepareStatementDataMap, callBack);
+        return resultList;
+    }
 
+    public static <T> void callbackObj(Connection conn, Class<T> objClass , String sql, String whereValue, String orderByValue, int size, Map<Integer, PrepareStatementData> prepareStatementDataMap, GenericCallBack callback) throws IllegalAccessException, SQLException, InstantiationException {
 
         Table table = objClass.getAnnotation(Table.class);
         Map<String, Field> columnFieldMap = makeColumnFieldMap(objClass);
@@ -322,16 +328,14 @@ public class JdbcObjects {
 
                     setFieldsValue(result, columnFieldMap, resultObj);
 
-                    resultList.add(resultObj);
+                    callback.callback(resultObj);
                 }
             }else{
                 int checkCount = 0;
                 while(result.next()){
                     T resultObj = objClass.newInstance();
-
                     setFieldsValue(result, columnFieldMap, resultObj);
-
-                    resultList.add(resultObj);
+                    callback.callback(resultObj);
                     checkCount ++ ;
                     if(checkCount >= size)
                         break;
@@ -342,10 +346,9 @@ public class JdbcObjects {
             throw e;
         }finally{
             JdbcClose.statementResultSet(stmt, result);
-
         }
-        return resultList;
     }
+
 
     /**
      * Map make
@@ -919,6 +922,9 @@ public class JdbcObjects {
     }
 
 
+
+
+
     /**
      * upsert
      * @param conn Connection
@@ -1362,8 +1368,6 @@ public class JdbcObjects {
         }catch(SQLException e){
             throw new SQLRuntimeException(e);
         }
-
-
 
         StringBuilder importBuilder = new StringBuilder();
         importBuilder.append("\nimport com.seomse.jdbc.annotation.Column;");
