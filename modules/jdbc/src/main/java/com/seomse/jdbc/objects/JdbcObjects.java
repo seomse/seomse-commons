@@ -833,7 +833,6 @@ public class JdbcObjects {
      */
     public static <T> String getCheckWhere(T obj) throws IllegalAccessException {
         Class<?> objClass = obj.getClass();
-        String tableName = TableSql.getTableName(objClass.getAnnotation(Table.class), objClass.getName());
 
         Map<String, Field> columnFieldMap = makeColumnFieldMap(objClass);
         String [] columnNames = columnFieldMap.keySet().toArray(new String[0]);
