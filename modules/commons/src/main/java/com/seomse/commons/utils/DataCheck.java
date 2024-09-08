@@ -8,6 +8,22 @@ import java.util.List;
  */
 public class DataCheck {
 
+    public static boolean isEqualsObj(Object source, Object target){
+        if(source == null && target == null){
+            return true;
+        }
+
+        if(source == null && target != null){
+            return false;
+        }
+        if(target == null && source != null){
+            return false;
+        }
+
+        return source.equals(target);
+
+    }
+
     @SuppressWarnings("rawtypes")
     public static boolean isEquals(List a, List b){
         if(a == null && b == null){
