@@ -121,6 +121,10 @@ public class YmdUtil {
 		}
 	}
 
+	public static long getTime(int ymd, ZoneId zoneId) {
+		return getTime(Integer.toString(ymd), zoneId);
+	}
+
 	public static long getTime(String ymd, ZoneId zoneId) {
 		try {
 			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");

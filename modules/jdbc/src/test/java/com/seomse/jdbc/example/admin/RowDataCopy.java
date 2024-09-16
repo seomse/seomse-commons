@@ -15,7 +15,7 @@
  */
 package com.seomse.jdbc.example.admin;
 
-import com.seomse.jdbc.admin.RowDataInOut;
+import com.seomse.jdbc.sync.RowDataInOut;
 import com.seomse.jdbc.connection.ConnectionFactory;
 
 import java.sql.Connection;

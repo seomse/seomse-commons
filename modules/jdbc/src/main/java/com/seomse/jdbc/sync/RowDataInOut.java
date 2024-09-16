@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.seomse.jdbc.admin;
+package com.seomse.jdbc.sync;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

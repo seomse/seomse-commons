@@ -1,6 +1,6 @@
 rootProject.name = 'seomse-commons'
-include 'modules:commons'
-findProject(':modules:commons')?.name = 'commons'
+include ':seomse-commons'
+project(':seomse-commons').projectDir = new File(settingsDir,'../../seomse/seomse-commons/modules/commons')
 include 'modules:poi'
 findProject(':modules:poi')?.name = 'poi'
 include 'modules:jdbc'
