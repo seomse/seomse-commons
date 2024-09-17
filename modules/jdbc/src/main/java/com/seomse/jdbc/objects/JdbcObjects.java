@@ -297,6 +297,10 @@ public class JdbcObjects {
         return resultList;
     }
 
+    public static <T> void callbackObj(Connection conn, Class<T> objClass , String whereValue, String orderByValue,  Map<Integer, PrepareStatementData> prepareStatementDataMap, GenericCallBack callback) throws IllegalAccessException, SQLException, InstantiationException {
+        callbackObj(conn, objClass, null, whereValue, orderByValue, -1, prepareStatementDataMap , callback);
+    }
+
     public static <T> void callbackObj(Connection conn, Class<T> objClass , String sql, String whereValue, String orderByValue, int size, Map<Integer, PrepareStatementData> prepareStatementDataMap, GenericCallBack callback) throws IllegalAccessException, SQLException, InstantiationException {
 
         Table table = objClass.getAnnotation(Table.class);

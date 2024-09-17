@@ -136,6 +136,25 @@ public class Remove {
         return str;
     }
 
+    public static String commentImage(String str){
+        String [] values = str.split("\n");
+        StringBuilder sb = new StringBuilder();
+        for(String value : values){
+            if(value.startsWith("//")){
+                if(value.toLowerCase().endsWith(".jpg") || value.toLowerCase().endsWith(".jpeg")|| value.toLowerCase().endsWith(".png") ){
+                    continue;
+                }
+            }
+            sb.append("\n").append(value);
+        }
+
+        if(sb.length() == 0){
+            return "";
+        }
+
+        return sb.substring(1);
+    }
+
     public static void main(String[] args) {
         System.out.println(HTML_ENTER_ENTRY.length);
     }

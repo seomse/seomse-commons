@@ -485,8 +485,6 @@ public class Database {
 			list.clear();
 
 			return array;
-
-
 		}
 
 	}
