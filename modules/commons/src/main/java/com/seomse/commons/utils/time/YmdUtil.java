@@ -234,6 +234,11 @@ public class YmdUtil {
 	}
 
 
+	public static boolean isNow(String ymd, ZoneId zoneId){
+		String nowYmd = now(zoneId);
+		return nowYmd.equals(ymd);
+	}
+
 	public static void main(String[] args) {
 		List<StartEndYmd> list = getYmdRangeList("20000101", "20230130" , 29);
 		for(StartEndYmd rangeYmd : list){

@@ -107,6 +107,19 @@ public class Check {
 		return true;
 	}
 
+	public static boolean isNumberIn(String str){
+		if(str == null){
+			return false;
+		}
+
+		char [] array = str.toCharArray();
+        for (char ch : array) {
+            if ( ch <= 57 && ch >= 48 )
+                return true;
+        }
+		return false;
+	}
+
 	/**
 	 * 영어로 이루어져 있는지 체크한다.
 	 * @param str String 체크할 문자열
