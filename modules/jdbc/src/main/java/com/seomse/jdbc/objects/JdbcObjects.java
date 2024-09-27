@@ -791,6 +791,11 @@ public class JdbcObjects {
         return insertOrUpdate(obj, false);
     }
 
+    public static <T> int insertOrUpdate(Connection connection, T obj){
+        return insertOrUpdate(connection, obj, false);
+    }
+
+
     /**
      * 있으면 update, 없으면 insert
      * @param obj T
