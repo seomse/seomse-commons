@@ -297,6 +297,17 @@ public class JdbcObjects {
         return resultList;
     }
 
+
+    public static <T> void callbackObj( Class<T> objClass , String whereValue, GenericCallBack callback){
+        try(Connection conn = ApplicationConnectionPool.getInstance().getCommitConnection()){
+                callbackObj(conn,  objClass, whereValue, null ,null,callback);
+        }catch(SQLException e){
+            throw new SQLRuntimeException(e);
+        }catch(ReflectiveOperationException e){
+            throw new ReflectiveOperationRuntimeException(e);
+        }
+    }
+
     public static <T> void callbackObj(Connection conn, Class<T> objClass , String whereValue, String orderByValue,  Map<Integer, PrepareStatementData> prepareStatementDataMap, GenericCallBack callback) throws IllegalAccessException, SQLException, InstantiationException {
         callbackObj(conn, objClass, null, whereValue, orderByValue, -1, prepareStatementDataMap , callback);
     }
@@ -779,6 +790,11 @@ public class JdbcObjects {
     public static <T> int insertOrUpdate(T obj){
         return insertOrUpdate(obj, false);
     }
+
+    public static <T> int insertOrUpdate(Connection connection, T obj){
+        return insertOrUpdate(connection, obj, false);
+    }
+
 
     /**
      * 있으면 update, 없으면 insert
