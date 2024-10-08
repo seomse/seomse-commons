@@ -68,6 +68,10 @@ public class YmdUtil {
 
 
 	public static String getYmd(String ymd, int day) {
+		if (day == 0) {
+			return ymd;
+		}
+
 		return getYmd(ymd, day, null);
 	}
 	/**
@@ -78,6 +82,10 @@ public class YmdUtil {
 	 * @return String yyyyMMdd
 	 */
 	public static String getYmd(String ymd, int day, ZoneId zoneId) {
+		if (day == 0) {
+			return ymd;
+		}
+
 		try {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 
@@ -182,6 +190,20 @@ public class YmdUtil {
 	}
 	public static String getYmd(long time, ZoneId zoneId) {
 		return getYmd(new Date(time), zoneId);
+	}
+
+	public static int getYmdInt(long time, ZoneId zoneId){
+		return Integer.parseInt(getYmd(new Date(time), zoneId));
+	}
+
+
+	public static int getYmdInt(int ymd, int day){
+		if(day == 0){
+			return ymd;
+		}
+
+		return Integer.parseInt(getYmd(Integer.toString(ymd) ,day));
+
 	}
 
 	/**

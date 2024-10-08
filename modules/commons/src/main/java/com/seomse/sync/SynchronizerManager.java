@@ -77,7 +77,6 @@ public class SynchronizerManager {
 
             List<Class<?>> classes = search.search();
             for(Class<?> cl : classes){
-                System.out.println(cl);
                 if (cl.isAnnotationPresent(Synchronization.class)) {
 
                     Synchronizer sync = (Synchronizer) cl.newInstance();
