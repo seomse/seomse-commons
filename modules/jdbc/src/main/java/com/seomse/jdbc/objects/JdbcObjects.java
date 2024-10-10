@@ -274,6 +274,18 @@ public class JdbcObjects {
         return getObjList(conn, objClass, sql, whereValue , null, -1 , prepareStatementDataMap);
     }
 
+    public static <T> List<T> getObjList(Class<T> objClass , String sql, String whereValue, String orderByValue, Map<Integer, PrepareStatementData> prepareStatementDataMap)  {
+
+        try(Connection conn = ApplicationConnectionPool.getInstance().getCommitConnection()){
+            return getObjList(conn,  objClass, sql, whereValue, orderByValue, -1, prepareStatementDataMap);
+        }catch(SQLException e){
+            throw new SQLRuntimeException(e);
+        }catch(ReflectiveOperationException e){
+            throw new ReflectiveOperationRuntimeException(e);
+        }
+    }
+
+
     /**
      *  List 얻기
      * @param conn Connection

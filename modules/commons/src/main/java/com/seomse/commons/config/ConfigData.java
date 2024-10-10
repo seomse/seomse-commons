@@ -47,14 +47,14 @@ public abstract class ConfigData {
      */
     public abstract int getPriority();
 
-    protected abstract void put(String key, String value);
+    public abstract void put(String key, String value);
 
     /**
      * 설정삭제
      * @param key String key
      * @return String remove value
      */
-    protected abstract String remove(String key);
+    public abstract String remove(String key);
 
     /**
      * 초기 설정이 끝나고 업데이트 될경우

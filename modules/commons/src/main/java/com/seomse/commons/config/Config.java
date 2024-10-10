@@ -383,7 +383,7 @@ public class Config {
 			synchronized (addLock){
 				if(configDataArray.length == 0){
 					ConfigData[] newDataArray = new ConfigData[1];
-					ConfigDataImpl configDataImpl = new ConfigDataImpl();
+					PropertiesConfigData configDataImpl = new PropertiesConfigData();
 					newDataArray [0] =  configDataImpl;
 					this.configDataArray = newDataArray ;
 				}
