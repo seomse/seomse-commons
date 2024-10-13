@@ -196,14 +196,12 @@ public class YmdUtil {
 		return Integer.parseInt(getYmd(new Date(time), zoneId));
 	}
 
-
 	public static int getYmdInt(int ymd, int day){
 		if(day == 0){
 			return ymd;
 		}
 
 		return Integer.parseInt(getYmd(Integer.toString(ymd) ,day));
-
 	}
 
 	/**
