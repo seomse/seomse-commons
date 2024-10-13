@@ -27,7 +27,7 @@ public class SystemPropertiesData extends ConfigData{
     }
 
     @Override
-    protected String remove(String key) {
+    public String remove(String key) {
         //시스템 설정은 삭제하지 않음
         return null;
     }
