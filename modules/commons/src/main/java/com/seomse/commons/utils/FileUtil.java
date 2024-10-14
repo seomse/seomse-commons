@@ -337,6 +337,14 @@ public class FileUtil {
 		return list;
 	}
 
+	public static String [] getLines(File file){
+		return getLineList(file, StandardCharsets.UTF_8).toArray(new String[0]);
+	}
+
+	public static List<String> getLineList(File file){
+		return getLineList(file, StandardCharsets.UTF_8);
+	}
+
 	public static List<String> getLineList(File file, Charset charset){
 		List<String> list = new ArrayList<>();
 		addLine(list, file, charset);
