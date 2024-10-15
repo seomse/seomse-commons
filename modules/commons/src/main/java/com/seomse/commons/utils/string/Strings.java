@@ -66,4 +66,15 @@ public class Strings {
         return newStrings;
     }
 
+    public static String [] makeTextArray(String text, String tag, String [] array){
+
+        String [] textArray = new String[array.length];
+
+        for (int i = 0; i <textArray.length ; i++) {
+            textArray[i] = text.replace(tag, array[i]);
+        }
+
+        return textArray;
+    }
+
 }
