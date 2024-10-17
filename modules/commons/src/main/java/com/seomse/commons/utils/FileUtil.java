@@ -1244,6 +1244,27 @@ public class FileUtil {
 	}
 
 
+	public static int getDirLength(String path){
+		File dirFie = new File(path);
+		if(!dirFie.isDirectory()){
+			return 0;
+		}
+		File [] files = dirFie.listFiles();
+
+		if(files == null || files.length == 0){
+			return 0;
+		}
+
+		int cnt =0;
+		for(File file : files){
+			if(file.isDirectory()){
+				cnt ++;
+			}
+		}
+
+		return cnt;
+	}
+
 	public static void main(String[] args) {
 		File file = new File("temp/text.txt");
 
