@@ -2,6 +2,7 @@ package com.seomse.commons.http;
 
 import com.seomse.commons.utils.time.Times;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +69,6 @@ public class HttpApis {
         return POST_JSON_APT.getResponse(url, outStreamJson).getMessage();
     }
 
-
     public static HttpApiResponse postJson(String url, Map<String, String> requestProperty, String outStreamJson){
         return POST_JSON_APT.getResponse(url, requestProperty, outStreamJson);
     }
@@ -78,5 +78,9 @@ public class HttpApis {
 
     public static HttpApiResponse post(String url, Map<String, String> requestProperty, String outStreamJson) {
         return POST_APT.getResponse(url, requestProperty, outStreamJson);
+    }
+
+    public static File downloadFile(String urlAddress, String downloadPath){
+        return GET_API.downloadFile(urlAddress, downloadPath);
     }
 }

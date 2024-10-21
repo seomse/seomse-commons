@@ -321,7 +321,6 @@ public class HttpUrl {
 			return file;
 		} 
 		catch (IOException e) {
-
 			throw e;
 		}finally{
 			if(in != null){

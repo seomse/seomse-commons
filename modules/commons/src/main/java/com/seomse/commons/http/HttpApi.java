@@ -1,12 +1,11 @@
 package com.seomse.commons.http;
 
 import com.seomse.commons.exception.IORuntimeException;
+import com.seomse.commons.utils.FileUtil;
 import lombok.Setter;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import javax.net.ssl.HttpsURLConnection;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -30,6 +29,10 @@ public class HttpApi {
     private Integer connectTimeOut= null;
 
     private Integer readTimeOut= null;
+
+
+    private Integer fileReadTimeOut= null;
+
 
     private Charset defaultCharSet= StandardCharsets.UTF_8;
 
@@ -148,6 +151,92 @@ public class HttpApi {
         }
     }
 
+    public File downloadFile(String urlAddress, String downloadPath){
+        InputStream in = null;
+        FileOutputStream fos = null ;
+        HttpURLConnection conn = null ;
+
+        File pathFile = new File(downloadPath);
+        String dirPath = pathFile.getParentFile().getAbsolutePath();
+        if(!FileUtil.isDirectory(dirPath)){
+            //noinspection ResultOfMethodCallIgnored
+            new File(dirPath).mkdirs();
+        }
+
+        if(pathFile.isFile()){
+            //noinspection ResultOfMethodCallIgnored
+            pathFile.delete();
+        }
+
+        try {
+            File file = null;
+            URL url = new URL(defaultAddress+urlAddress);
+            conn = (HttpsURLConnection) url.openConnection();
+
+            if(fileReadTimeOut != null){
+                conn.setReadTimeout(fileReadTimeOut);
+            }else{
+                if(readTimeOut != null) {
+                    conn.setReadTimeout(readTimeOut);
+                }
+            }
+
+            if(connectTimeOut != null) {
+                conn.setConnectTimeout(connectTimeOut);
+            }
+
+            if(defaultRequestProperty != null){
+                Set<String> keys = defaultRequestProperty.keySet();
+
+                for(String key: keys){
+                    conn.setRequestProperty(key, defaultRequestProperty.get(key));
+                }
+            }
+
+            if (conn != null && conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+
+                file = new File(downloadPath);
+                //noinspection ResultOfMethodCallIgnored
+                file.getParentFile().mkdirs();
+                if(file.exists()){
+                    //noinspection ResultOfMethodCallIgnored
+                    file.delete();
+                }
+                //noinspection ResultOfMethodCallIgnored
+                file.createNewFile();
+                in = conn.getInputStream();
+                fos = new FileOutputStream(file);
+
+                byte[] buffer = new byte[1024];
+                int len1 ;
+                while ((len1 = in.read(buffer)) != -1) {
+                    fos.write(buffer, 0, len1);
+                }
+
+                fos.getFD().sync();
+
+                fos.close();
+                in.close();
+
+
+            }
+            return file;
+        }
+        catch (IOException e) {
+            throw new IORuntimeException(e);
+        }finally{
+            if(in != null){
+                try{in.close();}catch(Exception ignore){}
+            }
+            if(fos != null){
+                try{fos.close();}catch(Exception ignore){}
+            }
+            if(conn != null){
+                try{  conn.disconnect();}catch(Exception ignore){}
+            }
+        }
+    }
+
     public static String getMessage(HttpURLConnection conn, Charset charset){
         StringBuilder message = new StringBuilder();
         BufferedReader br = null;
@@ -205,5 +294,8 @@ public class HttpApi {
         }
         return message.toString();
     }
+
+
+
 
 }
