@@ -21,6 +21,7 @@ public class GsonUtils {
         return GSON.toJson(jsonArray);
     }
 
+
     public static JsonObject fromJsonObject(String jsonText){
         return GSON.fromJson(jsonText, JsonObject.class);
     }

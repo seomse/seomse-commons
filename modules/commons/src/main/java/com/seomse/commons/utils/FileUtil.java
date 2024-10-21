@@ -31,6 +31,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * 파일처리 관련 유틸성 클래스
@@ -38,8 +40,6 @@ import java.util.stream.Stream;
  */
 @Slf4j
 public class FileUtil {
-
-
 
 
 	@SuppressWarnings({"unused", "WeakerAccess"})
@@ -58,6 +58,9 @@ public class FileUtil {
 	public static String getFileContents(File file, String charSet){
 		Charset charset= Charset.forName(charSet);
 		return getFileContents(file, charset);
+	}
+	public static String getFileContents(String filePath){
+		return getFileContents(new File(filePath), StandardCharsets.UTF_8);
 	}
 
 	public static String getFileContents(String filePath,  Charset charset){
@@ -335,6 +338,14 @@ public class FileUtil {
 			throw new IORuntimeException(e);
 		}
 		return list;
+	}
+
+	public static String [] getLines(File file){
+		return getLineList(file, StandardCharsets.UTF_8).toArray(new String[0]);
+	}
+
+	public static List<String> getLineList(File file){
+		return getLineList(file, StandardCharsets.UTF_8);
 	}
 
 	public static List<String> getLineList(File file, Charset charset){
@@ -1236,6 +1247,79 @@ public class FileUtil {
 	}
 
 
+	public static int getDirLength(String path){
+		File dirFie = new File(path);
+		if(!dirFie.isDirectory()){
+			return 0;
+		}
+		File [] files = dirFie.listFiles();
+
+		if(files == null || files.length == 0){
+			return 0;
+		}
+
+		int cnt =0;
+		for(File file : files){
+			if(file.isDirectory()){
+				cnt ++;
+			}
+		}
+
+		return cnt;
+	}
+
+
+	public static File [] unZip(String filepath){
+		return unZip(new File(filepath));
+	}
+
+	public static File [] unZip(File zipFile){
+		String dirPath = zipFile.getParentFile().getAbsolutePath();
+
+		BufferedInputStream in = null;
+		FileOutputStream out = null;
+		ZipInputStream zipInputStream = null;
+
+		List<File> list = new ArrayList<>();
+
+		try{
+			in = new BufferedInputStream(Files.newInputStream(zipFile.toPath()));
+			zipInputStream = new ZipInputStream(in);
+			ZipEntry zipEntry;
+			while((zipEntry = zipInputStream.getNextEntry()) != null){
+				int length ;
+
+				File unZipFile = new File(dirPath + zipEntry.getName());
+
+				out = new FileOutputStream(unZipFile);
+				while((length = zipInputStream.read()) != -1){
+					out.write(length);
+				}
+
+				out.getFD().sync();
+				out.close();
+				zipInputStream.closeEntry();
+
+				list.add(unZipFile);
+			}
+		}catch (IOException e){
+			throw new IORuntimeException(e);
+		}finally {
+			if(in != null){
+				try{in.close();}catch (Exception ignore){}
+			}
+			if(out != null){
+				try{out.close();}catch (Exception ignore){}
+			}
+			if(zipInputStream != null){
+				try{zipInputStream.close();}catch (Exception ignore){}
+			}
+
+		}
+
+		return list.toArray(new File[0]);
+
+	}
 	public static void main(String[] args) {
 		File file = new File("temp/text.txt");
 
