@@ -77,4 +77,17 @@ public class Strings {
         return textArray;
     }
 
+    public static String toString(String [] array, String split){
+        if(array == null || array.length == 0){
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(array[0]);
+        for (int i = 1; i <array.length ; i++) {
+            sb.append(split).append(array[i]);
+        }
+        return sb.toString();
+    }
+
 }

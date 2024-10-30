@@ -228,6 +228,19 @@ public class YmdUtil {
 
 	}
 
+	public static String max(String sourceYmd, String targetYmd){
+		int source = Integer.parseInt(sourceYmd);
+		int target = Integer.parseInt(targetYmd);
+		return Integer.toString(Math.max(source,target));
+	}
+
+	public static String min(String sourceYmd, String targetYmd){
+		int source = Integer.parseInt(sourceYmd);
+		int target = Integer.parseInt(targetYmd);
+		return Integer.toString(Math.min(source,target));
+	}
+
+
 	public static List<StartEndYmd> getYmdRangeList(String startYmd, String endYmd, int rangeDay){
 
 		if(rangeDay < 0){
