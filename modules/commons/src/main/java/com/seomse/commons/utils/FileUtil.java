@@ -48,6 +48,7 @@ public class FileUtil {
 		return getFileContents(new File(filePath), charset);
 	}
 
+
 	/**
 	 * 파일 내용을 줄바꿈 단위로 가져온다
 	 * @param file File target text file
@@ -1186,10 +1187,14 @@ public class FileUtil {
 
 	public static String getLastTextLine(String path){
 		File file = new File(path);
+
 		return getLastTextLine(file);
 	}
 
 	public static String getLastTextLine(File file){
+		if(!file.isFile()){
+			return "";
+		}
 
 		int lastIndex = (int)getLineCount(file)-1;
 
@@ -1316,10 +1321,19 @@ public class FileUtil {
 			}
 
 		}
-
 		return list.toArray(new File[0]);
-
 	}
+
+	public static String getExtension(File file) {
+		String fileName = file.getName();
+		return getExtension(fileName);
+	}
+
+	public static String getExtension(String fileName){
+		return fileName.substring(fileName.lastIndexOf(".") + 1);
+	}
+
+
 	public static void main(String[] args) {
 		File file = new File("temp/text.txt");
 
