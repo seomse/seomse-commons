@@ -19,6 +19,7 @@ import com.seomse.commons.exception.ParseRuntimeException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -240,6 +241,14 @@ public class Times {
         return time ;
     }
 
+
+    public static DayOfWeek getDayOfWeek(long time, ZoneId zoneId){
+        Instant i = Instant.ofEpochMilli(time);
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(i, zoneId);
+
+        return  zonedDateTime.getDayOfWeek();
+
+    }
 
 
 }
