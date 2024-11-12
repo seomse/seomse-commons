@@ -272,6 +272,45 @@ public class YmdUtil {
 		return nowYmd.equals(ymd);
 	}
 
+	public static String getYearMonth(String ym, int month) {
+		return getYearMonth(ym, month, null);
+	}
+
+	public static String getYearMonth(String ym, int month, ZoneId zoneId) {
+		if (month == 0) {
+			return ym;
+		}
+
+		try {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMM");
+
+			if(zoneId != null){
+				simpleDateFormat.setTimeZone(TimeZone.getTimeZone(zoneId));
+			}
+
+			Date date = simpleDateFormat.parse(ym);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.add(Calendar.MONTH, month);
+
+			if(zoneId != null){
+				TimeZone timeZone = TimeZone.getTimeZone(zoneId);
+				calendar.setTimeZone(timeZone);
+
+				SimpleDateFormat format = new SimpleDateFormat("yyyyMM");
+				format.setTimeZone(TimeZone.getTimeZone(zoneId));
+
+				return format.format(calendar.getTime());
+			}
+
+
+			return new SimpleDateFormat("yyyyMM").format(calendar.getTime());
+		} catch (ParseException e) {
+			throw new ParseRuntimeException(e);
+		}
+
+	}
+
 	public static void main(String[] args) {
 		List<StartEndYmd> list = getYmdRangeList("20000101", "20230130" , 29);
 		for(StartEndYmd rangeYmd : list){

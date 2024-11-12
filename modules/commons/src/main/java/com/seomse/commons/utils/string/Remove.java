@@ -27,6 +27,37 @@ import java.util.List;
 public class Remove {
 
 
+    public static String betweenFirst(String text, String beginStr, String endStr){
+        return betweenFirst(text, false, beginStr, endStr);
+    }
+
+    public static String betweenFirst( String text,boolean isRemoveSymbol, String beginStr, String endStr) {
+
+        int beginIndex = text.indexOf(beginStr);
+        if(beginIndex == -1){
+            return text;
+        }
+
+        int searchEndStart = beginIndex + beginStr.length();
+
+        if(!isRemoveSymbol){
+            beginIndex = searchEndStart;
+        }
+
+        int endIndex = text.indexOf(endStr,searchEndStart );
+        if(endIndex == -1){
+            return text;
+        }
+
+        if(isRemoveSymbol){
+            endIndex = endIndex + endStr.length();
+        }
+
+
+        return text.substring(0, beginIndex) +
+                text.substring(endIndex);
+    }
+
     /**
      * tab enter 제거
      * @param str String
