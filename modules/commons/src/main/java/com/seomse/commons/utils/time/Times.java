@@ -250,5 +250,25 @@ public class Times {
 
     }
 
+    public static String getYmd(String ymdhm){
+        return ymdhm.substring(0,8);
+    }
+    public static String getHm(String ymdhm){
+        return ymdhm.substring(9);
+    }
+
+    public static final String DATE_FORMAT_YMDHM = "yyyyMMdd HHmm";
+
+    public static String getYmdhm(String ymdhm, long addTime){
+
+        ZoneId zoneId = ZoneId.systemDefault();
+
+        long time = getTime(DATE_FORMAT_YMDHM, ymdhm, zoneId);
+
+        time = time + addTime;
+        return ymdhm(time, zoneId);
+
+    }
+
 
 }
