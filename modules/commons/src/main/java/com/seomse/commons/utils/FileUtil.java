@@ -1334,6 +1334,37 @@ public class FileUtil {
 	}
 
 
+	public static File [] getDirs(File rootDirFile, String dirName){
+//		getFiles()
+		List<File> dirs = new ArrayList<>();
+		addDirs(dirs, rootDirFile, dirName);
+
+		return dirs.toArray(new File[0]);
+	}
+
+	public static void addDirs(List<File> list, File file, String dirName){
+		if(!file.isFile() && !file.isDirectory()){
+			return;
+		}
+
+		if(file.isDirectory()){
+			if(file.getName().equals(dirName)){
+				list.add(file);
+			}
+			File [] files = file.listFiles();
+
+			if(files == null){
+				return;
+			}
+
+			for(File f : files){
+				if(file.isDirectory()) {
+					addDirs(list, f, dirName);
+				}
+			}
+		}
+	}
+
 	public static void main(String[] args) {
 		File file = new File("temp/text.txt");
 
