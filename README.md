@@ -15,10 +15,6 @@ modules 디렉토리 안에 모듈별로 설명되어 있습니다.(각 모듈�
 - [github.com/seomse](https://github.com/seomse)
 - [www.seomse.com](https://www.seomse.com/)
 
-
-### email
-- ysys86a@gmail.com
-
 ### cafe
 - [cafe.naver.com/radvisor](https://cafe.naver.com/radvisor)
 
