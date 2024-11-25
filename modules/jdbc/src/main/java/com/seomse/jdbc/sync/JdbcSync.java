@@ -9,6 +9,9 @@ import com.seomse.jdbc.connection.ConnectionFactory;
 
 import java.sql.Connection;
 
+/**
+ * @author macle
+ */
 public class JdbcSync {
     public static Connection newSyncServerConnection(){
 

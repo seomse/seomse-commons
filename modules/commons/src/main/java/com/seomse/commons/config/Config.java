@@ -249,18 +249,19 @@ public class Config {
 		if(!file.isFile()){
 			return ;
 		}
-		LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+
 
 		try {
+			LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
 			JoranConfigurator configurator = new JoranConfigurator();
 			configurator.setContext(context);
 			context.reset();
 			configurator.doConfigure(configPath);
 
-		} catch (JoranException je) {
-			if(isErrorLog){
-				ExceptionUtil.exception(je, log, instance.exceptionHandler);
-			}
+		} catch (Exception je) {
+//			if(isErrorLog){
+//				ExceptionUtil.exception(je, log, instance.exceptionHandler);
+//			}
 		}
 	}
 

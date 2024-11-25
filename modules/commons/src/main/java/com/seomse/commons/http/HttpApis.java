@@ -17,7 +17,7 @@ public class HttpApis {
 
     public static final HttpApi POST_APT = makeDefaultPost();
 
-
+    public static final Map<String,String> JSON_UTF8_PROPERTY = makeJsonUtf8RequestProperty();
 
     public static HttpApi makeDefaultGet(){
         HttpApi httpApi = new HttpApi();
@@ -33,6 +33,13 @@ public class HttpApis {
         return httpApi;
     }
 
+
+    public static Map<String,String> makeJsonUtf8RequestProperty(){
+        Map<String,String> requestProperty = new HashMap<>();
+        requestProperty.put("Content-Type","application/json; charset=utf-8");
+        requestProperty.put("Accept", "application/json");
+        return requestProperty;
+    }
 
     public static HttpApi makeDefaultPostJson(){
         HttpApi httpApi = new HttpApi();
