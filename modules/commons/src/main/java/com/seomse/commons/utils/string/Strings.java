@@ -1,6 +1,7 @@
 package com.seomse.commons.utils.string;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 문자열 관련 유틸성 클래스
@@ -86,6 +87,20 @@ public class Strings {
         sb.append(array[0]);
         for (int i = 1; i <array.length ; i++) {
             sb.append(split).append(array[i]);
+        }
+        return sb.toString();
+    }
+
+
+    public static String toString(List<String> list , String split){
+        if(list == null || list.isEmpty()){
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(list.get(0));
+        for (int i = 1; i < list.size() ; i++) {
+            sb.append(split).append(list.get(i));
         }
         return sb.toString();
     }
