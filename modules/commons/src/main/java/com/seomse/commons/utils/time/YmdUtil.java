@@ -180,6 +180,16 @@ public class YmdUtil {
 	}
 
 
+
+	public static int nowInt(){
+		return Integer.parseInt(now());
+	}
+
+	public static int nowInt(ZoneId zoneId){
+		return Integer.parseInt(now(zoneId));
+	}
+
+
 	/**
 	 * ymd 얻기
 	 * @param time unix time
