@@ -48,7 +48,6 @@ public class FileUtil {
 		return getFileContents(new File(filePath), charset);
 	}
 
-
 	/**
 	 * 파일 내용을 줄바꿈 단위로 가져온다
 	 * @param file File target text file

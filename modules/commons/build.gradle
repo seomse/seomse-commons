@@ -2,8 +2,6 @@ plugins {
     id 'java'
 }
 
-group 'com.seomse.commons'
-version '1.6.0'
 
 repositories {
     mavenCentral()
