@@ -1,7 +1,7 @@
 # seomse-commons
 - [runon.io](https://runon.io)
 
-https://github.com/runonio/commons-jdk8
+https://github.com/runonio/commons
 
 이후 버전은 runon에서 업데이트 됩니다.
 
